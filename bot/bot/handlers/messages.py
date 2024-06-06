@@ -1,4 +1,5 @@
 import re
+
 from aiogram import Router, types
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
@@ -28,7 +29,7 @@ async def get_registration_phone(message: types.Message, state: FSMContext):
         await state.update_data(phone_number=message.text)
         get_data_registration = await state.get_data()
         await state.clear()
-        print(get_data_registration)
+
         await message.answer_photo(
             photo=types.FSInputFile('files/chatademia.png'),
             caption='',
