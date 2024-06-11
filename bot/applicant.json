@@ -1,0 +1,40 @@
+{
+    "applicant" : [
+        {
+            "name" : "Никита Кондратьев",
+            "phone" : "+79990572027",
+            "UserName" : "@kondrateevv",
+            "tgid" : "#"
+        },
+        {
+            "name" : "Денис Сарапулов",
+            "phone" : "+79084494946",
+            "UserName" : "@balistiktw",
+            "tgid" : "#"
+        },
+        {
+            "name" : "Иван Афанасьев",
+            "phone" : "+79144200495",
+            "UserName" : "@sssnukke",
+            "tgid" : "#"
+        },
+        {
+            "name" : "Даша Мищенко",
+            "phone" : "+79143323316",
+            "UserName" : "@mishchenkooooo",
+            "tgid" : "#"
+        },
+        {
+            "name" : "Лиана Мурадян",
+            "phone" : "+79996185318",
+            "UserName" : "@Li_mrd",
+            "tgid" : "#"
+        },
+        {
+            "name" : "Андрей Кулигин",
+            "phone" : "+79147429433",
+            "UserName" : "@dushese",
+            "tgid" : "#"
+        }
+    ]
+}
