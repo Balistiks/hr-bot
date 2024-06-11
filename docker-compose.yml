@@ -12,7 +12,6 @@ services:
       - ./bot/bot:/app/bot
     depends_on:
       - redis
-      - back
     networks:
       bot:
         aliases:
