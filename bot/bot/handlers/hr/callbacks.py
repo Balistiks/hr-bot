@@ -14,6 +14,15 @@ def get_page(callback_data, current_page):
         return current_page + 1
     return current_page
 
+@callbacks_router.callback_query(F.data == 'hr')
+async def start_hr(callback: types.CallbackQuery, state: FSMContext):
+    await state.clear()
+    await state.update_data(direction_page=1)
+    await state.set_state(ApplicantState.page)
+
+    await callback.message.edit_text(text='text',
+                        reply_markup=await keyboards.hr.get_applicant_keyboards(1))
+
 
 @callbacks_router.callback_query(ApplicantState.page, F.data == 'prev_page')
 @callbacks_router.callback_query(ApplicantState.page, F.data == 'next_page')

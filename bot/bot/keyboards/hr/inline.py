@@ -19,8 +19,9 @@ async def get_applicant_keyboards(current_page: int):
     end_index = min(start_index + 5, count_applicant)
 
     for i in range(start_index, end_index):
+        tgid = applicant['applicant'][i]['tgid']
         markup.inline_keyboard.append([
-            InlineKeyboardButton(text=applicant['applicant'][i]['name'], callback_data='#')
+            InlineKeyboardButton(text=applicant['applicant'][i]['name'], callback_data=f'tgid_{tgid}')
         ])
 
     prev_callback_data = 'prev_page' if current_page > 1 else '#'
