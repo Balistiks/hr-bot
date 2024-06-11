@@ -13,6 +13,7 @@ messages_router = Router()
 @messages_router.message(Command('hr'))
 async def start_hr(message: types.Message, state: FSMContext):
     await state.clear()
+    await state.update_data(direction_page=1)
     await state.set_state(ApplicantState.page)
 
     await message.answer(text='text',
