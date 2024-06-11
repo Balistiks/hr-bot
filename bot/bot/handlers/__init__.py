@@ -1,4 +1,4 @@
-from .messages import messages_router
-from .callbacks import callbacks_router
+from .applicant import applicant_router
+from .hr import hr_router
 
-routers = (messages_router, callbacks_router)
+routers = (*applicant_router, *hr_router)

@@ -1,23 +1,14 @@
 import re
 
 from aiogram import Router, types
-from aiogram.filters import CommandStart, Command
+from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 
 from bot import keyboards
-from bot.states import RegisterState, ApplicantState
+from bot.states import RegisterState
 
 messages_router = Router()
 
-
-@messages_router.message(Command('hr'))
-async def start_hr(message: types.Message, state: FSMContext):
-    await state.clear()
-    await state.set_state(ApplicantState.page)
-
-    await message.answer(text='text',
-                        reply_markup=await keyboards.get_applicant_keyboards(1))
-      
 
 @messages_router.message(CommandStart())
 async def start_applicant(message: types.Message, state: FSMContext):
@@ -42,7 +33,7 @@ async def get_registration_phone(message: types.Message, state: FSMContext):
         await message.answer_photo(
             photo=types.FSInputFile('files/chatademia.png'),
             caption='',
-            reply_markup=keyboards.TRAINING_KEYBOARD
+            reply_markup=keyboards.applicant.TRAINING_KEYBOARD
         )
     else:
         await message.answer(
