@@ -4,37 +4,49 @@
             "name" : "Никита Кондратьев",
             "phone" : "+79990572027",
             "UserName" : "@kondrateevv",
-            "tgid" : "#"
+            "tgid" : "123",
+            "course" : "course",
+            "stage" : "1"
         },
         {
             "name" : "Денис Сарапулов",
             "phone" : "+79084494946",
             "UserName" : "@balistiktw",
-            "tgid" : "#"
+            "tgid" : "213",
+            "course" : "course",
+            "stage" : "1"
         },
         {
             "name" : "Иван Афанасьев",
             "phone" : "+79144200495",
             "UserName" : "@sssnukke",
-            "tgid" : "#"
+            "tgid" : "234",
+            "course" : "course",
+            "stage" : "2"
         },
         {
             "name" : "Даша Мищенко",
             "phone" : "+79143323316",
             "UserName" : "@mishchenkooooo",
-            "tgid" : "#"
+            "tgid" : "435",
+            "course" : "course",
+            "stage" : "3"
         },
         {
             "name" : "Лиана Мурадян",
             "phone" : "+79996185318",
             "UserName" : "@Li_mrd",
-            "tgid" : "#"
+            "tgid" : "333",
+            "course" : "course",
+            "stage" : "2"
         },
         {
             "name" : "Андрей Кулигин",
             "phone" : "+79147429433",
             "UserName" : "@dushese",
-            "tgid" : "#"
+            "tgid" : "237",
+            "course" : "course",
+            "stage" : "2"
         }
     ]
 }
