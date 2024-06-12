@@ -14,14 +14,6 @@ STAGE_APPLICANT_KEYBOARD = InlineKeyboardMarkup(
     ]
 )
 
-STAGE_BACK_KEYBOARD = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [
-            InlineKeyboardButton(text='К списку', callback_data='hr')
-        ]
-    ]
-)
-
 async def get_status_keyboard(tgid):
     builder = InlineKeyboardBuilder()
     builder.adjust(2)
@@ -36,8 +28,8 @@ async def get_status_keyboard(tgid):
             break
 
     markup.inline_keyboard.append([
-        InlineKeyboardButton(text='Дозвон' if current_status == 'missed_call' else 'Недозвон', 
-                     callback_data='status-call' if current_status == 'missed_call' else 'status-missed_call'),
+        InlineKeyboardButton(text='Дозвон' if current_status == 'Недозвон' else 'Недозвон', 
+                     callback_data='status-call' if current_status == 'Недозвон' else 'status-missed_call'),
         InlineKeyboardButton(text='Перезвонит', callback_data='status-call_back')
     ])
     markup.inline_keyboard.append([
