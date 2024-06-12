@@ -17,6 +17,7 @@ def get_page(callback_data, current_page):
         return current_page + 1
     return current_page
 
+
 @callbacks_router.callback_query(F.data == 'hr')
 async def start_hr(callback: types.CallbackQuery, state: FSMContext):
     await state.clear()
