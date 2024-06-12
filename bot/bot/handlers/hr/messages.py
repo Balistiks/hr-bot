@@ -17,4 +17,4 @@ async def start_hr(message: types.Message, state: FSMContext):
     await state.set_state(ApplicantState.page)
 
     await message.answer(text='text',
-                        reply_markup=await keyboards.hr.get_applicant_keyboards(1))
+                        reply_markup=await keyboards.hr.get_applicant_keyboard(1))

@@ -6,7 +6,8 @@
             "UserName" : "@kondrateevv",
             "tgid" : "123",
             "course" : "course",
-            "stage" : "1"
+            "stage" : "1",
+            "status" : ""
         },
         {
             "name" : "Денис Сарапулов",
@@ -14,7 +15,8 @@
             "UserName" : "@balistiktw",
             "tgid" : "213",
             "course" : "course",
-            "stage" : "1"
+            "stage" : "1",
+            "status" : ""
         },
         {
             "name" : "Иван Афанасьев",
@@ -22,7 +24,8 @@
             "UserName" : "@sssnukke",
             "tgid" : "234",
             "course" : "course",
-            "stage" : "2"
+            "stage" : "passed",
+            "status" : ""
         },
         {
             "name" : "Даша Мищенко",
@@ -30,7 +33,8 @@
             "UserName" : "@mishchenkooooo",
             "tgid" : "435",
             "course" : "course",
-            "stage" : "3"
+            "stage" : "3",
+            "status" : ""
         },
         {
             "name" : "Лиана Мурадян",
@@ -38,7 +42,8 @@
             "UserName" : "@Li_mrd",
             "tgid" : "333",
             "course" : "course",
-            "stage" : "2"
+            "stage" : "passed",
+            "status" : ""
         },
         {
             "name" : "Андрей Кулигин",
@@ -46,7 +51,8 @@
             "UserName" : "@dushese",
             "tgid" : "237",
             "course" : "course",
-            "stage" : "2"
+            "stage" : "2",
+            "status" : ""
         }
     ]
 }
