@@ -21,7 +21,7 @@ async def start_hr(callback: types.CallbackQuery, state: FSMContext):
     await state.set_state(ApplicantState.page)
 
     await callback.message.edit_text(text='text',
-                        reply_markup=await keyboards.hr.get_applicant_keyboards(1))
+                        reply_markup=await keyboards.hr.get_applicant_keyboard(1))
 
 
 @callbacks_router.callback_query(ApplicantState.page, F.data == 'prev_page')
@@ -34,5 +34,5 @@ async def get_applicant_slider(callback: types.CallbackQuery, state: FSMContext)
 
     await callback.message.edit_text(
         text='text',
-        reply_markup=await keyboards.hr.get_applicant_keyboards(page)
+        reply_markup=await keyboards.hr.get_applicant_keyboard(page)
     )

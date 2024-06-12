@@ -5,7 +5,7 @@ from aiogram.types import InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
-async def get_applicant_keyboards(current_page: int):
+async def get_applicant_keyboard(current_page: int):
     builder = InlineKeyboardBuilder()
     builder.adjust(1)
     markup = builder.as_markup()
