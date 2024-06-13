@@ -23,8 +23,9 @@ async def start_hr(callback: types.CallbackQuery, state: FSMContext):
     await state.clear()
     await state.update_data(direction_page=1)
     await state.set_state(ApplicantState.page)
-
-    await callback.message.edit_text(text='text',
+    
+    await callback.message.delete()
+    await callback.message.answer(text='text',
                         reply_markup=await keyboards.hr.get_applicant_keyboard(1))
 
 
@@ -67,7 +68,9 @@ async def create_excel_applicant():
 
 @callbacks_router.callback_query(F.data == 'excel_status')
 async def get_excel_applicant(callback: types.CallbackQuery):
+    await callback.message.delete()
     await create_excel_applicant()
     
     await callback.message.answer_document(
-        types.FSInputFile('files/applicant_status.xlsx'))
+        types.FSInputFile('files/applicant_status.xlsx'),
+        reply_markup=keyboards.hr.BACK_LIST_KEYBOARD)
