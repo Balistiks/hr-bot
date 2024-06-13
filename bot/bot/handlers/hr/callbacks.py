@@ -43,11 +43,11 @@ async def get_applicant_slider(callback: types.CallbackQuery, state: FSMContext)
     )
 
 
-async def create_excel_applicant():
+async def create_excel_applicant(tgid):
     with open('applicant.json') as data_file:
-        applicant = json.load(data_file)
+        applicant_data = json.load(data_file)
         
-    data_applicant = applicant['applicant']
+    data_applicant = applicant_data['applicant']
     
     data_formatted = []
     for applicant in data_applicant:
@@ -61,16 +61,19 @@ async def create_excel_applicant():
             'статус': applicant['status']
         })
     
-    df = pd.DataFrame(data_formatted,
-                      columns=['Имя', 'Номер', 'UserName', 'tgid', 'курс', 'этап', 'статус'])
-    df.to_excel('files/applicant_status.xlsx', index=False)
+    df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'курс', 'этап', 'статус'])
+    file_name = f'files/applicant_status_{tgid}.xlsx'
+    df.to_excel(file_name, index=False)
+
+    return file_name
 
 
 @callbacks_router.callback_query(F.data == 'excel_status')
 async def get_excel_applicant(callback: types.CallbackQuery):
     await callback.message.delete()
-    await create_excel_applicant()
+    tgid = callback.from_user.id
+    file_name = await create_excel_applicant(tgid)
     
     await callback.message.answer_document(
-        types.FSInputFile('files/applicant_status.xlsx'),
+        types.FSInputFile(file_name),
         reply_markup=keyboards.hr.BACK_LIST_KEYBOARD)
