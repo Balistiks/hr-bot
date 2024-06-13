@@ -1,6 +1,10 @@
 import json
 
-from aiogram import Router, types, F
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.date import DateTrigger
+from datetime import datetime, timedelta
+
+from aiogram import Router, types, F, Bot
 from aiogram.fsm.context import FSMContext
 
 from bot import keyboards
@@ -8,6 +12,41 @@ from bot.misc import applicant_status
 from bot.states import StageCommentState
 
 callbacks_router = Router()
+
+scheduler = AsyncIOScheduler()
+scheduler.start()
+
+async def send_reminder(tgid):
+    # Логика отправки напоминания
+    await send_message(tgid, "Напоминание: Пожалуйста, свяжитесь с нами.")
+
+
+async def send_message(tgid, text, bot: Bot):
+    # Используйте bot.send_message для отправки сообщения
+    await bot.send_message(chat_id=tgid, text=text)
+
+
+async def update_status_lost(tgid):
+    with open('applicant.json', 'r+') as data_file:
+        applicant_data = json.load(data_file)
+        
+        for applicant in applicant_data['applicant']:
+            if str(applicant['tgid']) == tgid:
+                applicant['status'] = 'Потерян'
+                break
+        data_file.seek(0)
+        json.dump(applicant_data, data_file, indent=4)
+        data_file.truncate()
+        
+    print(f'Applicant {tgid} status updated to "Потерян"')
+
+
+async def schedule_reminders(tgid):
+    now = datetime.now()
+    scheduler.add_job(send_reminder, trigger=DateTrigger(run_date=now + timedelta(seconds=3)), args=[tgid])
+    scheduler.add_job(send_reminder, trigger=DateTrigger(run_date=now + timedelta(minutes=6)), args=[tgid])
+    scheduler.add_job(send_reminder, trigger=DateTrigger(run_date=now + timedelta(minutes=10)), args=[tgid])
+    scheduler.add_job(update_status_lost, trigger=DateTrigger(run_date=now + timedelta(minutes=10)), args=[tgid])
 
 
 @callbacks_router.callback_query(F.data.startswith('tgid_'))
@@ -50,6 +89,12 @@ async def get_status(callback: types.CallbackQuery, state: FSMContext):
                     if status['callback_data'] == status_callback:
                         applicant['status'] = status['text']
                         break
+        
+        if applicant['status'] == 'Недозвон':
+                schedule_reminders(tgid)
+        else:
+            scheduler.remove_all_jobs()
+        
         
         data_file.seek(0)
         json.dump(applicant_data, data_file, indent=4)

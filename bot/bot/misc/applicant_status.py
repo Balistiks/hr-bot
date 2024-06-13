@@ -23,4 +23,8 @@ applicant_status = [
         'text': 'Выходит на работу',
         'callback_data': 'work'
     },
+    {
+        'text' : 'Потерян',
+        'callback_data' : 'lost'
+    },
 ]
