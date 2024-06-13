@@ -4,7 +4,6 @@ from aiogram import Router, types, F
 from aiogram.fsm.context import FSMContext
 
 from bot import keyboards
-from bot.misc import applicant_status
 from bot.states import StageCommentState
 
 callbacks_router = Router()
@@ -46,10 +45,7 @@ async def get_status(callback: types.CallbackQuery, state: FSMContext):
 
         for applicant in applicant_data['applicant']:
             if str(applicant['tgid']) == tgid:
-                for status in applicant_status:
-                    if status['callback_data'] == status_callback:
-                        applicant['status'] = status['text']
-                        break
+                applicant['status'] = status_callback
         
         data_file.seek(0)
         json.dump(applicant_data, data_file, indent=4)

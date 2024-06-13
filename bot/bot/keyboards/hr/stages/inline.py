@@ -29,16 +29,16 @@ async def get_status_keyboard(tgid):
 
     markup.inline_keyboard.append([
         InlineKeyboardButton(text='Дозвон' if current_status == 'Недозвон' else 'Недозвон', 
-                     callback_data='status-call' if current_status == 'Недозвон' else 'status-missed_call'),
+                     callback_data='status-Дозвон' if current_status == 'Недозвон' else 'status-Недозвон'),
         InlineKeyboardButton(text='Перезвонит', callback_data='status-call_back')
     ])
     markup.inline_keyboard.append([
-        InlineKeyboardButton(text='Думает', callback_data='status-thinks'),
-        InlineKeyboardButton(text='Испытательный срок', callback_data='status-probation')
+        InlineKeyboardButton(text='Думает', callback_data='status-Думает'),
+        InlineKeyboardButton(text='Испытательный срок', callback_data='status-Испытательный срок')
     ])
     markup.inline_keyboard.append([
         InlineKeyboardButton(text='Изменить статус', callback_data='#'),
-        InlineKeyboardButton(text='Выходит на работу', callback_data='status-work')
+        InlineKeyboardButton(text='Выходит на работу', callback_data='status-Выходит на работу')
     ])
     markup.inline_keyboard.append([
         InlineKeyboardButton(text='К списку', callback_data='hr')
