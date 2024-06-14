@@ -71,10 +71,10 @@ async def get_status(callback: types.CallbackQuery, bot: Bot, state: FSMContext,
             if str(applicant['tgid']) == tgid:
                 applicant['status'] = status_callback
                 if status_callback == 'Недозвон':
-                    apscheduler.add_job(scheduler_missed_call, trigger='date', run_date=datetime.now() + timedelta(seconds=10), kwargs={'bot': bot, 'chat_id': tgid})
-                    apscheduler.add_job(scheduler_missed_call, trigger='date', run_date=datetime.now() + timedelta(seconds=20), kwargs={'bot': bot, 'chat_id': tgid})
-                    apscheduler.add_job(scheduler_missed_call, trigger='date', run_date=datetime.now() + timedelta(seconds=30), kwargs={'bot': bot, 'chat_id': tgid})
-                    apscheduler.add_job(get_status_lost, trigger='date', run_date=datetime.now() + timedelta(seconds=30), kwargs={'tgid': tgid})
+                    apscheduler.add_job(scheduler_missed_call, trigger='date', run_date=datetime.now() + timedelta(days=1), kwargs={'chat_id': tgid})
+                    apscheduler.add_job(scheduler_missed_call, trigger='date', run_date=datetime.now() + timedelta(days=3), kwargs={'chat_id': tgid})
+                    apscheduler.add_job(scheduler_missed_call, trigger='date', run_date=datetime.now() + timedelta(days=7), kwargs={'chat_id': tgid})
+                    apscheduler.add_job(get_status_lost, trigger='date', run_date=datetime.now() + timedelta(days=7), kwargs={'tgid': tgid})
                 else:
                     apscheduler.remove_all_jobs()
                 break

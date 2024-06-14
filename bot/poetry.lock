@@ -189,6 +189,21 @@ twisted = ["twisted"]
 zookeeper = ["kazoo"]
 
 [[package]]
+name = "apscheduler-di"
+version = "0.1.0"
+description = "Lightweight and beneficial Dependency Injection plugin for apscheduler "
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "apscheduler_di-0.1.0-py3-none-any.whl", hash = "sha256:aaeda49f4f9c5a4cdd3dcb9498e3431eecfedce50e05ccf77861cca70bfb44bc"},
+    {file = "apscheduler_di-0.1.0.tar.gz", hash = "sha256:cc98b38a38829bc4974b3f0436e62bccd3c51989ad3e9646244110258b3e4f33"},
+]
+
+[package.dependencies]
+APScheduler = ">=3.8.1,<4.0.0"
+rodi = ">=2.0.0,<3.0.0"
+
+[[package]]
 name = "async-timeout"
 version = "4.0.3"
 description = "Timeout context manager for asyncio programs"
@@ -806,6 +821,17 @@ hiredis = ["hiredis (>=1.0.0)"]
 ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"]
 
 [[package]]
+name = "rodi"
+version = "2.0.6"
+description = "Implementation of dependency injection for Python 3"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "rodi-2.0.6-py3-none-any.whl", hash = "sha256:d299276be19842133def84dde365771d11a5195b76be0595eae9c1ecad818446"},
+    {file = "rodi-2.0.6.tar.gz", hash = "sha256:f533e315d84b63824efcc67526a156ad5fb0a158f1ccbc41e0db3944d0c08693"},
+]
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -1048,4 +1074,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "028e0cf9d7d4a1525bc83671f2b06bea674ddba95aee9d91c8bbe69ef962ed8c"
+content-hash = "56ba8519c1848d85ba2028bdc2ce6488d37d5bd9ea780c8bed49b3e9ffe15b53"
