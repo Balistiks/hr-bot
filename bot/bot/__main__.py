@@ -6,6 +6,8 @@ from aiogram import Bot
 
 from redis.asyncio.client import Redis
 
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
 from bot.misc.configuration import conf
 
 from bot.dispatcher import get_redis_storage, get_dispatcher
@@ -22,7 +24,9 @@ async def start_bot():
             port=conf.redis.port,
         )
     )
-    dp = get_dispatcher(storage=storage)
+    scheduler = AsyncIOScheduler()
+    scheduler.start()
+    dp = get_dispatcher(storage=storage, scheduler=scheduler)
 
     await dp.start_polling(
         bot,

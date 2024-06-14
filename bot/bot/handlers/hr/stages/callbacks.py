@@ -1,8 +1,8 @@
 import json
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.date import DateTrigger
 from datetime import datetime, timedelta
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from aiogram import Router, types, F, Bot
 from aiogram.fsm.context import FSMContext
@@ -13,18 +13,6 @@ from bot.states import StageCommentState
 
 callbacks_router = Router()
 
-scheduler = AsyncIOScheduler()
-scheduler.start()
-
-async def send_reminder(tgid):
-    # Логика отправки напоминания
-    await send_message(tgid, "Напоминание: Пожалуйста, свяжитесь с нами.")
-
-
-async def send_message(tgid, text, bot: Bot):
-    # Используйте bot.send_message для отправки сообщения
-    await bot.send_message(chat_id=tgid, text=text)
-
 
 async def update_status_lost(tgid):
     with open('applicant.json', 'r+') as data_file:
@@ -34,19 +22,10 @@ async def update_status_lost(tgid):
             if str(applicant['tgid']) == tgid:
                 applicant['status'] = 'Потерян'
                 break
+            
         data_file.seek(0)
         json.dump(applicant_data, data_file, indent=4)
         data_file.truncate()
-        
-    print(f'Applicant {tgid} status updated to "Потерян"')
-
-
-async def schedule_reminders(tgid):
-    now = datetime.now()
-    scheduler.add_job(send_reminder, trigger=DateTrigger(run_date=now + timedelta(seconds=3)), args=[tgid])
-    scheduler.add_job(send_reminder, trigger=DateTrigger(run_date=now + timedelta(minutes=6)), args=[tgid])
-    scheduler.add_job(send_reminder, trigger=DateTrigger(run_date=now + timedelta(minutes=10)), args=[tgid])
-    scheduler.add_job(update_status_lost, trigger=DateTrigger(run_date=now + timedelta(minutes=10)), args=[tgid])
 
 
 @callbacks_router.callback_query(F.data.startswith('tgid_'))
@@ -63,7 +42,7 @@ async def set_status(callback: types.CallbackQuery, state: FSMContext):
                 reply_markup= await keyboards.hr.stages.get_status_keyboard(tgid)
             )
             break
-        elif str(applicant['tgid'])== tgid:
+        elif str(applicant['tgid']) == tgid:
             applicant_name = applicant['name']
             applicant_stage = applicant['stage']
             await callback.message.edit_text(
@@ -74,9 +53,15 @@ async def set_status(callback: types.CallbackQuery, state: FSMContext):
             break
 
 
+async def send(bot: Bot, chat_id: int):        
+    await bot.send_message(chat_id, 'Привет, ты не ответил нашему HR, '
+                                    'свяжись с ним "ссылка на телеграм HR"')
+
+
 @callbacks_router.callback_query(F.data.startswith('status-'))
-async def get_status(callback: types.CallbackQuery, state: FSMContext):
+async def get_status(callback: types.CallbackQuery, bot: Bot, state: FSMContext, apscheduler: AsyncIOScheduler):
     status_callback = callback.data.split('-')[1]
+    print(status_callback)
     data = await state.get_data()
     tgid = data.get('current_tgid')
 
@@ -88,13 +73,17 @@ async def get_status(callback: types.CallbackQuery, state: FSMContext):
                 for status in applicant_status:
                     if status['callback_data'] == status_callback:
                         applicant['status'] = status['text']
-                        break
-        
-        if applicant['status'] == 'Недозвон':
-                schedule_reminders(tgid)
-        else:
-            scheduler.remove_all_jobs()
-        
+                    
+            if status_callback == 'Недозвон':
+                apscheduler.add_job(send, trigger='date', run_date=datetime.now() + timedelta(seconds=3), kwargs={'bot': bot, 'chat_id': tgid})
+                apscheduler.add_job(send, trigger='date', run_date=datetime.now() + timedelta(seconds=7), kwargs={'bot': bot, 'chat_id': tgid})
+                apscheduler.add_job(send, trigger='date', run_date=datetime.now() + timedelta(seconds=11), kwargs={'bot': bot, 'chat_id': tgid})
+                # apscheduler.add_job(update_status_lost, trigger='date', run_date=datetime.now() + timedelta(seconds=11), kwargs={'tgid': tgid})
+                break
+            else:
+                # apscheduler.remove_all_jobs()
+                print('nonon')
+                break
         
         data_file.seek(0)
         json.dump(applicant_data, data_file, indent=4)
@@ -111,6 +100,3 @@ async def set_comment(callback: types.CallbackQuery, state: FSMContext):
     await state.clear()
     await state.set_state(StageCommentState.comment)
     await callback.message.edit_text(text='Оставьте комментарий')
-    
-
-    
