@@ -13,4 +13,4 @@ async def get_comment(message: types.Message, state: FSMContext):
     get_comment_stage = await state.get_data()
     await state.clear()
     await message.answer(text='Комментарий отправлен',
-                         reply_markup=keyboards.hr.stages.STAGE_BACK_KEYBOARD)
+                         reply_markup=keyboards.hr.BACK_LIST_KEYBOARD)

@@ -36,7 +36,7 @@ async def set_status(callback: types.CallbackQuery, state: FSMContext):
 
 @callbacks_router.callback_query(F.data.startswith('status-'))
 async def get_status(callback: types.CallbackQuery, state: FSMContext):
-    status = callback.data.split('-')[1]
+    status_callback = callback.data.split('-')[1]
     data = await state.get_data()
     tgid = data.get('current_tgid')
 
@@ -45,16 +45,15 @@ async def get_status(callback: types.CallbackQuery, state: FSMContext):
 
         for applicant in applicant_data['applicant']:
             if str(applicant['tgid']) == tgid:
-                applicant['status'] = status
-                break
-
+                applicant['status'] = status_callback
+        
         data_file.seek(0)
         json.dump(applicant_data, data_file, indent=4)
         data_file.truncate()
         
     await callback.message.edit_text(
         text='Статус добавлен',
-        reply_markup=keyboards.hr.stages.STAGE_BACK_KEYBOARD
+        reply_markup=keyboards.hr.BACK_LIST_KEYBOARD
     )
 
 

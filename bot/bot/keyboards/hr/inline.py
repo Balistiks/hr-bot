@@ -1,8 +1,17 @@
 import math
 import json
 
-from aiogram.types import InlineKeyboardButton
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
+
+
+BACK_LIST_KEYBOARD = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text='К списку', callback_data='hr')
+        ]
+    ]
+)
 
 
 async def get_applicant_keyboard(current_page: int):
@@ -31,6 +40,9 @@ async def get_applicant_keyboard(current_page: int):
         InlineKeyboardButton(text='⬅️', callback_data=prev_callback_data),
         InlineKeyboardButton(text=f'{current_page}/{total_pages}', callback_data='#'),
         InlineKeyboardButton(text='➡️', callback_data=next_callback_data)
+    ])
+    markup.inline_keyboard.append([
+        InlineKeyboardButton(text='Excel', callback_data='excel_status')
     ])
 
     return markup

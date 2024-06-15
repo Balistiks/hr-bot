@@ -1,3 +1,6 @@
+import json
+import pandas as pd
+
 from aiogram import Router, types, F
 from aiogram.fsm.context import FSMContext
 
@@ -14,13 +17,15 @@ def get_page(callback_data, current_page):
         return current_page + 1
     return current_page
 
+
 @callbacks_router.callback_query(F.data == 'hr')
 async def start_hr(callback: types.CallbackQuery, state: FSMContext):
     await state.clear()
     await state.update_data(direction_page=1)
     await state.set_state(ApplicantState.page)
-
-    await callback.message.edit_text(text='text',
+    
+    await callback.message.delete()
+    await callback.message.answer(text='text',
                         reply_markup=await keyboards.hr.get_applicant_keyboard(1))
 
 
@@ -36,3 +41,39 @@ async def get_applicant_slider(callback: types.CallbackQuery, state: FSMContext)
         text='text',
         reply_markup=await keyboards.hr.get_applicant_keyboard(page)
     )
+
+
+async def create_excel_applicant(tgid):
+    with open('applicant.json') as data_file:
+        applicant_data = json.load(data_file)
+        
+    data_applicant = applicant_data['applicant']
+    
+    data_formatted = []
+    for applicant in data_applicant:
+        data_formatted.append({
+            'Имя': applicant['name'],
+            'Номер': applicant['phone'],
+            'UserName': applicant['UserName'],
+            'tgid': applicant['tgid'],
+            'курс': applicant['course'],
+            'этап': applicant['stage'],
+            'статус': applicant['status']
+        })
+    
+    df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'курс', 'этап', 'статус'])
+    file_name = f'files/applicant_status_{tgid}.xlsx'
+    df.to_excel(file_name, index=False)
+
+    return file_name
+
+
+@callbacks_router.callback_query(F.data == 'excel_status')
+async def get_excel_applicant(callback: types.CallbackQuery):
+    await callback.message.delete()
+    tgid = callback.from_user.id
+    file_name = await create_excel_applicant(tgid)
+    
+    await callback.message.answer_document(
+        types.FSInputFile(file_name),
+        reply_markup=keyboards.hr.BACK_LIST_KEYBOARD)
