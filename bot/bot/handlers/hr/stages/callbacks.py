@@ -13,6 +13,45 @@ from bot.states import StageCommentState
 callbacks_router = Router()
 
 
+def scheduler_missed_call(tgid: int, apscheduler: AsyncIOScheduler):
+    apscheduler.add_job(
+        scheduler_send_missed_call, 
+        id=f'missed_call_{tgid}_1', 
+        trigger='date', 
+        run_date=datetime.now() + timedelta(seconds=30), 
+        kwargs={'tgid': tgid}
+    )
+    apscheduler.add_job(
+        scheduler_send_missed_call, 
+        id=f'missed_call_{tgid}_3', 
+        trigger='date', 
+        run_date=datetime.now() + timedelta(minutes=1), 
+        kwargs={'tgid': tgid}
+    )
+    apscheduler.add_job(
+        scheduler_send_missed_call, 
+        id=f'missed_call_{tgid}_7', 
+        trigger='date', 
+        run_date=datetime.now() + timedelta(minutes=2), 
+        kwargs={'tgid': tgid}
+    )
+    apscheduler.add_job(
+        get_status_lost, 
+        id=f'status_lost_{tgid}', 
+        trigger='date', 
+        run_date=datetime.now() + timedelta(minutes=2), 
+        kwargs={'tgid': tgid}
+    )
+
+
+async def scheduler_send_missed_call(bot: Bot, tgid: int):
+    await bot.send_message(
+        tgid,
+        'Привет, ты не ответил нашему HR,' 
+        'свяжись с ним "ссылка на телеграм HR"'
+    )
+    
+    
 async def get_status_lost(tgid):
     with open('applicant.json', 'r+') as data_file:
         applicant_data = json.load(data_file)
@@ -25,16 +64,8 @@ async def get_status_lost(tgid):
         data_file.seek(0)
         json.dump(applicant_data, data_file, indent=4)
         data_file.truncate()
-
-
-async def scheduler_missed_call(bot: Bot, chat_id: int):
-    await bot.send_message(
-        chat_id,
-        'Привет, ты не ответил нашему HR,' 
-        'свяжись с ним "ссылка на телеграм HR"'
-        )
-    
-    
+        
+        
 @callbacks_router.callback_query(F.data.startswith('tgid_'))
 async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
     tgid = callback.data.split('_')[1]
@@ -59,29 +90,27 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
 
 
 @callbacks_router.callback_query(F.data.startswith('status-'))
-async def get_status(callback: types.CallbackQuery, bot: Bot, state: FSMContext, apscheduler: AsyncIOScheduler):
+async def get_status(callback: types.CallbackQuery, state: FSMContext, apscheduler: AsyncIOScheduler):
     status_callback = callback.data.split('-')[1]
     data = await state.get_data()
     tgid = data.get('current_tgid')
 
     with open('applicant.json', 'r+') as data_file:
         applicant_data = json.load(data_file)
-
         for applicant in applicant_data['applicant']:
             if str(applicant['tgid']) == tgid:
                 applicant['status'] = status_callback
-                if status_callback == 'Недозвон':
-                    apscheduler.add_job(scheduler_missed_call, trigger='date', run_date=datetime.now() + timedelta(days=1), kwargs={'chat_id': tgid})
-                    apscheduler.add_job(scheduler_missed_call, trigger='date', run_date=datetime.now() + timedelta(days=3), kwargs={'chat_id': tgid})
-                    apscheduler.add_job(scheduler_missed_call, trigger='date', run_date=datetime.now() + timedelta(days=7), kwargs={'chat_id': tgid})
-                    apscheduler.add_job(get_status_lost, trigger='date', run_date=datetime.now() + timedelta(days=7), kwargs={'tgid': tgid})
-                else:
-                    apscheduler.remove_all_jobs()
-                break
-        
+                break 
         data_file.seek(0)
         json.dump(applicant_data, data_file, indent=4)
         data_file.truncate()
+        
+    for job in apscheduler.get_jobs():
+        if job.id.startswith(f'missed_call_{tgid}') or job.id == f'status_lost_{tgid}':
+            apscheduler.remove_job(job.id)
+
+    if status_callback == 'Недозвон':
+        scheduler_missed_call(tgid, apscheduler)
         
     await callback.message.edit_text(
         text='Статус добавлен',
