@@ -8,62 +8,10 @@ from aiogram.fsm.context import FSMContext
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from bot import keyboards
+from bot.scheduler import scheduler_missed_call
 from bot.states import StageCommentState
 
 callbacks_router = Router()
-
-
-def scheduler_missed_call(tgid: int, apscheduler: AsyncIOScheduler):
-    apscheduler.add_job(
-        scheduler_send_missed_call, 
-        id=f'missed_call_{tgid}_1', 
-        trigger='date', 
-        run_date=datetime.now() + timedelta(seconds=30), 
-        kwargs={'tgid': tgid}
-    )
-    apscheduler.add_job(
-        scheduler_send_missed_call, 
-        id=f'missed_call_{tgid}_3', 
-        trigger='date', 
-        run_date=datetime.now() + timedelta(minutes=1), 
-        kwargs={'tgid': tgid}
-    )
-    apscheduler.add_job(
-        scheduler_send_missed_call, 
-        id=f'missed_call_{tgid}_7', 
-        trigger='date', 
-        run_date=datetime.now() + timedelta(minutes=2), 
-        kwargs={'tgid': tgid}
-    )
-    apscheduler.add_job(
-        get_status_lost, 
-        id=f'status_lost_{tgid}', 
-        trigger='date', 
-        run_date=datetime.now() + timedelta(minutes=2), 
-        kwargs={'tgid': tgid}
-    )
-
-
-async def scheduler_send_missed_call(bot: Bot, tgid: int):
-    await bot.send_message(
-        tgid,
-        'Привет, ты не ответил нашему HR,' 
-        'свяжись с ним "ссылка на телеграм HR"'
-    )
-    
-    
-async def get_status_lost(tgid):
-    with open('applicant.json', 'r+') as data_file:
-        applicant_data = json.load(data_file)
-        
-        for applicant in applicant_data['applicant']:
-            if str(applicant['tgid']) == tgid:
-                applicant['status'] = 'Потерян'
-                break
-            
-        data_file.seek(0)
-        json.dump(applicant_data, data_file, indent=4)
-        data_file.truncate()
         
         
 @callbacks_router.callback_query(F.data.startswith('tgid_'))
