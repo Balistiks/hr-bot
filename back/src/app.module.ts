@@ -7,22 +7,13 @@ import { CitiesModule } from './cities/cities.module';
 import { QuestionsModule } from './questions/questions.module';
 import { AnswersModule } from './answers/answers.module';
 import { EmployeesModule } from './employees/employees.module';
-import * as process from 'process';
+import { dataSourceOptions } from '../db/data-source';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: async () => {
-        return {
-          type: 'postgres',
-          host: 'db',
-          port: 5432,
-          username: process.env.POSTGRES_USER,
-          password: process.env.POSTGRES_PASSWORD,
-          database: process.env.POSTGRES_DB,
-          entities: [],
-          synchronize: true,
-        };
+        return dataSourceOptions;
       },
     }),
     AuthModule,
