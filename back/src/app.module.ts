@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { CoursesModule } from './courses/courses.module';
 import { CitiesModule } from './cities/cities.module';
 import { QuestionsModule } from './questions/questions.module';
+import { AnswersModule } from './answers/answers.module';
 import * as process from 'process';
 
 @Module({
@@ -28,6 +29,7 @@ import * as process from 'process';
     CoursesModule,
     CitiesModule,
     QuestionsModule,
+    AnswersModule,
   ],
   controllers: [],
   providers: [],
