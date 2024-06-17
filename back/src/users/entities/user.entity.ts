@@ -18,6 +18,9 @@ export class User {
   @Column({ nullable: false })
   phoneNumber: string;
 
+  @Column({ nullable: false, default: 0 })
+  stage: number;
+
   @ManyToOne(() => Course, (course) => course.users)
   course: Course;
 }
