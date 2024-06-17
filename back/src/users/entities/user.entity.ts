@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Course } from '../../courses/entities/course.entity';
+import { Question } from '../../questions/entities/question.entity';
 
 @Entity()
 export class User {
@@ -18,8 +19,8 @@ export class User {
   @Column({ nullable: false })
   phoneNumber: string;
 
-  @Column({ nullable: false, default: 0 })
-  stage: number;
+  @ManyToOne(() => Question, (question) => question.users)
+  question: Question;
 
   @ManyToOne(() => Course, (course) => course.users)
   course: Course;
