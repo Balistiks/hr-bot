@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { City } from '../../cities/entities/city.entity';
 
 @Entity()
 export class Course {
@@ -7,4 +8,7 @@ export class Course {
 
   @Column({ nullable: false })
   name: string;
+
+  @ManyToOne(() => City, (city) => city.courses)
+  city: City;
 }
