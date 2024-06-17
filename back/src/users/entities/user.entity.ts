@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'ty
 import { Course } from '../../courses/entities/course.entity';
 import { Question } from '../../questions/entities/question.entity';
 import { Answer } from '../../answers/entitites/answer.entity';
+import { Employee } from '../../employees/entities/employee.entity';
 
 @Entity()
 export class User {
@@ -28,4 +29,7 @@ export class User {
 
   @OneToMany(() => Answer, (answer) => answer.user)
   answers: Answer[];
+
+  @ManyToOne(() => Employee, (employee) => employee.users)
+  employee: Employee;
 }
