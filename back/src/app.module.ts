@@ -8,6 +8,7 @@ import { QuestionsModule } from './questions/questions.module';
 import { AnswersModule } from './answers/answers.module';
 import { EmployeesModule } from './employees/employees.module';
 import { dataSourceOptions } from '../db/data-source';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { dataSourceOptions } from '../db/data-source';
     QuestionsModule,
     AnswersModule,
     EmployeesModule,
+    CommentsModule,
   ],
   controllers: [],
   providers: [],

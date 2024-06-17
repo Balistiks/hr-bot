@@ -1,7 +1,14 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Course } from '../../courses/entities/course.entity';
 import { User } from '../../users/entities/user.entity';
 import { Answer } from '../../answers/entitites/answer.entity';
+import { Comment } from '../../comments/entitites/comment.entity';
 
 @Entity()
 export class Question {
@@ -25,4 +32,7 @@ export class Question {
 
   @OneToMany(() => Answer, (answer) => answer.question)
   answers: Answer[];
+
+  @OneToMany(() => Comment, (comment) => comment.question)
+  comments: Comment[];
 }

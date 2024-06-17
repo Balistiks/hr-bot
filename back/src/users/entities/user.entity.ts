@@ -3,6 +3,7 @@ import { Course } from '../../courses/entities/course.entity';
 import { Question } from '../../questions/entities/question.entity';
 import { Answer } from '../../answers/entitites/answer.entity';
 import { Employee } from '../../employees/entities/employee.entity';
+import { Comment } from '../../comments/entitites/comment.entity';
 
 @Entity()
 export class User {
@@ -32,4 +33,7 @@ export class User {
 
   @ManyToOne(() => Employee, (employee) => employee.users)
   employee: Employee;
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[];
 }
