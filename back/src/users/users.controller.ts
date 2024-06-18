@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Patch, Post, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
@@ -18,6 +18,13 @@ export class UsersController {
     return await this.usersService.findOne({
       where: { id },
       relations: ['course', 'question'],
+    });
+  }
+
+  @Get()
+  async find(@Query('request') request?: string): Promise<User[]> {
+    return await this.usersService.find({
+      where: request ? JSON.parse(request) : null,
     });
   }
 
