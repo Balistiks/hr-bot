@@ -1,4 +1,4 @@
-import { Body, Controller, Logger, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Patch, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
@@ -11,6 +11,13 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly employeesService: EmployeesService,
   ) {}
+
+  @Get(':id')
+  async findOne(@Param('id') id: number): Promise<User> {
+    return await this.usersService.findOne({
+      id,
+    });
+  }
 
   @Post()
   async save(@Body() user: CreateUserDto): Promise<User> {
