@@ -30,7 +30,7 @@ async def get_status_keyboard(tgid):
     markup.inline_keyboard.append([
         InlineKeyboardButton(text='Дозвон' if current_status == 'Недозвон' else 'Недозвон', 
                      callback_data='status-Дозвон' if current_status == 'Недозвон' else 'status-Недозвон'),
-        InlineKeyboardButton(text='Перезвонит', callback_data='status-call_back')
+        InlineKeyboardButton(text='Перезвонит', callback_data='status-Перезвонит')
     ])
     markup.inline_keyboard.append([
         InlineKeyboardButton(text='Думает', callback_data='status-Думает'),
