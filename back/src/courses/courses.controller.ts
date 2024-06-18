@@ -7,9 +7,9 @@ export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Get()
-  async find(@Query('request') request: string): Promise<Course[]> {
+  async find(@Query('request') request?: string): Promise<Course[]> {
     return await this.coursesService.find({
-      where: JSON.parse(request),
+      where: request ? JSON.parse(request) : null,
     });
   }
 }
