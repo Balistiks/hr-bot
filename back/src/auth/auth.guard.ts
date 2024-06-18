@@ -21,7 +21,6 @@ export class AuthGuard implements CanActivate {
       if (bearer !== 'Bearer' || !token) {
         throw new UnauthorizedException({ message: 'Ошибка авторизации' });
       }
-
       if (process.env.SECRET_TOKEN == token) {
         return true;
       }

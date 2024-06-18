@@ -11,13 +11,17 @@ export class EmployeesService {
   ) {}
 
   async getWithMinimalUsers(): Promise<Employee> {
-    return (
-      await this.employeeRepository.find({
-        relations: ['users'],
-        order: {
-          users: 'DESC',
-        },
-      })
-    )[0];
+    const employees = await this.employeeRepository.find({
+      relations: ['users'],
+    });
+    let minimalUsers = employees[0].users.length;
+    let employeeWithMinimalUsers = employees[0];
+    for (const employee of employees) {
+      if (employee.users.length < minimalUsers) {
+        minimalUsers = employee.users.length;
+        employeeWithMinimalUsers = employee;
+      }
+    }
+    return employeeWithMinimalUsers;
   }
 }
