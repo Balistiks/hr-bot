@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { EmployeesService } from '../employees/employees.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Not } from 'typeorm';
 
 @Controller('users')
 export class UsersController {
@@ -15,7 +16,8 @@ export class UsersController {
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<User> {
     return await this.usersService.findOne({
-      id,
+      where: { id },
+      relations: ['course', 'question'],
     });
   }
 
