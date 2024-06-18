@@ -22,6 +22,13 @@ export class User {
   @Column({ nullable: false })
   phoneNumber: string;
 
+  @Column({
+    nullable: false,
+    default: 'studying',
+    enum: ['missedCall', 'willCallBack', 'thinks', 'probation', 'goesToWork'],
+  })
+  status: string;
+
   @ManyToOne(() => Question, (question) => question.users)
   question: Question;
 
