@@ -1,0 +1,60 @@
+@import "@shared/styles/theme/colors.scss";
+
+.CustomButtonOutline {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  padding: 10px 59px;
+  border-radius: 10px;
+
+  border: none;
+  position: relative;
+  background: #FFFFFF;
+  color: $dark-custom;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 10px;
+    top: -0.1em;
+    bottom: -0.1em;
+    right: -0.1em;
+    left: -0.1em;
+    z-index: -1;
+    background: linear-gradient(22deg, $primary-custom 31%, rgba(255, 255, 255, 0) 100%);
+  }
+}
+
+.CustomButtonRed {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  padding: 8px 0;
+  border-radius: 10px;
+
+  border: none;
+  position: relative;
+  background: $primary-custom;
+  color: #FFFFFF;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 10px;
+    top: -0.1em;
+    bottom: -0.1em;
+    right: -0.1em;
+    left: -0.1em;
+    z-index: -1;
+    background: linear-gradient(180deg, $primary-custom 0%, #920000 98%);
+  }
+}

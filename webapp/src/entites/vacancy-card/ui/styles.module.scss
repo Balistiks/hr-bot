@@ -1,0 +1,17 @@
+@import "@shared/styles/theme/colors.scss";
+
+.VacancyCard {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  filter: drop-shadow(0px 34px 10px rgba(0.4313725531101227,0.4313725531101227,0.4313725531101227,0));
+  border: 1px #F6F6F6 solid;
+  padding: 18px 7px 11px 7px;
+}
+
+.dot {
+  height: 5px;
+  width: 5px;
+  background-color: $primary-custom;
+  border-radius: 50%;
+  display: inline-block;
+}

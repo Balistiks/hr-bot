@@ -1,0 +1,74 @@
+@import "@shared/styles/theme/colors.scss";
+
+.boldText {
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+
+  &--25 {
+    @extend .boldText;
+    font-size: 25px;
+  }
+
+  &--22 {
+    @extend .boldText;
+    font-size: 22px;
+  }
+
+  &--20 {
+    @extend .boldText;
+    font-size: 20px;
+  }
+
+  &--10 {
+    @extend .boldText;
+    font-size: 10px;
+  }
+}
+
+
+.regularText {
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+
+  &--16 {
+    @extend .regularText;
+    font-size: 16px;
+  }
+
+  &--15 {
+    @extend .regularText;
+    font-size: 15px;
+  }
+
+  &--14 {
+    @extend .regularText;
+    font-size: 14px;
+  }
+
+  &--13 {
+    @extend .regularText;
+    font-size: 13px;
+  }
+
+  &--10 {
+    @extend .regularText;
+    font-size: 10px;
+  }
+
+  &--8 {
+    @extend .regularText;
+    font-size: 8px;
+  }
+}
+
+.textBlack {
+  color: #000000;
+}
+
+.textGray {
+  color: $secondary-dark-custom;
+}

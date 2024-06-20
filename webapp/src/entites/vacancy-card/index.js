@@ -1,0 +1,1 @@
+export {VacancyCard} from './ui/vacancy-card.jsx';
