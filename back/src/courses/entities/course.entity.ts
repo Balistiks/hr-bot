@@ -11,6 +11,12 @@ export class Course {
   @Column({ nullable: false })
   name: string;
 
+  @Column({ nullable: false })
+  description: string;
+
+  @Column({ nullable: false })
+  address: string;
+
   @ManyToOne(() => City, (city) => city.courses)
   city: City;
 
