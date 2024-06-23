@@ -1,0 +1,47 @@
+import {CustomButton, Text} from "@shared/ui/index.js";
+
+import styles from './styles.module.scss'
+
+export const TimelineItem = ({type, border = true}) => {
+
+    switch (type) {
+        case 'completed':
+            return (
+                <li className={`${styles.timelineItemCompleted} text-center`}>
+                    {border && <div className={styles.timelineBorderCompleted}/>}
+                    <Text typeText={'regular'} sizeText={'15'} color={'gray'} style={{paddingTop: 12}}>
+                        НАЗВАНИЕ ЗАДАНИЯ
+                    </Text>
+                    <Text typeText={'regular'} sizeText={'10'} color={'gray'} style={{marginTop: 9}}>ЗАДАНИЕ
+                        ВЫПОЛНЕНО</Text>
+                    <CustomButton typeButton={'gray'} style={{marginTop: 13}}>Посмотреть задание</CustomButton>
+                </li>
+            )
+        case 'current':
+            return (
+                <li className={`${styles.timelineItemCurrent} text-center`}>
+                    {border && <div className={styles.timelineBorder}/>}
+                    <span className={styles.dotCurrent}/>
+                    <Text typeText={'regular'} sizeText={'16'} color={'black'} style={{paddingTop: 6}}>
+                        НАЗВАНИЕ ЗАДАНИЯ
+                    </Text>
+                    <Text typeText={'regular'} sizeText={'11'} color={'gray'} style={{marginTop: 9}}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </Text>
+                    <CustomButton typeButton={'red-icon'} style={{marginTop: 25}}>Задание проверяется <img
+                        src={'./Clock.svg'} style={{marginLeft: 10}}/></CustomButton>
+                </li>
+            )
+        default:
+            return (
+                <li className={`${styles.timelineItem} text-center`}>
+                    {border && <div className={styles.timelineBorder}/>}
+                    <span className={styles.dot}/>
+                    <Text typeText={'regular'} sizeText={'16'} color={'gray'} style={{paddingTop: 3}}>
+                        НАЗВАНИЕ ЗАДАНИЯ
+                    </Text>
+                    <CustomButton typeButton={'gray'} style={{marginTop: 13}}>Посмотреть задание</CustomButton>
+                </li>
+            )
+    }
+}

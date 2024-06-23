@@ -58,3 +58,44 @@
     background: linear-gradient(180deg, $primary-custom 0%, #920000 98%);
   }
 }
+
+.CustomButtonGray {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  padding: 8px 0;
+  border-radius: 10px;
+  border: none;
+
+  background: $secondary-custom;
+  color: $secondary-dark-custom;
+
+  font-size: 13px;
+
+  filter: drop-shadow(0px 4px 4px rgba(0.3633333742618561,0.3633333742618561,0.3633333742618561,0.05000000074505806));
+}
+
+.CustomButtonRedIcon {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  padding: 8px 0;
+  border-radius: 10px;
+  border: none;
+
+  font-size: 13px;
+  font-weight: bold;
+
+  background: $primary-custom;
+  color: #FFFFFF;
+
+  filter: drop-shadow(0px 4px 4px rgba(0.3633333742618561,0.3633333742618561,0.3633333742618561,0.05000000074505806));
+}

@@ -7,6 +7,10 @@ export const CustomButton = ({typeButton, style, className, children}) => {
               return styles.CustomButtonOutline;
           case 'solid':
               return styles.CustomButtonRed;
+          case 'gray':
+              return styles.CustomButtonGray;
+          case 'red-icon':
+              return styles.CustomButtonRedIcon;
       }
   }
 

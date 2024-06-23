@@ -54,6 +54,11 @@
     font-size: 13px;
   }
 
+  &--11 {
+    @extend .regularText;
+    font-size: 11px;
+  }
+
   &--10 {
     @extend .regularText;
     font-size: 10px;
