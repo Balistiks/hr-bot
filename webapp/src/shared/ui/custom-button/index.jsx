@@ -1,6 +1,6 @@
 import styles from './styles.module.scss'
 
-export const CustomButton = ({typeButton, style, className, children}) => {
+export const CustomButton = ({typeButton, style, className, children, type, onClick}) => {
   const getStyles = (type) => {
       switch(type) {
           case 'outline':
@@ -15,7 +15,7 @@ export const CustomButton = ({typeButton, style, className, children}) => {
   }
 
   return (
-      <button className={`${getStyles(typeButton)} ${className}`} style={style}>
+      <button className={`${getStyles(typeButton)} ${className}`} style={style} type={type} onClick={onClick}>
           {children}
       </button>
   )
