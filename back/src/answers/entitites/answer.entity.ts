@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Question } from '../../questions/entities/question.entity';
 import { User } from '../../users/entities/user.entity';
+import { File } from '../../files/entities/file.entity';
 
 @Entity()
 export class Answer {
@@ -15,4 +16,7 @@ export class Answer {
 
   @ManyToOne(() => User, (user) => user.answers)
   user: User;
+
+  @OneToOne(() => File, (file) => file.answer)
+  file: File;
 }

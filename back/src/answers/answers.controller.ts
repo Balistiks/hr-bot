@@ -1,15 +1,49 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { AnswersService } from './answers.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { Answer } from './entitites/answer.entity';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import multer from 'multer';
+import e from 'express';
+import { FilesService } from '../files/files.service';
+import { File } from '../files/entities/file.entity';
 
 @Controller('answers')
 export class AnswersController {
-  constructor(private readonly answersService: AnswersService) {}
+  constructor(private readonly answersService: AnswersService, private readonly filesService: FilesService) {}
 
   @Post()
-  async save(@Body() answer: CreateAnswerDto): Promise<Answer> {
-    return await this.answersService.save(answer);
+  @UseInterceptors(
+    AnyFilesInterceptor({
+      limits: {
+        fileSize: 53248,
+      },
+      storage: multer.diskStorage({
+        destination: 'upload/',
+        filename(req: e.Request, file: Express.Multer.File, callback) {
+          callback(
+            null,
+            `${file.fieldname}-${Date.now()}.${file.originalname
+              .split('.')
+              .pop()}`,
+          );
+        },
+      }),
+    }),
+  )
+  async save(
+    @Body() answer: CreateAnswerDto,
+    @UploadedFile()
+    file: any,
+  ): Promise<Answer> {
+    const newAnswer = await this.answersService.save(answer);
+    if (file) {
+      const newFile = new File();
+      newFile.path = file.filename;
+      newFile.answer = newAnswer;
+      await this.filesService.save(newFile);
+    }
+    return newAnswer;
   }
 
   @Get('byTgId')
