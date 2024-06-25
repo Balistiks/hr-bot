@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { AnswersService } from './answers.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { Answer } from './entitites/answer.entity';
@@ -10,5 +10,14 @@ export class AnswersController {
   @Post()
   async save(@Body() answer: CreateAnswerDto): Promise<Answer> {
     return await this.answersService.save(answer);
+  }
+
+  @Get('byTgId')
+  async findByTgId(@Query('tgId') tgId: number): Promise<Answer> {
+    return await this.answersService.find({
+      where: {
+        user: { tgId },
+      },
+    });
   }
 }
