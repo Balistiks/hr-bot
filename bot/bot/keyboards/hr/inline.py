@@ -14,23 +14,20 @@ BACK_LIST_KEYBOARD = InlineKeyboardMarkup(
 )
 
 
-async def get_applicant_keyboard(current_page: int):
+async def get_applicant_keyboard(applicants: list, current_page: int):
     builder = InlineKeyboardBuilder()
     builder.adjust(1)
     markup = builder.as_markup()
 
-    with open('applicant.json') as data_file:
-        applicant = json.load(data_file)
-
-    count_applicant = len(applicant['applicant'])
+    count_applicant = len(applicants)
     total_pages = math.ceil(count_applicant / 5)
     start_index = (current_page - 1) * 5
     end_index = min(start_index + 5, count_applicant)
 
     for i in range(start_index, end_index):
-        tgid = applicant['applicant'][i]['tgid']
+        tg_id = applicants[i]['tgId']
         markup.inline_keyboard.append([
-            InlineKeyboardButton(text=applicant['applicant'][i]['name'], callback_data=f'tgid_{tgid}')
+            InlineKeyboardButton(text=applicants[i]['name'], callback_data=f'tgid_{tg_id}')
         ])
 
     prev_callback_data = 'prev_page' if current_page > 1 else '#'

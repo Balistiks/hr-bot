@@ -7,6 +7,7 @@ from aiogram.fsm.context import FSMContext
 from bot import keyboards
 from bot.states import ApplicantState
 from bot.filter import IsEmployeeFilter
+from bot.services import employees_service
 
 messages_router = Router()
 
@@ -17,5 +18,7 @@ async def start_hr(message: types.Message, state: FSMContext):
     await state.update_data(direction_page=1)
     await state.set_state(ApplicantState.page)
 
+    users = (await employees_service.get_by_tg_id(message.from_user.id))['users']
+
     await message.answer(text='text',
-                        reply_markup=await keyboards.hr.get_applicant_keyboard(1))
+                         reply_markup=await keyboards.hr.get_applicant_keyboard(users, 1))
