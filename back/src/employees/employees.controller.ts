@@ -10,7 +10,7 @@ export class EmployeesController {
   async findByTgId(@Query('tgId') tgId: number): Promise<Employee> {
     return await this.employeesService.find({
       where: { tgId },
-      relations: ['users'],
+      relations: ['users', 'users.course', 'users.question'],
     });
   }
 }
