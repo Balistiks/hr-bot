@@ -49,20 +49,17 @@ async def get_applicant_slider(callback: types.CallbackQuery, state: FSMContext)
 
 
 async def create_excel_applicant(tgid):
-    with open('applicant.json') as data_file:
-        applicant_data = json.load(data_file)
-
-    data_applicant = applicant_data['applicant']
+    applicants = (await employees_service.get_by_tg_id(tgid))['users']
 
     data_formatted = []
-    for applicant in data_applicant:
+    for applicant in applicants:
         data_formatted.append({
             'Имя': applicant['name'],
-            'Номер': applicant['phone'],
-            'UserName': applicant['UserName'],
-            'tgid': applicant['tgid'],
-            'курс': applicant['course'],
-            'этап': applicant['stage'],
+            'Номер': applicant['phoneNumber'],
+            'UserName': applicant['userName'],
+            'tgid': applicant['tgId'],
+            'курс': applicant['course']['name'],
+            'этап': applicant['question']['number'],
             'статус': applicant['status']
         })
 
