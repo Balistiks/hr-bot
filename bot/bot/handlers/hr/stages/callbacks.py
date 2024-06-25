@@ -65,6 +65,5 @@ async def get_status(callback: types.CallbackQuery, state: FSMContext, apschedul
 
 @callbacks_router.callback_query(F.data == 'comment')
 async def set_comment(callback: types.CallbackQuery, state: FSMContext):
-    await state.clear()
     await state.set_state(StageCommentState.comment)
     await callback.message.edit_text(text='Оставьте комментарий')
