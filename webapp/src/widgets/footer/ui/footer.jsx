@@ -6,8 +6,8 @@ export const Footer = () => {
           <div className={`d-flex justify-content-between align-items-center mx-auto ${styles.containerFooter}`}>
               &copy; ЦирюльникЪ. Все права защищены
               <div className={'d-flex justify-content-between'}>
-                  <img src={'./Telegram.svg'}/>
-                  <img src={'./VK.svg'} className={styles.iconFooterLeft}/>
+                  <img src={window.location.origin + '/Telegram.svg'}/>
+                  <img src={window.location.origin + '/VK.svg'} className={styles.iconFooterLeft}/>
               </div>
           </div>
       </footer>

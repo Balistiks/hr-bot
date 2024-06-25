@@ -6,7 +6,7 @@ const VacancyPage = lazy(() => import("./vacancy-page"));
 
 const pagesRoutes = {
     index: '/',
-    vacancy: '/vacancy'
+    vacancy: '/vacancy/:id'
 }
 
 const pages = [

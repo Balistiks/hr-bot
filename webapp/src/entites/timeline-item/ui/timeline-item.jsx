@@ -2,7 +2,7 @@ import {CustomButton, Text} from "@shared/ui/index.js";
 
 import styles from './styles.module.scss'
 
-export const TimelineItem = ({type, border = true, onClick}) => {
+export const TimelineItem = ({type, border = true, onClick, name}) => {
 
     switch (type) {
         case 'completed':
@@ -10,10 +10,11 @@ export const TimelineItem = ({type, border = true, onClick}) => {
                 <li className={`${styles.timelineItemCompleted} text-center`}>
                     {border && <div className={styles.timelineBorderCompleted}/>}
                     <Text typeText={'regular'} sizeText={'16'} color={'gray'} style={{paddingTop: 12}}>
-                        НАЗВАНИЕ ЗАДАНИЯ
+                        {name.toUpperCase()}
                     </Text>
-                    <Text typeText={'regular'} sizeText={'10'} color={'gray'} style={{marginTop: 9}}>ЗАДАНИЕ
-                        ВЫПОЛНЕНО</Text>
+                    <Text typeText={'regular'} sizeText={'10'} color={'gray'} style={{marginTop: 9}}>
+                        ЗАДАНИЕ ВЫПОЛНЕНО
+                    </Text>
                     <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>
                         Посмотреть задание
                     </CustomButton>
@@ -25,7 +26,7 @@ export const TimelineItem = ({type, border = true, onClick}) => {
                     {border && <div className={styles.timelineBorder}/>}
                     <span className={styles.dotCurrent}/>
                     <Text typeText={'regular'} sizeText={'16'} color={'black'} style={{paddingTop: 6}}>
-                        НАЗВАНИЕ ЗАДАНИЯ
+                        {name.toUpperCase()}
                     </Text>
                     <Text typeText={'regular'} sizeText={'11'} color={'gray'} style={{marginTop: 9}}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -41,7 +42,7 @@ export const TimelineItem = ({type, border = true, onClick}) => {
                     {border && <div className={styles.timelineBorder}/>}
                     <span className={styles.dot}/>
                     <Text typeText={'regular'} sizeText={'16'} color={'gray'} style={{paddingTop: 3}}>
-                        НАЗВАНИЕ ЗАДАНИЯ
+                        {name.toUpperCase()}
                     </Text>
                     <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>
                         Посмотреть задание

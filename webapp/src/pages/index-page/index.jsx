@@ -19,8 +19,9 @@ const IndexPage = () => {
             </section>
             <section className={'text-center'} style={{paddingTop: 30}}>
                 <Text typeText={'bold'} sizeText={'22'}>ВАКАНСИИ</Text>
-                <Text typeText={'regular'} sizeText={'13'} color={'gray'}>Акутальные вакансии в салонах
-                    ЦирюльникЪ</Text>
+                <Text typeText={'regular'} sizeText={'13'} color={'gray'}>
+                    Акутальные вакансии в салонах ЦирюльникЪ
+                </Text>
                 <Vacancy/>
             </section>
         </main>
