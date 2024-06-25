@@ -25,15 +25,14 @@ async def get_status_keyboard(status: str):
     markup.inline_keyboard.append([
         InlineKeyboardButton(text='Дозвон' if status == 'недозвон' else 'Недозвон',
                              callback_data='status-окончил курс' if status == 'недозвон' else 'status-недозвон'),
-        InlineKeyboardButton(text='Перезвонит', callback_data='status-Перезвонит')
+        InlineKeyboardButton(text='Перезвонит', callback_data='status-перезвонит')
     ])
     markup.inline_keyboard.append([
-        InlineKeyboardButton(text='Думает', callback_data='status-Думает'),
-        InlineKeyboardButton(text='Испытательный срок', callback_data='status-Испытательный срок')
+        InlineKeyboardButton(text='Думает', callback_data='status-думает'),
+        InlineKeyboardButton(text='Испытательный срок', callback_data='status-испытательный срок')
     ])
     markup.inline_keyboard.append([
-        InlineKeyboardButton(text='Изменить статус', callback_data='#'),
-        InlineKeyboardButton(text='Выходит на работу', callback_data='status-Выходит на работу')
+        InlineKeyboardButton(text='Выходит на работу', callback_data='status-выходит на работу')
     ])
     markup.inline_keyboard.append([
         InlineKeyboardButton(text='К списку', callback_data='hr')
