@@ -28,6 +28,13 @@ export class UsersController {
     });
   }
 
+  @Get('byTgId')
+  async findByTgId(@Query('tgId') tgId: number): Promise<User> {
+    return await this.usersService.findOne({
+      where: { tgId },
+    });
+  }
+
   @Post()
   async save(@Body() user: CreateUserDto): Promise<User> {
     user.employee = await this.employeesService.getWithMinimalUsers();
