@@ -3,7 +3,7 @@ import { AnswersService } from './answers.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { Answer } from './entitites/answer.entity';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import multer from 'multer';
+import * as multer from 'multer';
 import e from 'express';
 import { FilesService } from '../files/files.service';
 import { File } from '../files/entities/file.entity';
