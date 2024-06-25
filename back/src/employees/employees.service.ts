@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Employee } from './entities/employee.entity';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class EmployeesService {
@@ -23,5 +23,9 @@ export class EmployeesService {
       }
     }
     return employeeWithMinimalUsers;
+  }
+
+  async find(options: FindOneOptions<Employee>): Promise<Employee> {
+    return await this.employeeRepository.findOne(options);
   }
 }
