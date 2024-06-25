@@ -9,6 +9,7 @@ import { AnswersModule } from './answers/answers.module';
 import { EmployeesModule } from './employees/employees.module';
 import { dataSourceOptions } from '../db/data-source';
 import { CommentsModule } from './comments/comments.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { CommentsModule } from './comments/comments.module';
     AnswersModule,
     EmployeesModule,
     CommentsModule,
+    FilesModule,
   ],
   controllers: [],
   providers: [],
