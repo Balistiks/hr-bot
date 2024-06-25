@@ -27,3 +27,13 @@ async def get_by_tg_id(tg_id: int) -> dict | None:
             )).json()
         except ContentTypeError:
             return None
+
+
+async def update(user: dict) -> dict:
+    async with aiohttp.ClientSession(
+        headers=headers
+    ) as session:
+        return await (await session.patch(
+            f'{url}/users',
+            data=user
+        )).json()
