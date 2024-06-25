@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
+from bot.services import users_service
+
 
 def scheduler_missed_call(tgid: int, apscheduler: AsyncIOScheduler):
     apscheduler.add_job(
@@ -47,14 +49,8 @@ async def send_missed_call(bot: Bot, tgid: int):
 
 
 async def get_status_lost(tgid):
-    with open('applicant.json', 'r+') as data_file:
-        applicant_data = json.load(data_file)
-        
-        for applicant in applicant_data['applicant']:
-            if str(applicant['tgid']) == tgid:
-                applicant['status'] = 'Потерян'
-                break
-            
-        data_file.seek(0)
-        json.dump(applicant_data, data_file, indent=4)
-        data_file.truncate()
+    user = await users_service.get_by_tg_id(tgid)
+    await users_service.update({
+        'id': user['id'],
+        'status': 'потерян'
+    })
