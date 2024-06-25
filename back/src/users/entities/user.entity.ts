@@ -32,6 +32,7 @@ export class User {
     nullable: false,
     default: 'обучается',
     enum: [
+      'окончил курс',
       'недозвон',
       'перезвонит',
       'думает',
