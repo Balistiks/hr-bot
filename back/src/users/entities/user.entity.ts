@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Course } from '../../courses/entities/course.entity';
 import { Question } from '../../questions/entities/question.entity';
 import { Answer } from '../../answers/entitites/answer.entity';
@@ -24,8 +30,14 @@ export class User {
 
   @Column({
     nullable: false,
-    default: 'studying',
-    enum: ['missedCall', 'willCallBack', 'thinks', 'probation', 'goesToWork'],
+    default: 'обучается',
+    enum: [
+      'недозвон',
+      'перезвонит',
+      'думает',
+      'испытательный срок',
+      'выходит на работу',
+    ],
   })
   status: string;
 
