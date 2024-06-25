@@ -13,6 +13,13 @@ export class UsersController {
     private readonly employeesService: EmployeesService,
   ) {}
 
+  @Get('byTgId')
+  async findByTgId(@Query('tgId') tgId: number): Promise<User> {
+    return await this.usersService.findOne({
+      where: { tgId },
+    });
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<User> {
     return await this.usersService.findOne({
@@ -25,13 +32,6 @@ export class UsersController {
   async find(@Query('request') request?: string): Promise<User[]> {
     return await this.usersService.find({
       where: request ? JSON.parse(request) : null,
-    });
-  }
-
-  @Get('byTgId')
-  async findByTgId(@Query('tgId') tgId: number): Promise<User> {
-    return await this.usersService.findOne({
-      where: { tgId },
     });
   }
 
