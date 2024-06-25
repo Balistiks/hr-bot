@@ -20,8 +20,7 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
     tgid = callback.data.split('_')[1]
     await state.update_data(current_tgid=tgid)
 
-    user = await users_service.get_by_tg_id(callback.from_user.id)
-
+    user = await users_service.get_by_tg_id(int(tgid))
     if user['status'] != 'обучается':
         await callback.message.edit_text(
             text='Поставить статус',
