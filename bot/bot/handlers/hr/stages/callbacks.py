@@ -10,6 +10,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from bot import keyboards
 from bot.scheduler import scheduler_missed_call
 from bot.states import StageCommentState
+from bot.services import users_service
 
 callbacks_router = Router()
         
@@ -18,23 +19,19 @@ callbacks_router = Router()
 async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
     tgid = callback.data.split('_')[1]
     await state.update_data(current_tgid=tgid)
-    
-    with open('applicant.json') as data:
-        applicant_data = json.load(data)
-    
-    for applicant in applicant_data['applicant']:
-        if str(applicant['tgid']) == tgid:
-            if str(applicant['stage']) == 'passed':
-                await callback.message.edit_text(
-                    text='Поставить статус',
-                    reply_markup=await keyboards.hr.stages.get_status_keyboard(tgid)
-                )
-            else:
-                await callback.message.edit_text(
-                    text=f'Результаты этапа\n{applicant['name']}\nЭтап - {applicant['stage']}',
-                    reply_markup=keyboards.hr.stages.STAGE_APPLICANT_KEYBOARD
-                )
-            break
+
+    user = await users_service.get_by_tg_id(callback.from_user.id)
+
+    if user['status'] != 'обучается':
+        await callback.message.edit_text(
+            text='Поставить статус',
+            reply_markup=await keyboards.hr.stages.get_status_keyboard(tgid)
+        )
+    else:
+        await callback.message.edit_text(
+            text=f'Результаты этапа\n{user['name']}\nЭтап - {user['status']}',
+            reply_markup=keyboards.hr.stages.STAGE_APPLICANT_KEYBOARD
+        )
 
 
 @callbacks_router.callback_query(F.data.startswith('status-'))
