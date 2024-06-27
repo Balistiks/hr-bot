@@ -55,7 +55,7 @@ export const GeoDropDown = ({style, selectCity, setSelectCity, cities, citiesLoa
     return (
         <Dropdown style={style} drop={'down-centered'} onSelect={onSelectItem}>
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                <Text typeText={'regular'} sizeText={'14'} color={'black'}>
+                <Text typeText={'regular'} sizeText={'17'} color={'black'}>
                     {cities && !citiesLoad
                         ?
                         <>

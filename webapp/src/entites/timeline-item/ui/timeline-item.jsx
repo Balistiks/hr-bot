@@ -9,15 +9,15 @@ export const TimelineItem = ({type, border = true, onClick, name}) => {
             return (
                 <li className={`${styles.timelineItemCompleted} text-center`}>
                     {border && <div className={styles.timelineBorderCompleted}/>}
-                    <Text typeText={'regular'} sizeText={'16'} color={'gray'} style={{paddingTop: 12}}>
+                    <Text typeText={'regular'} sizeText={'19'} color={'gray'} style={{paddingTop: 12}}>
                         {name.toUpperCase()}
                     </Text>
-                    <Text typeText={'regular'} sizeText={'10'} color={'gray'} style={{marginTop: 9}}>
+                    <Text typeText={'regular'} sizeText={'13'} color={'gray'} style={{marginTop: 9}}>
                         ЗАДАНИЕ ВЫПОЛНЕНО
                     </Text>
-                    <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>
-                        Посмотреть задание
-                    </CustomButton>
+                    {/*<CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>*/}
+                    {/*    Посмотреть задание*/}
+                    {/*</CustomButton>*/}
                 </li>
             )
         case 'current':
@@ -28,12 +28,15 @@ export const TimelineItem = ({type, border = true, onClick, name}) => {
                     <Text typeText={'regular'} sizeText={'16'} color={'black'} style={{paddingTop: 6}}>
                         {name.toUpperCase()}
                     </Text>
-                    <Text typeText={'regular'} sizeText={'11'} color={'gray'} style={{marginTop: 9}}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </Text>
-                    <CustomButton typeButton={'red-icon'} style={{marginTop: 25}} onClick={onClick}>
-                        Задание проверяется <img src={'./Clock.svg'} style={{marginLeft: 10}}/>
+                    {/*<Text typeText={'regular'} sizeText={'11'} color={'gray'} style={{marginTop: 9}}>*/}
+                    {/*    Lorem ipsum dolor sit amet, consectetur adipiscing elit.*/}
+                    {/*</Text>*/}
+                    <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>
+                        Посмотреть задание
                     </CustomButton>
+                    {/*<CustomButton typeButton={'red-icon'} style={{marginTop: 25}} onClick={onClick}>*/}
+                    {/*    Задание проверяется <img src={'./Clock.svg'} style={{marginLeft: 10}}/>*/}
+                    {/*</CustomButton>*/}
                 </li>
             )
         default:
@@ -44,9 +47,9 @@ export const TimelineItem = ({type, border = true, onClick, name}) => {
                     <Text typeText={'regular'} sizeText={'16'} color={'gray'} style={{paddingTop: 3}}>
                         {name.toUpperCase()}
                     </Text>
-                    <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>
-                        Посмотреть задание
-                    </CustomButton>
+                    {/*<CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>*/}
+                    {/*    Посмотреть задание*/}
+                    {/*</CustomButton>*/}
                 </li>
             )
     }

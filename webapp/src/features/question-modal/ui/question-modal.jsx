@@ -28,13 +28,13 @@ export const QuestionModal = ({show, handleClose, submitAnswer, name, number, te
                         <img src={window.location.origin + '/Pencil.svg'}/>
                     </div>
                     <div className={styles.TaskInfoBlockText}>
-                        <Text typeText={'regular'} sizeText={'15'} color={'gray'}>Задание {number}</Text>
-                        <Text typeText={'regular'} sizeText={'20'} color={'black'}>{name && name.toUpperCase()}</Text>
+                        <Text typeText={'regular'} sizeText={'17'} color={'gray'}>Задание {number}</Text>
+                        <Text typeText={'regular'} sizeText={'22'} color={'black'}>{name && name.toUpperCase()}</Text>
                     </div>
                 </div>
             </Modal.Header>
             <Modal.Body className={styles.CustomModalBody}>
-                <Text typeText={'regular'} sizeText={'15'} color={'gray'}>
+                <Text typeText={'regular'} sizeText={'16'} color={'gray'}>
                     {text}
                 </Text>
                 {/*<Text typeText={'regular'} sizeText={'13'} color={'gray'} style={{marginTop: 25}}>*/}
@@ -44,7 +44,7 @@ export const QuestionModal = ({show, handleClose, submitAnswer, name, number, te
                 <Form style={{marginTop: 13}} onSubmit={onSubmit}>
                     <Form.Group className="mb-3">
                         <Form.Label>
-                            <Text typeText={'regular'} sizeText={'15'} color={'gray'} style={{marginTop: 13}}>
+                            <Text typeText={'regular'} sizeText={'17'} color={'gray'} style={{marginTop: 13}}>
                                 Ваш ответ:
                             </Text>
                         </Form.Label>

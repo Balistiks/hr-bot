@@ -12,17 +12,17 @@ export const VacancyCard = ({id, name, address}) => {
 
     return (
         <div className={`${styles.VacancyCard} text-start`}>
-            <Text typeText={'regular'} sizeText={'14'} color={'black'} style={{paddingLeft: 7}}>
+            <Text typeText={'regular'} sizeText={'16'} color={'black'} style={{whiteSpace: 'nowrap'}}>
                 {name}
             </Text>
             <div className={'d-flex align-items-center'} style={{paddingLeft: 7, marginTop: 8}}>
                 <div className={styles.dot}/>
-                <Text typeText={'regular'} sizeText={'10'} color={'black'} style={{paddingLeft: 8}}>
+                <Text typeText={'regular'} sizeText={'13'} color={'black'} style={{paddingLeft: 8}}>
                     {address}
                 </Text>
             </div>
             <CustomButton typeButton={'solid'} style={{marginTop: 16}} onClick={onNavigateCourses}>
-                <Text typeText={'bold'} sizeText={'10'}>Пройти обучение</Text>
+                <Text typeText={'bold'} sizeText={'13'}>Пройти обучение</Text>
             </CustomButton>
         </div>
     )
