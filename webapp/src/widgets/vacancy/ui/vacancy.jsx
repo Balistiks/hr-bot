@@ -40,7 +40,7 @@ export const Vacancy = () => {
                     <>
                         {courses.map((item, index) => {
                             return (
-                                <Col xs={6} key={index}>
+                                <Col xs={6} key={index} style={{paddingRight: 0}}>
                                     <VacancyCard id={item.id} name={item.name} address={item.address}/>
                                 </Col>
                             )

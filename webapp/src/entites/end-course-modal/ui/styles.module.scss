@@ -1,0 +1,23 @@
+.SuccessModal {
+  [class$="modal-content"] {
+    border-radius: 15px !important;
+    border: none !important;
+    -webkit-box-shadow: -6px 0px 0px 0px rgba(213,16,28,1);
+    -moz-box-shadow: -6px 0px 0px 0px rgba(213,16,28,1);
+    box-shadow: -6px 0px 0px 0px rgba(213,16,28,1);
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.SuccessModalBody {
+  padding: 23px 40px 25px;
+}
+
+.textModalHeader {
+  color: #D5101C;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

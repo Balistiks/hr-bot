@@ -6,9 +6,19 @@
   padding: 0;
   line-height: normal;
 
+  &--27 {
+    @extend .boldText;
+    font-size: 27px;
+  }
+
   &--25 {
     @extend .boldText;
     font-size: 25px;
+  }
+
+  &--24 {
+    @extend .boldText;
+    font-size: 24px;
   }
 
   &--22 {
@@ -19,6 +29,11 @@
   &--20 {
     @extend .boldText;
     font-size: 20px;
+  }
+
+  &--13 {
+    @extend .boldText;
+    font-size: 13px;
   }
 
   &--10 {
@@ -34,9 +49,29 @@
   padding: 0;
   line-height: normal;
 
+  &--22 {
+    @extend .regularText;
+    font-size: 22px;
+  }
+
   &--20 {
     @extend .regularText;
     font-size: 20px;
+  }
+
+  &--19 {
+    @extend .regularText;
+    font-size: 19px;
+  }
+
+  &--18 {
+    @extend .regularText;
+    font-size: 18px;
+  }
+
+  &--17 {
+    @extend .regularText;
+    font-size: 17px;
   }
 
   &--16 {

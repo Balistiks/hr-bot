@@ -26,6 +26,9 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsOptional()
   course: Course;
 
+  @IsOptional()
+  status: string;
+
   @IsEmpty()
   answers: Answer[];
 }

@@ -3,17 +3,45 @@ import {TimelineItem} from "../../../entites/timeline-item/ui/timeline-item.jsx"
 import './timeline.scss';
 
 export const Timeline = ({showQuestionModal, showProccesModal, questions, answers}) => {
-
     const getStatus = (item, index) => {
         const found = answers.find(function (element) {
             return element.question.number === item.number;
         });
 
+        let lastAnsweredQuestion = null;
+
+        answers.forEach(answer => {
+            const correspondingQuestion = questions.find(question => question.id === answer.question.id);
+            if (correspondingQuestion) {
+                lastAnsweredQuestion = correspondingQuestion;
+            }
+        });
+
+        let nextQuestion = null;
+        if (lastAnsweredQuestion) {
+            const lastIndex = questions.findIndex(question => question.id === lastAnsweredQuestion.id);
+            if (lastIndex !== -1 && lastIndex + 1 < questions.length) {
+                nextQuestion = questions[lastIndex + 1];
+            }
+        }
+
         if (found) {
             return 'completed'
-        } else {
-            return undefined
         }
+
+        if (nextQuestion)
+        {
+            if (item.number === nextQuestion.number) {
+                return 'current'
+            }
+        }
+
+        if (questions[0].number === item.number && !nextQuestion)
+        {
+            return 'current'
+        }
+
+        return undefined;
     }
 
     return (

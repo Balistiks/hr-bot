@@ -11,6 +11,11 @@ export class CoursesController {
     return await this.coursesService.findOne({
       where: { id },
       relations: ['questions'],
+      order: {
+        questions: {
+          number: 'ASC',
+        },
+      },
     });
   }
 
