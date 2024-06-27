@@ -6,16 +6,16 @@ import {SuccessModal} from "../../entites/success-modal/index.js";
 import {useParams} from "react-router-dom";
 import {useApi} from "@shared/lib/index.js";
 
-const userId = 2; // TODO: Поменять на ID из вашего того самого
-const tgId = 1; // TODO: Поменять на ID с библиотеки телеграмма
-
 const VacancyPage = () => {
+    const tg = window.Telegram.WebApp;
+
     const {id} = useParams();
 
     // API
     const {data: course, loading: courseLoad, fetchData: fetchCourse} = useApi();
     const {data: answers, fetchData: fetchAnswers} = useApi();
     const {fetchData: fetchAnswer} = useApi();
+    const {data: user, fetchData: fetchUser} = useApi()
 
     // States
     const [showQuestionModal, setShowQuestionModal] = useState(false);
@@ -26,10 +26,12 @@ const VacancyPage = () => {
     const submitAnswer = async (event) => {
         const formData = new FormData();
 
+        await fetchUser(`users/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+
         const request = {
             text: event.target[0].value,
             question: course.questions[selectQuestion].id,
-            user: userId
+            user: user.id
         }
 
         for (let key in request) {
@@ -51,7 +53,7 @@ const VacancyPage = () => {
         const fetchData = async () => {
             try {
                 await fetchCourse(`courses/${id}`, 'GET')
-                await fetchAnswers(`answers/byTgId?tgId=${tgId}`, 'GET')
+                await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
             } catch (error) {
                 console.error(error)
             }

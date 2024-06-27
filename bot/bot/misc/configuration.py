@@ -48,6 +48,7 @@ class BotConfig:
 
     token: str = getenv("BOT_TOKEN")
     secret_token: str = getenv("SECRET_TOKEN")
+    web_app_url: str = getenv("WEB_APP_URL")
 
 
 @dataclass
