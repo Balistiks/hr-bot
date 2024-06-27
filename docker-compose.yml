@@ -1,6 +1,17 @@
 version: '3.7'
 
 services:
+  nginx:
+    image: nginx:alpine
+    restart: always
+    volumes:
+      - './conf/nginx:/etc/nginx'
+    networks:
+      bot:
+        aliases:
+          - nginx
+    ports:
+      - '80:80'
   bot:
     build:
       context: bot
@@ -28,6 +39,24 @@ services:
       bot:
         aliases:
           - redis
+  webapp:
+    build:
+      context: ./webapp
+      dockerfile: ../buildfiles/webapp.dockerfile
+    restart: always
+    networks:
+      bot:
+        aliases:
+          - webapp
+    env_file:
+      - .env
+    ports:
+      - '8080:8080'
+    volumes:
+      - './webapp/src:/app/src'
+    depends_on:
+      - back
+      - nginx
   back:
     build:
       context: back

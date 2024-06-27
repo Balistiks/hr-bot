@@ -16,7 +16,11 @@ export default defineConfig({
       { find: '@widgets', replacement: fileURLToPath(new URL('./src/widgets', import.meta.url)) },
     ],
   },
-  server: {
-    port: 80,
+  define: {
+    'process.env.SECRET_TOKEN': JSON.stringify(process.env.SECRET_TOKEN)
   },
+  server: {
+    host: true,
+    port: 8080
+  }
 })
