@@ -16,6 +16,7 @@ const VacancyPage = () => {
     const {data: course, loading: courseLoad, fetchData: fetchCourse} = useApi();
     const {data: answers, fetchData: fetchAnswers} = useApi();
     const {fetchData: fetchAnswer} = useApi();
+    const {data: user, fetchData: fetchUser} = useApi()
     const {fetchData: updateUser} = useApi();
     const {data: user, fetchData: fetchUser} = useApi()
 
