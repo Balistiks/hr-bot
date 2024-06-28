@@ -31,7 +31,7 @@ export const Header = () => {
                         {showHome
                             ?
                             <div className={'d-flex'}>
-                                <Link to={'/'}>
+                                <Link to={external ? '/external' : '/'}>
                                     <img src={window.location.origin + '/House.svg'}/>
                                 </Link>
                                 {!external &&

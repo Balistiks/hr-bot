@@ -42,7 +42,6 @@
   }
 }
 
-
 .regularText {
   font-weight: 400;
   margin: 0;
@@ -121,4 +120,20 @@
 
 .textGray {
   color: $secondary-dark-custom;
+}
+
+.textDark {
+  color: $dark-custom;
+}
+
+.lightText {
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+
+  &--24 {
+    @extend .lightText;
+    font-size: 24px;
+  }
 }
