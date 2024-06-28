@@ -1,0 +1,20 @@
+@import "@shared/styles/theme/colors.scss";
+
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.CustomProgress {
+  margin-top: 22px;
+  background-image: linear-gradient(to right, #D5101C, rgba(150, 15, 24, 0.9)) !important;
+  height: 10px;
+  max-height: 10px;
+
+  [class$="progress-bar"] {
+    box-shadow: 0 0 0 2000px $secondary-custom;   /* white or whatever color you like */
+    background-image: none !important;
+    background-color: transparent !important;
+  }
+}

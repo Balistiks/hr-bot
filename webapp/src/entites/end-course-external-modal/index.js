@@ -1,0 +1,1 @@
+export {EndCourseExternalModal} from './ui/end-course-external-modal.jsx';
