@@ -1,0 +1,1 @@
+export {VacancyExternal} from './ui/vacancy-external.jsx';
