@@ -5,36 +5,49 @@ import {useEffect, useState} from "react";
 
 export const Header = () => {
     const {pathname} = useLocation();
+    const [external, setExternal] = useState(false);
     const [showHome, setShowHome] = useState(false);
+
     useEffect(() => {
-        setShowHome(pathname !== '/')
+        setExternal(pathname === '/external' || pathname === '/external/course')
+        if (external) {
+            setShowHome(pathname !== '/external')
+        } else {
+            setShowHome(pathname !== '/')
+        }
     }, [pathname]);
 
-  return (
-      <header className={`fixed-top bg-white`}>
-          <div className={`${styles.containerHeader}`}>
-              <Row>
-                  <Col xs={3} className={'d-flex align-items-center'}>
-                      <img src={window.location.origin + '/Back.svg'}/>
-                  </Col>
-                  <Col xs={6} className={'d-flex align-items-center justify-content-center'}>
-                      <img src={window.location.origin + '/Logo.svg'}/>
-                  </Col>
-                  <Col xs={3} className={'d-flex align-items-center justify-content-end'}>
-                      {showHome
-                          ?
-                          <div className={'d-flex'}>
-                              <Link to={'/'}>
-                                  <img src={window.location.origin + '/House.svg'}/>
-                              </Link>
-                              <img src={window.location.origin + '/User.svg'} style={{marginLeft: 19}}/>
-                          </div>
-                          :
-                          <img src={window.location.origin + '/User.svg'}/>
-                      }
-                  </Col>
-              </Row>
-          </div>
-      </header>
-  )
+    return (
+        <header className={`fixed-top bg-white`}>
+            <div className={`${styles.containerHeader}`}>
+                <Row>
+                    <Col xs={3} className={'d-flex align-items-center'}>
+                        <img src={window.location.origin + '/Back.svg'}/>
+                    </Col>
+                    <Col xs={6} className={'d-flex align-items-center justify-content-center'}>
+                        <img src={window.location.origin + '/Logo.svg'}/>
+                    </Col>
+                    <Col xs={3} className={'d-flex align-items-center justify-content-end'}>
+                        {showHome
+                            ?
+                            <div className={'d-flex'}>
+                                <Link to={'/'}>
+                                    <img src={window.location.origin + '/House.svg'}/>
+                                </Link>
+                                {!external &&
+                                    <img src={window.location.origin + '/User.svg'} style={{marginLeft: 19}}/>
+                                }
+                            </div>
+                            :
+                            <>
+                                {!external &&
+                                    <img src={window.location.origin + '/User.svg'}/>
+                                }
+                            </>
+                        }
+                    </Col>
+                </Row>
+            </div>
+        </header>
+    )
 }

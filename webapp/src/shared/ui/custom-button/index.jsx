@@ -11,6 +11,10 @@ export const CustomButton = ({typeButton, style, className, children, type, onCl
               return styles.CustomButtonGray;
           case 'red-icon':
               return styles.CustomButtonRedIcon;
+          case 'white-icon':
+              return styles.CustomButtonWhiteIcon;
+          case 'white-icon-box':
+              return styles.CustomButtonWhiteIconBox;
       }
   }
 
