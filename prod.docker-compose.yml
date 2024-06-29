@@ -56,6 +56,7 @@ services:
       SECRET_TOKEN: '${SECRET_TOKEN}'
     volumes:
       - ./back/src:/app/src
+      - ./back/db:/app/db
     ports:
       - '3000:3000'
     depends_on:
