@@ -17,7 +17,8 @@ export default defineConfig({
     ],
   },
   define: {
-    'process.env.SECRET_TOKEN': JSON.stringify(process.env.SECRET_TOKEN)
+    'process.env.SECRET_TOKEN': JSON.stringify(process.env.SECRET_TOKEN),
+    'proccess.env.URL': JSON.stringify(process.env.URL)
   },
   server: {
     host: true,
