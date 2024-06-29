@@ -6,9 +6,9 @@ import {useApi} from "@shared/lib/index.js";
 import {Spinner} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
-const tgId = 1; // TODO: Поменять на ID с библиотеки телеграмма
-
 const IndexPage = () => {
+    const tg = window.Telegram.WebApp;
+
     const navigate = useNavigate();
 
     const {data: user, loading: userLoad, fetchData: fetchUser} = useApi();
@@ -16,7 +16,7 @@ const IndexPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await fetchUser(`users/byTgId?tgId=${tgId}`, 'GET')
+                await fetchUser(`users/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
             } catch (error) {
                 console.error(error)
             }
