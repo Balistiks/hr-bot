@@ -1,7 +1,8 @@
 .heroSection {
-  min-height: 410px;
-  max-height: max-content;
+  height: 342px;
+  max-height: 342px;
   max-width: 100%;
+  padding-top: 53px;
   //background: #FFFFFF url('../../../public/RedLines.svg') no-repeat;
   background-color: #FFFFFF;
   background-position-x: center;
@@ -11,7 +12,6 @@
 }
 
 .heroBlock {
-  margin-top: 52px;
   max-width: 360px;
   height: 287px;
   max-height: 287px;

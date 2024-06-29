@@ -24,7 +24,7 @@ const ExternalCoursePage = () => {
 
     return (
         <main>
-            <section className={'text-center'} style={{marginTop: 30}}>
+            <section className={'text-center'} style={{paddingTop: 30}}>
                 <Text typeText={'bold'} sizeText={'22'} color={'black'}>
                     ПРОБНЫЙ УРОК
                 </Text>

@@ -10,10 +10,11 @@
 }
 
 .formBlock {
-  padding-top: 0;
   width: 326px;
   max-width: 326px;
-  margin: 16px auto 95px;
+  margin: 16px auto 0;
+  padding-top: 0;
+  padding-bottom: 95px;
 }
 
 .timelineBlock {

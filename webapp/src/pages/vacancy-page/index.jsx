@@ -90,7 +90,7 @@ const VacancyPage = () => {
 
     return (
         <main>
-            <section className={'text-center'} style={{marginTop: 30}}>
+            <section className={'text-center'} style={{paddingTop: 30}}>
                 <Text typeText={'bold'} sizeText={'22'}
                       color={'black'}>{course && !courseLoad ? course.name.toUpperCase() : 'ВАКАНСИЯ'}</Text>
                 <Text typeText={'regular'} sizeText={'16'} color={'gray'}
