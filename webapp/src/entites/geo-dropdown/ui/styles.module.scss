@@ -7,6 +7,7 @@
   width: 127px !important;
   min-width: 127px !important;
   max-width: 127px !important;
+  transform: translate(117px, 23px) !important;
 
   [class$="dropdown-item"] {
     font-size: 12px;
@@ -42,7 +43,7 @@
   font-size: 12px;
   font-weight: normal;
   color: #D9D9D9;
-  padding: 4px;
+  padding: 4px 4px 4px 20px;
 
   &:focus {
     border-color: $secondary-custom;
@@ -57,4 +58,11 @@
   overflow: auto;
   z-index: 99;
   max-width: 119px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 13px;
+  top: 9px;
+  z-index: 9999; /*this will keep the icon appearing all time, even when on input::focus*/
 }
