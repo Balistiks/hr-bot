@@ -18,7 +18,6 @@ const VacancyPage = () => {
     const {fetchData: fetchAnswer} = useApi();
     const {data: user, fetchData: fetchUser} = useApi()
     const {fetchData: updateUser} = useApi();
-    const {data: user, fetchData: fetchUser} = useApi()
 
     // States
     const [showQuestionModal, setShowQuestionModal] = useState(false);
