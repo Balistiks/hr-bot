@@ -24,7 +24,7 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
     if user['status'] != 'обучается':
         await callback.message.edit_text(
             text='Поставить статус',
-            reply_markup=await keyboards.hr.stages.get_status_keyboard(tgid)
+            reply_markup=await keyboards.hr.stages.get_status_keyboard(user['status'])
         )
     else:
         await callback.message.edit_text(
