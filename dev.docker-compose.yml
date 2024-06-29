@@ -96,19 +96,6 @@ services:
       bot:
         aliases:
           - db
-  certbot:
-    ports:
-      - "6000:80"
-    env_file:
-      - .env
-    volumes:
-      - '.conf/nginx/:/etc/nginx/'
-    build:
-      context: ./certbot
-      dockerfile: certbot.dockerfile
-      args:
-        DOMAIN_EMAIL: ${DOMAIN_EMAIL}
-        DOMAIN_URL: ${DOMAIN_URL}
 
 networks:
   bot:
