@@ -5,7 +5,7 @@ services:
     image: nginx:alpine
     restart: always
     volumes:
-      - '.conf/nginx/:/etc/nginx/'
+      - '.conf/nginx:/etc/nginx'
       - './webapp/dist:/var/www/html'
     networks:
       bot:
@@ -84,7 +84,7 @@ services:
     env_file:
       - .env
     volumes:
-      - '.conf/nginx/:/etc/nginx/'
+      - '.conf/nginx:/etc/nginx'
     build:
       context: ./certbot
       dockerfile: certbot.dockerfile
