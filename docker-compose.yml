@@ -6,12 +6,16 @@ services:
     restart: always
     volumes:
       - './conf/nginx:/etc/nginx'
+      - '.conf/nginx/dev.nginx.conf:/etc/nginx/dev.nginx.conf:ro'
+      - '.conf/nginx/cert.pem:/etc/cert.pem'
+      - '.conf/nginx/key.pem:/etc/key.pem'
     networks:
       bot:
         aliases:
           - nginx
     ports:
       - '80:80'
+      - "443:443"
   bot:
     build:
       context: bot
@@ -94,6 +98,19 @@ services:
       bot:
         aliases:
           - db
+  certbot:
+    ports:
+      - "6000:80"
+    env_file:
+      - .env
+    volumes:
+      - '.conf/nginx/:/etc/nginx/'
+    build:
+      context: ./buildfiles
+      dockerfile: certbot.dockerfile
+      args:
+        DOMAIN_EMAIL: ${DOMAIN_EMAIL}
+        DOMAIN_URL: ${DOMAIN_URL}
 
 networks:
   bot:
