@@ -104,7 +104,7 @@ services:
     volumes:
       - '.conf/nginx/:/etc/nginx/'
     build:
-      context: ./buildfiles
+      context: ./certbot
       dockerfile: certbot.dockerfile
       args:
         DOMAIN_EMAIL: ${DOMAIN_EMAIL}
