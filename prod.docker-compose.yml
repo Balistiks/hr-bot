@@ -5,9 +5,7 @@ services:
     image: nginx:alpine
     restart: always
     volumes:
-      - '.conf/nginx/nginx.conf:/etc/nginx/nginx.conf'
-      - '.conf/nginx/cert.pem:/etc/cert.pem'
-      - '.conf/nginx/key.pem:/etc/key.pem'
+      - '.conf/nginx/:/etc/nginx/'
       - './webapp/dist:/var/www/html'
     networks:
       bot:
