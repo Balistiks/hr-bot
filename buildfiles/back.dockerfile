@@ -39,4 +39,4 @@ FROM node:20-alpine as production
 COPY --from=build-production /app/node_modules ./node_modules
 COPY --from=build-production /app/dist ./dist
 
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/src/main.js"]
