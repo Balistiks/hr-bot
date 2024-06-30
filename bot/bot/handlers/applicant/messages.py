@@ -38,7 +38,8 @@ async def get_registration_name(message: types.Message, state: FSMContext):
     await state.set_state(RegisterState.phone_number)
     await message.answer_photo(
         photo=types.FSInputFile('files/chatademia.png'),
-        caption='Введите ваш номер телефона?'
+        caption='Введите ваш номер телефона\n'
+                '\nПример: +79081234567'
     )
 
 
