@@ -12,7 +12,7 @@ from bot.filter import RegisteredFilter
 messages_router = Router()
 
 
-# @messages_router.message(CommandStart(), RegisteredFilter())
+@messages_router.message(CommandStart(), RegisteredFilter())
 async def menu(message: types.Message, state: FSMContext):
     await state.clear()
 
@@ -23,7 +23,7 @@ async def menu(message: types.Message, state: FSMContext):
     )
 
 
-# @messages_router.message(CommandStart())
+@messages_router.message(CommandStart())
 async def start_applicant(message: types.Message, state: FSMContext):
     await state.set_state(RegisterState.name)
     await message.answer_photo(types.FSInputFile('files/photos/name.png'),)
