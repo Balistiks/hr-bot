@@ -12,28 +12,28 @@ from bot.filter import RegisteredFilter
 messages_router = Router()
 
 
-@messages_router.message(CommandStart(), RegisteredFilter())
+# @messages_router.message(CommandStart(), RegisteredFilter())
 async def menu(message: types.Message, state: FSMContext):
     await state.clear()
 
     await message.answer_photo(
-        photo=types.FSInputFile('files/chatademia.png'),
+        photo=types.FSInputFile('files/photos/main.png'),
         caption='',
         reply_markup=keyboards.applicant.TRAINING_KEYBOARD
     )
 
 
-@messages_router.message(CommandStart())
+# @messages_router.message(CommandStart())
 async def start_applicant(message: types.Message, state: FSMContext):
     await state.set_state(RegisterState.name)
-    await message.answer('Как вас зовут?')
+    await message.answer_photo(types.FSInputFile('files/photos/name.png'),)
 
 
 @messages_router.message(RegisterState.name)
 async def get_registration_name(message: types.Message, state: FSMContext):
     await state.update_data(name=message.text)
     await state.set_state(RegisterState.phone_number)
-    await message.answer('Введите ваш номер телефона?')
+    await message.answer_photo(types.FSInputFile('files/photos/phone.png'),)
 
 
 @messages_router.message(RegisterState.phone_number)
@@ -50,7 +50,4 @@ async def get_registration_phone(message: types.Message, state: FSMContext):
 
         await menu(message, state)
     else:
-        await message.answer(
-            'Попробуйте ввести номер телефона еше раз\n'
-            '\nПример: +79081234567'
-        )
+        await message.answer_photo(types.FSInputFile('files/photos/phone.png'), )
