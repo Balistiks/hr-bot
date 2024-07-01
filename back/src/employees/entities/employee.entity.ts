@@ -10,6 +10,9 @@ export class Employee {
   @Column('bigint', { nullable: false, unique: true })
   tgId: number;
 
+  @Column({ nullable: false, default: false })
+  hr: boolean;
+
   @OneToMany(() => User, (user) => user.employee)
   users: User[];
 
