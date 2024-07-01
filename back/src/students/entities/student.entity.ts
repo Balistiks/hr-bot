@@ -11,6 +11,9 @@ export class Student {
   @Column('bigint', { nullable: false, unique: true })
   tgId: number;
 
+  @Column({ nullable: false, default: false })
+  paid: boolean;
+
   @ManyToOne(() => Position, (position) => position.students)
   position: Position;
 
