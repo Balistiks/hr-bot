@@ -9,6 +9,8 @@ import { Course } from '../../courses/entities/course.entity';
 import { User } from '../../users/entities/user.entity';
 import { Answer } from '../../answers/entitites/answer.entity';
 import { Comment } from '../../comments/entitites/comment.entity';
+import { Position } from '../../positions/entities/position.entity';
+import { Student } from '../../students/entities/student.entity';
 
 @Entity()
 export class Question {
@@ -27,8 +29,14 @@ export class Question {
   @OneToMany(() => User, (user) => user.question)
   users: User[];
 
+  @OneToMany(() => Student, (student) => student.question)
+  students: Student[];
+
   @ManyToOne(() => Course, (course) => course.questions)
   course: Course;
+
+  @ManyToOne(() => Position, (position) => position.questions)
+  position: Position;
 
   @OneToMany(() => Answer, (answer) => answer.question)
   answers: Answer[];

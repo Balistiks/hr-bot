@@ -47,19 +47,10 @@ export class AnswersController {
   }
 
   @Get('byTgId')
-  async findByTgId(@Query('tgId') tgId: number): Promise<Answer[]> {
-    return await this.answersService.findMany({
+  async findByTgId(@Query('tgId') tgId: number): Promise<Answer> {
+    return await this.answersService.find({
       where: {
         user: { tgId },
-      },
-      select: {
-        question: {
-          id: true,
-          number: true,
-        },
-      },
-      relations: {
-        question: true,
       },
     });
   }

@@ -20,12 +20,11 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
     tgid = callback.data.split('_')[1]
     await state.update_data(current_tgid=tgid)
 
-    user = await users_service.get_by_tg_id(callback.from_user.id)
-
+    user = await users_service.get_by_tg_id(int(tgid))
     if user['status'] != 'обучается':
         await callback.message.edit_text(
             text='Поставить статус',
-            reply_markup=await keyboards.hr.stages.get_status_keyboard(tgid)
+            reply_markup=await keyboards.hr.stages.get_status_keyboard(user['status'])
         )
     else:
         await callback.message.edit_text(
@@ -40,31 +39,26 @@ async def get_status(callback: types.CallbackQuery, state: FSMContext, apschedul
     data = await state.get_data()
     tgid = data.get('current_tgid')
 
-    with open('applicant.json', 'r+') as data_file:
-        applicant_data = json.load(data_file)
-        for applicant in applicant_data['applicant']:
-            if str(applicant['tgid']) == tgid:
-                applicant['status'] = status_callback
-                break 
-        data_file.seek(0)
-        json.dump(applicant_data, data_file, indent=4)
-        data_file.truncate()
+    user = await users_service.get_by_tg_id(int(tgid))
+    await users_service.update({
+        'id': user['id'],
+        'status': status_callback
+    })
         
     for job in apscheduler.get_jobs():
         if job.id.startswith(f'missed_call_{tgid}') or job.id == f'status_lost_{tgid}':
             apscheduler.remove_job(job.id)
 
-    if status_callback == 'Недозвон':
+    if status_callback == 'недозвон':
         scheduler_missed_call(tgid, apscheduler)
         
     await callback.message.edit_text(
-        text='Статус добавлен',
+        text='Статус изменен',
         reply_markup=keyboards.hr.BACK_LIST_KEYBOARD
     )
 
 
 @callbacks_router.callback_query(F.data == 'comment')
 async def set_comment(callback: types.CallbackQuery, state: FSMContext):
-    await state.clear()
     await state.set_state(StageCommentState.comment)
     await callback.message.edit_text(text='Оставьте комментарий')
