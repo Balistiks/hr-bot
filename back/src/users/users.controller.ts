@@ -1,10 +1,9 @@
-import { Body, Controller, Get, Logger, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { EmployeesService } from '../employees/employees.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Not } from 'typeorm';
 
 @Controller('users')
 export class UsersController {
@@ -17,7 +16,7 @@ export class UsersController {
   async findByTgId(@Query('tgId') tgId: number): Promise<User> {
     return await this.usersService.findOne({
       where: { tgId },
-      relations: ['question'],
+      relations: ['course', 'question'],
     });
   }
 

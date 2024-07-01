@@ -1,0 +1,175 @@
+@import "@shared/styles/theme/colors.scss";
+
+.CustomButtonOutline {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  padding: 8px 43px;
+  border-radius: 10px;
+
+  border: none;
+  position: relative;
+  background: #FFFFFF;
+  color: $dark-custom;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: normal;
+  line-height: normal;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 10px;
+    top: -0.1em;
+    bottom: -0.1em;
+    right: -0.1em;
+    left: -0.1em;
+    z-index: -1;
+    background: linear-gradient(22deg, $primary-custom 31%, rgba(255, 255, 255, 0) 100%);
+  }
+}
+
+.CustomButtonRed {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  padding: 8px 0;
+  border-radius: 10px;
+
+  border: none;
+  position: relative;
+  background: $primary-custom;
+  color: #FFFFFF;
+
+  font-weight: bold;
+  font-size: 20px;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 10px;
+    top: -0.1em;
+    bottom: -0.1em;
+    right: -0.1em;
+    left: -0.1em;
+    z-index: -1;
+    background: linear-gradient(180deg, $primary-custom 0%, #920000 98%);
+  }
+}
+
+.CustomButtonGray {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  padding: 8px 0;
+  border-radius: 10px;
+  border: none;
+
+  background: $secondary-custom;
+  color: $secondary-dark-custom;
+
+  font-size: 17px;
+  font-weight: normal;
+  line-height: normal;
+
+  filter: drop-shadow(0px 4px 4px rgba(0.3633333742618561,0.3633333742618561,0.3633333742618561,0.05000000074505806));
+}
+
+.CustomButtonRedIcon {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  padding: 8px 0;
+  border-radius: 10px;
+  border: none;
+
+  font-size: 13px;
+  font-weight: bold;
+
+  background: $primary-custom;
+  color: #FFFFFF;
+
+  filter: drop-shadow(0px 4px 4px rgba(0.3633333742618561,0.3633333742618561,0.3633333742618561,0.05000000074505806));
+}
+
+.CustomButtonWhiteIcon {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  padding: 15px 28px 12px;
+  border-radius: 30px;
+
+  border: none;
+  position: relative;
+  background: #FFFFFF;
+  color: $dark-custom;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: normal;
+  line-height: normal;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 30px;
+    top: -0.1em;
+    bottom: -0.1em;
+    right: -0.1em;
+    left: -0.1em;
+    z-index: -1;
+    background: linear-gradient(-21deg, rgba(205, 47, 47, 0.65) 2%, rgba(255, 255, 255, 0) 100%);
+  }
+}
+
+.CustomButtonWhiteIconBox {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 28px 10px;
+  border-radius: 10px;
+
+  border: none;
+  position: relative;
+  background: #FFFFFF;
+  color: $dark-custom;
+  font-size: 20px;
+  font-weight: normal;
+  line-height: normal;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 10px;
+    top: -0.1em;
+    bottom: -0.1em;
+    right: -0.1em;
+    left: -0.1em;
+    z-index: -1;
+    background: linear-gradient(0deg, rgba(205, 47, 47, 0.65) 2%, rgba(255, 255, 255, 0) 100%);
+  }
+}

@@ -10,6 +10,9 @@ export class QuestionsController {
   async findOneById(@Param('id') id: number): Promise<Question> {
     return await this.questionsService.findOne({
       where: { id },
+      order: {
+        number: 'ASC',
+      },
     });
   }
 }

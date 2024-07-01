@@ -1,0 +1,18 @@
+@use 'index' as *;
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+// Set custom styles
+:root {
+  scroll-behavior: smooth;
+  --bs-body-font-family: 'Calibri', sans-serif;
+}
+
+html, body {
+  //height: 100%;
+}
+
+// Sections
+section {
+  padding: 69px 0 0;
+  overflow: visible;
+}

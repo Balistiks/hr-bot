@@ -1,0 +1,64 @@
+@import "@shared/styles/theme/colors.scss";
+
+.timelineSeparate {
+  border: 1px solid $primary-custom;
+  border-radius: 5px;
+  width: 42px;
+  height: 1px;
+  margin-left: 3px;
+  margin-right: 3px;
+
+  &NoColor {
+    @extend .timelineSeparate;
+    border: 1px solid $secondary-custom;
+  }
+}
+
+.timelineStepContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 27px;
+  height: 27px;
+}
+
+.timelineInnerCircle {
+  border-radius: 1.4375rem;
+  height: 0.9375rem;
+  width: 0.9375rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $primary-custom;
+
+  &:before {
+    content: "";
+    border: 1px solid $primary-custom;
+    display: inline-block;
+    height: 27px;
+    width: 27px;
+    min-width: 27px;
+    border-radius: 50%;
+  }
+
+  &NoColor {
+    @extend .timelineInnerCircle;
+    border-radius: 1.0625rem;
+    height: 0.5625rem;
+    width: 0.5625rem;
+    opacity: 0.85;
+  }
+}
+
+.timelineStepChecked {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background-color: $primary-custom;
+}
+
+.timelineStep {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+}

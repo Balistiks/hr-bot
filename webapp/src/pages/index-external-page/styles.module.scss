@@ -1,0 +1,34 @@
+.heroSection {
+  position: relative;
+  min-height: 637px;
+  max-height: 637px;
+  max-width: 360px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.heroCard {
+  width: 326px;
+  height: 210px;
+
+  padding: 21px 29px 22px 25px;
+
+  margin-top: 361px;
+  margin-right: auto;
+  margin-left: auto;
+
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid #FFFFFF;
+
+  background: rgba(217, 217, 217, 0.20);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.over {
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}

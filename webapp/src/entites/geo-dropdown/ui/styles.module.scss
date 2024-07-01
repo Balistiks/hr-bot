@@ -1,0 +1,60 @@
+@import "@shared/styles/theme/colors.scss";
+
+.CustomDropDownMenu {
+  border-radius: 5px !important;
+  border: 1px solid $secondary-custom !important;
+  padding: 8px 9px 0 5px;
+  width: 127px !important;
+  min-width: 127px !important;
+  max-width: 127px !important;
+
+  [class$="dropdown-item"] {
+    font-size: 12px;
+    font-weight: normal;
+    color: $dark-custom;
+    padding: 4px 3px;
+
+    &:active {
+      color: $dark-custom;
+      background-color: transparent;
+    }
+  }
+
+  [class$="dropdown-item active"] {
+    width: 100%;
+    max-width: 113px;
+    border-radius: 2px;
+    background-color: $secondary-custom;
+    font-size: 12px;
+    font-weight: normal;
+    color: $dark-custom;
+    padding: 4px 3px;
+  }
+}
+
+.CustomInputDropDownMenu {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 119px;
+  border: 1px solid $secondary-custom;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: normal;
+  color: #D9D9D9;
+  padding: 4px;
+
+  &:focus {
+    border-color: $secondary-custom;
+    box-shadow: none;
+  }
+}
+
+.CustomDropDownList {
+  margin-top: 9px;
+  margin-bottom: 7px;
+  max-height: 122px;
+  overflow: auto;
+  z-index: 99;
+  max-width: 119px;
+}
