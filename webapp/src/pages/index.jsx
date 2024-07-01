@@ -9,7 +9,7 @@ const VacancyPage = lazy(() => import("./vacancy-page"));
 const pagesRoutes = {
     index: '/',
     indexExternal: '/external',
-    externalCoursePage: '/external/course',
+    externalCoursePage: '/external/course/:id',
     vacancy: '/vacancy/:id'
 }
 

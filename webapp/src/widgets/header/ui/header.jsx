@@ -9,7 +9,7 @@ export const Header = () => {
     const [showHome, setShowHome] = useState(false);
 
     useEffect(() => {
-        setExternal(pathname === '/external' || pathname === '/external/course')
+        setExternal(pathname === '/external' || pathname.startsWith('/external/course'))
         if (external) {
             setShowHome(pathname !== '/external')
         } else {

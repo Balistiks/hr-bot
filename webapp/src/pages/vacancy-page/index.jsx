@@ -6,6 +6,7 @@ import {SuccessModal} from "../../entites/success-modal/index.js";
 import {useParams} from "react-router-dom";
 import {useApi} from "@shared/lib/index.js";
 import {EndCourseModal} from "../../entites/end-course-modal/index.js";
+import {CalendarModal} from "@features/calendar-modal/index.js";
 
 const userId = 2; // TODO: Поменять на ID из вашего того самого
 const tgId = 1; // TODO: Поменять на ID с библиотеки телеграмма
@@ -22,6 +23,7 @@ const VacancyPage = () => {
     // States
     const [showQuestionModal, setShowQuestionModal] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showCalendarModal, setShowCalendarModal] = useState(false);
     const [showNextTest, setNextTest] = useState(false);
     const [selectQuestion, setSelectQuestion] = useState(0);
     const [file, setFile] = useState();
@@ -61,6 +63,10 @@ const VacancyPage = () => {
 
         if (!endCourse) {
             setShowSuccessModal(true)
+        }
+
+        if (endCourse) {
+            setShowCalendarModal(true);
         }
     }
 
@@ -116,6 +122,7 @@ const VacancyPage = () => {
             />
             <SuccessModal show={showSuccessModal} handleClose={() => setShowSuccessModal(false)}/>
             <EndCourseModal show={showNextTest} handleClose={() => startTest()}/>
+            <CalendarModal show={showCalendarModal} handleClose={() => setShowCalendarModal(false)}/>
         </main>
     )
 }

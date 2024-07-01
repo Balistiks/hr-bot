@@ -2,53 +2,113 @@ import {CustomButton, Text} from "@shared/ui/index.js";
 
 import styles from './styles.module.scss';
 import {Form} from "react-bootstrap";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {TimelineExternal} from "@widgets/timeline-external/index.js";
 import {SuccessExternalModal} from "../../entites/success-external-modal/index.js";
 import {EndCourseExternalModal} from "../../entites/end-course-external-modal/index.js";
+import {useNavigate, useParams} from "react-router-dom";
+import {useApi} from "@shared/lib/index.js";
+
+const tgId = 11; // TODO: Поменять на ID с библиотеки телеграмма
 
 const ExternalCoursePage = () => {
+    const {id} = useParams();
+    const navigate = useNavigate();
+
+    const {data: position, loading: positionLoad, fetchData: fetchPosition} = useApi();
+    const {data: answers, fetchData: fetchAnswers} = useApi();
+    const {data: student, fetchData: fetchStudent} = useApi();
+    const {fetchData: fetchAnswer} = useApi();
+    const {fetchData: updateStudent} = useApi();
+
     const [showSuccess, setShowSuccess] = useState(false);
     const [showEnd, setShowEnd] = useState(false);
+    const [currentQuestion, setCurrentQuestion] = useState(0);
     const [file, setFile] = useState();
 
-    const onSubmit = (event) => {
-        event.preventDefault();
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if (position && student) {
+                    if (student.question) {
+                        const index = position.questions.findIndex(task =>
+                            task.id === student.question.id &&
+                            task.number === student.question.number &&
+                            task.name === student.question.name &&
+                            task.text === student.question.text
+                        );
+                        setCurrentQuestion(student.paid ? index : 0);
+                    }
+                    setCurrentQuestion(0)
+                } else {
+                    await fetchPosition(`positions/${id}`, 'GET')
+                    await fetchAnswers(`answers/byTgId?tgId=${tgId}`, 'GET')
+                    await fetchStudent(`students/byTgId?tgId=${tgId}`, 'GET')
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        };
+        fetchData();
+    }, [student, position]);
+
+    const submitAnswer = async (event) => {
+        const formData = new FormData();
+
+        const request = {
+            text: event.target[0].value,
+            question: position.questions[currentQuestion].id,
+            student: student.id
+        }
+
+        for (let key in request) {
+            formData.append(key, request[key])
+        }
+
+        formData.append('file', file);
+
+        await fetchAnswer('answers', 'POST', formData, true);
+        await fetchPosition(`positions/${id}`, 'GET')
+        await fetchAnswers(`answers/byTgId?tgId=${tgId}`, 'GET')
+
+        setCurrentQuestion(student.paid ? currentQuestion + 1 > currentQuestion.length - 1 ? currentQuestion.length - 1 : currentQuestion + 1 : 0);
+
+        await updateStudent('students', 'PATCH', {
+            id: Number(student.id),
+            question: Number(position.questions[currentQuestion + 1].id),
+            position: Number(id)
+        })
         setShowSuccess(true);
-        // submitAnswer(event);
+        setFile(undefined);
+    }
+
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        if (currentQuestion !== 0 && !student.paid) {
+            setShowEnd(true);
+        } else {
+            await submitAnswer(event);
+        }
+    }
+
+    const onCloseSuccess = () => {
+        setShowSuccess(false)
+        if (!student.paid) {
+            setShowEnd(true);
+        }
+    }
+
+    const onCloseEnd = () => {
+        setShowEnd(false);
+        navigate('/external');
     }
 
     const handleChangedFile = (event) => {
-        // setFile(event.target.files[0]);
+        setFile(event.target.files[0]);
     }
 
-    return (
-        <main>
-            <section className={'text-center'} style={{paddingTop: 30}}>
-                <Text typeText={'bold'} sizeText={'22'} color={'black'}>
-                    ПРОБНЫЙ УРОК
-                </Text>
-                <Text typeText={'regular'} sizeText={'16'} color={'gray'}
-                      style={{maxWidth: 216, marginLeft: 'auto', marginRight: 'auto'}}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                </Text>
-            </section>
-            <section className={styles.timelineBlock}>
-                <TimelineExternal/>
-            </section>
-            <section className={styles.questionSection}>
-                <Text typeText={'light'} sizeText={'24'} color={'dark'} style={{textAlign: 'center'}}>
-                    НАЗВАНИЕ ЗАДАНИЯ
-                </Text>
-                <div className={styles.questionBlock}>
-                    <Text typeText={'regular'} sizeText={'16'} color={'gray'} style={{paddingLeft: 25}}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    </Text>
-                </div>
-            </section>
+    const SectionForm = () => {
+        return (
             <section className={styles.formBlock}>
                 <Form onSubmit={onSubmit}>
                     <Form.Group className="mb-3">
@@ -70,15 +130,81 @@ const ExternalCoursePage = () => {
                         </Text>
                     }
                     <CustomButton typeButton={'solid'}
-                                  style={{marginTop: 19, width: 269, maxWidth: 269, marginRight: 'auto', marginLeft: 'auto'}}
+                                  style={{
+                                      marginTop: 19,
+                                      width: 269,
+                                      maxWidth: 269,
+                                      marginRight: 'auto',
+                                      marginLeft: 'auto'
+                                  }}
                                   type={'submit'}
                     >
                         Отправить
                     </CustomButton>
                 </Form>
             </section>
-            <SuccessExternalModal show={showSuccess} handleClose={() => {setShowSuccess(false); setShowEnd(true)}}/>
-            <EndCourseExternalModal show={showEnd} handleClose={() => setShowEnd(false)}/>
+        )
+    }
+
+    const FormSubmit = () => {
+        if (position && !positionLoad && student) {
+            if (student.paid) {
+                return (
+                    <SectionForm/>
+                )
+            }
+            if (position && !positionLoad && student) {
+                if (student.question) {
+                    const index = position.questions.findIndex(task =>
+                        task.id === student.question.id &&
+                        task.number === student.question.number &&
+                        task.name === student.question.name &&
+                        task.text === student.question.text
+                    );
+                    if (index !== 1)
+                    {
+                        return (
+                            <SectionForm/>
+                        )
+                    }
+                } else {
+                    return (
+                        <SectionForm/>
+                    )
+                }
+            }
+        }
+    }
+
+    return (
+        <main>
+            <section className={'text-center'} style={{paddingTop: 30}}>
+                <Text typeText={'bold'} sizeText={'22'} color={'black'}>
+                    {position && !positionLoad && position.name}
+                </Text>
+                <Text typeText={'regular'} sizeText={'16'} color={'gray'}
+                      style={{maxWidth: 216, marginLeft: 'auto', marginRight: 'auto'}}>
+                    {student && !student.paid && 'Пробный урок'}
+                </Text>
+            </section>
+            <section className={styles.timelineBlock}>
+                {position && !positionLoad &&
+                    <TimelineExternal currentIndex={currentQuestion} questions={position.questions} answers={answers}/>
+                }
+            </section>
+            <section className={styles.questionSection}>
+                <Text typeText={'light'} sizeText={'24'} color={'dark'} style={{textAlign: 'center'}}>
+                    {position && !positionLoad && position.questions[currentQuestion] && position.questions[currentQuestion].name}
+                </Text>
+                <div className={styles.questionBlock}>
+                    <Text typeText={'regular'} sizeText={'16'} color={'gray'} style={{paddingLeft: 25}}>
+                        {position && !positionLoad && position.questions[currentQuestion] && position.questions[currentQuestion].text}
+                    </Text>
+                </div>
+            </section>
+            <FormSubmit/>
+            <SuccessExternalModal show={showSuccess} handleClose={() => onCloseSuccess()}/>
+            <EndCourseExternalModal show={showEnd} handleClose={() => onCloseEnd()}/>
         </main>
     )
 }
