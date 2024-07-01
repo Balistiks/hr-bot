@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typ
 import { Question } from '../../questions/entities/question.entity';
 import { User } from '../../users/entities/user.entity';
 import { File } from '../../files/entities/file.entity';
+import { Student } from '../../students/entities/student.entity';
 
 @Entity()
 export class Answer {
@@ -16,6 +17,9 @@ export class Answer {
 
   @ManyToOne(() => User, (user) => user.answers)
   user: User;
+
+  @ManyToOne(() => Student, (student) => student.answers)
+  student: Student;
 
   @OneToOne(() => File, (file) => file.answer)
   file: File;

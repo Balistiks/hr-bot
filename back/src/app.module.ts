@@ -10,6 +10,8 @@ import { EmployeesModule } from './employees/employees.module';
 import { dataSourceOptions } from '../db/data-source';
 import { CommentsModule } from './comments/comments.module';
 import { FilesModule } from './files/files.module';
+import { PositionsModule } from './positions/positions.module';
+import { StudentsModule } from './students/students.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { FilesModule } from './files/files.module';
     EmployeesModule,
     CommentsModule,
     FilesModule,
+    PositionsModule,
+    StudentsModule,
   ],
   controllers: [],
   providers: [],
