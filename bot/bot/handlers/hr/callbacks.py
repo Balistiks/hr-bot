@@ -42,9 +42,14 @@ async def get_applicant_slider(callback: types.CallbackQuery, state: FSMContext)
 
     users = (await employees_service.get_by_tg_id(callback.from_user.id))['users']
 
+    users_for_keyboard = []
+    for user in users:
+        if user['status'] != 'выходит на работу':
+            users_for_keyboard.append(user)
+
     await callback.message.edit_text(
         text='text',
-        reply_markup=await keyboards.hr.get_applicant_keyboard(users, page)
+        reply_markup=await keyboards.hr.get_applicant_keyboard(users_for_keyboard, page)
     )
 
 

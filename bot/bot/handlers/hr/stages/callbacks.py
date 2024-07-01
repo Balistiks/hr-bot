@@ -10,7 +10,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from bot import keyboards
 from bot.scheduler import scheduler_missed_call
 from bot.states import StageCommentState
-from bot.services import users_service
+from bot.services import users_service, employees_service
 
 callbacks_router = Router()
         
@@ -51,6 +51,10 @@ async def get_status(callback: types.CallbackQuery, state: FSMContext, apschedul
 
     if status_callback == 'недозвон':
         scheduler_missed_call(tgid, apscheduler)
+    elif status_callback == 'Выходит на работу':
+        await employees_service.create({
+            'tgId': callback.from_user.id
+        })
         
     await callback.message.edit_text(
         text='Статус изменен',
