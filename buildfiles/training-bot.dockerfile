@@ -10,4 +10,4 @@ RUN poetry install --no-interaction --no-cache --no-root
 
 COPY . .
 
-CMD ["poetry", "run", "python", "-m", "bot"]
+CMD ["poetry", "run", "python", "-m", "training-bot"]

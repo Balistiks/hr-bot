@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "bot"
+name = "training-bot"
 version = "0.1.0"
 description = ""
 authors = ["balistik <balistiktw@gmail.com>"]

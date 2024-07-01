@@ -1,6 +1,21 @@
 version: '3.7'
 
 services:
+  training-bot:
+    build:
+      context: training-bot
+      dockerfile: ../buildfiles/bot.dockerfile
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./training-bot/training-bot:/app/training-bot
+    depends_on:
+      - redis
+    networks:
+      bot:
+        aliases:
+          - bot
   bot:
     build:
       context: bot
