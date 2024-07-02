@@ -1,3 +1,4 @@
-from .messages import messages_router
+from .employee import employee_router
+from .students import students_router
 
-routers = (messages_router,)
+routers = (*employee_router, *students_router)

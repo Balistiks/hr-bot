@@ -1,3 +1,3 @@
 from .messages import messages_router
 
-employee_router = (messages_router, )
+students_router = (messages_router, )
