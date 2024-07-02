@@ -39,8 +39,9 @@ const ExternalCoursePage = () => {
                             task.text === student.question.text
                         );
                         setCurrentQuestion(student.paid ? index : 0);
+                    } else {
+                        setCurrentQuestion(0)
                     }
-                    setCurrentQuestion(0)
                 } else {
                     await fetchPosition(`positions/${id}`, 'GET')
                     await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
