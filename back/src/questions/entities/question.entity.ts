@@ -11,6 +11,7 @@ import { Answer } from '../../answers/entitites/answer.entity';
 import { Comment } from '../../comments/entitites/comment.entity';
 import { Position } from '../../positions/entities/position.entity';
 import { Student } from '../../students/entities/student.entity';
+import { Employee } from '../../employees/entities/employee.entity';
 
 @Entity()
 export class Question {
@@ -31,6 +32,9 @@ export class Question {
 
   @OneToMany(() => Student, (student) => student.question)
   students: Student[];
+
+  @OneToMany(() => Employee, (employee) => employee.question)
+  employees: Employee[];
 
   @ManyToOne(() => Course, (course) => course.questions)
   course: Course;
