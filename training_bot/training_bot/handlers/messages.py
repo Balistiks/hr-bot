@@ -10,5 +10,5 @@ messages_router = Router()
 async def start_handler(message: types.Message):
     await message.answer_photo(
         photo=types.FSInputFile('files/images/Цирюльникъ.png'),
-        reply_markup=keyboards.employee.MENU_KEYBOARD
+        reply_markup=keyboards.MENU_KEYBOARD
     )

@@ -46,8 +46,9 @@ class RedisConfig:
 class BotConfig:
     """Bot configuration"""
 
-    token: str = getenv("BOT_TOKEN")
+    token: str = getenv("TRAINING_BOT_TOKEN")
     secret_token: str = getenv("SECRET_TOKEN")
+    webapp_url: str = getenv("URL")
 
 
 @dataclass

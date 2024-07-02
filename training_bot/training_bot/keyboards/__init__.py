@@ -1,1 +1,1 @@
-from . import employee
+from .inline import *

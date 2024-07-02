@@ -5,9 +5,9 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.fsm.storage.base import BaseEventIsolation, BaseStorage
 from aiogram.fsm.storage.memory import MemoryStorage
 
-from bot.handlers import routers
+from training_bot.handlers import routers
 
-from bot.misc.configuration import conf
+from training_bot.misc.configuration import conf
 
 
 def get_redis_storage(

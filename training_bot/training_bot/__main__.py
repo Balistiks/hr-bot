@@ -6,9 +6,9 @@ from aiogram import Bot
 
 from redis.asyncio.client import Redis
 
-from bot.misc.configuration import conf
+from training_bot.misc.configuration import conf
 
-from bot.dispatcher import get_redis_storage, get_dispatcher
+from training_bot.dispatcher import get_redis_storage, get_dispatcher
 
 
 async def start_bot():
