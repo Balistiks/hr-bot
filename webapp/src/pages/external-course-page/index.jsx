@@ -9,9 +9,10 @@ import {EndCourseExternalModal} from "../../entites/end-course-external-modal/in
 import {useNavigate, useParams} from "react-router-dom";
 import {useApi} from "@shared/lib/index.js";
 
-const tgId = 11; // TODO: Поменять на ID с библиотеки телеграмма
 
 const ExternalCoursePage = () => {
+    const tg = window.Telegram.WebApp;
+
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -42,8 +43,8 @@ const ExternalCoursePage = () => {
                     setCurrentQuestion(0)
                 } else {
                     await fetchPosition(`positions/${id}`, 'GET')
-                    await fetchAnswers(`answers/byTgId?tgId=${tgId}`, 'GET')
-                    await fetchStudent(`students/byTgId?tgId=${tgId}`, 'GET')
+                    await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+                    await fetchStudent(`students/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
                 }
             } catch (error) {
                 console.error(error)
@@ -69,7 +70,7 @@ const ExternalCoursePage = () => {
 
         await fetchAnswer('answers', 'POST', formData, true);
         await fetchPosition(`positions/${id}`, 'GET')
-        await fetchAnswers(`answers/byTgId?tgId=${tgId}`, 'GET')
+        await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
 
         setCurrentQuestion(student.paid ? currentQuestion + 1 > currentQuestion.length - 1 ? currentQuestion.length - 1 : currentQuestion + 1 : 0);
 

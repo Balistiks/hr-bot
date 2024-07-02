@@ -5,15 +5,16 @@ import {VacancyExternal} from "@widgets/vacancy-external/index.js";
 import {useApi} from "@shared/lib/index.js";
 import {useEffect} from "react";
 
-const tgId = 11; // TODO: Поменять на ID с библиотеки телеграмма
 
 const IndexExternalPage = () => {
+    const tg = window.Telegram.WebApp;
+
     const {data: student, fetchData: fetchStudent} = useApi();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await fetchStudent(`students/byTgId?tgId=${tgId}`, 'GET')
+                await fetchStudent(`students/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
             }
             catch (error) {
                 console.error(error)
