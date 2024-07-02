@@ -109,23 +109,24 @@
   filter: drop-shadow(0px 4px 4px rgba(0.3633333742618561,0.3633333742618561,0.3633333742618561,0.05000000074505806));
 }
 
-.CustomButtonWhiteIcon {
+.CustomButtonWhiteIconRounded {
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  width: 100%;
 
   padding: 15px 28px 12px;
   border-radius: 30px;
 
   border: none;
   position: relative;
-  background: #FFFFFF;
-  color: $dark-custom;
+  background: $primary-custom;
+  color: #FFFFFF;
   font-size: 18px;
   text-transform: uppercase;
-  font-weight: normal;
+  font-weight: bold;
   line-height: normal;
 
   &:before {
@@ -138,7 +139,7 @@
     right: -0.1em;
     left: -0.1em;
     z-index: -1;
-    background: linear-gradient(-21deg, rgba(205, 47, 47, 0.65) 2%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
   }
 }
 

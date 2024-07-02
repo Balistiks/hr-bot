@@ -6,6 +6,7 @@ import {SuccessModal} from "../../entites/success-modal/index.js";
 import {useParams} from "react-router-dom";
 import {useApi} from "@shared/lib/index.js";
 import {EndCourseModal} from "../../entites/end-course-modal/index.js";
+import {CalendarModal} from "@features/calendar-modal/index.js";
 
 const VacancyPage = () => {
     const tg = window.Telegram.WebApp;
@@ -22,6 +23,7 @@ const VacancyPage = () => {
     // States
     const [showQuestionModal, setShowQuestionModal] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [showCalendarModal, setShowCalendarModal] = useState(false);
     const [showNextTest, setNextTest] = useState(false);
     const [selectQuestion, setSelectQuestion] = useState(0);
     const [file, setFile] = useState();
@@ -42,13 +44,13 @@ const VacancyPage = () => {
         formData.append('file', file);
         await fetchAnswer('answers', 'POST', formData, true);
         await fetchCourse(`courses/${id}`, 'GET')
-        await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+        await fetchAnswers(`answers/byTgId?tgId=${tgId}`, 'GET')
 
         const nextTest = selectQuestion === (course.questions.length - 2)
         const endCourse = selectQuestion === (course.questions.length - 1)
 
         await updateUser('users', 'PATCH', {
-            id: user.id,
+            id: userId,
             question: course.questions[selectQuestion].id,
             status: endCourse ? 'окончил курс' : 'обучается',
             course: id
@@ -61,6 +63,10 @@ const VacancyPage = () => {
 
         if (!endCourse) {
             setShowSuccessModal(true)
+        }
+
+        if (endCourse) {
+            setShowCalendarModal(true);
         }
     }
 
@@ -91,7 +97,7 @@ const VacancyPage = () => {
 
     return (
         <main>
-            <section className={'text-center'} style={{marginTop: 30}}>
+            <section className={'text-center'} style={{paddingTop: 30}}>
                 <Text typeText={'bold'} sizeText={'22'}
                       color={'black'}>{course && !courseLoad ? course.name.toUpperCase() : 'ВАКАНСИЯ'}</Text>
                 <Text typeText={'regular'} sizeText={'16'} color={'gray'}
@@ -117,6 +123,7 @@ const VacancyPage = () => {
             />
             <SuccessModal show={showSuccessModal} handleClose={() => setShowSuccessModal(false)}/>
             <EndCourseModal show={showNextTest} handleClose={() => startTest()}/>
+            <CalendarModal show={showCalendarModal} handleClose={() => setShowCalendarModal(false)}/>
         </main>
     )
 }

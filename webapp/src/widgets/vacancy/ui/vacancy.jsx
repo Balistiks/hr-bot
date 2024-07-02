@@ -7,11 +7,11 @@ import {useApi} from "@shared/lib/index.js";
 export const Vacancy = () => {
     const {data: cities, loading: citiesLoad, fetchData: fetchCity} = useApi();
     const {data: courses, loading: coursesLoad, fetchData: fetchCourses} = useApi();
-    const [selectCity, setSelectCity] = useState(0);
+    const [selectCity, setSelectCity] = useState('');
 
-    const OnSelectCity = async (id) => {
-        setSelectCity(id);
-        const request = `courses?request={"city":{"name":"${cities[id].name}"}}`;
+    const OnSelectCity = async (name) => {
+        setSelectCity(name);
+        const request = `courses?request={"city":{"name":"${name}"}}`;
         await fetchCourses(request, 'GET')
     }
 
@@ -21,7 +21,7 @@ export const Vacancy = () => {
                 if (!cities) {
                     await fetchCity('cities', 'GET')
                 } else {
-                    await OnSelectCity(0);
+                    await OnSelectCity(cities[0].name);
                 }
             } catch (error) {
                 console.error(error)

@@ -1,5 +1,5 @@
 import React, {forwardRef, useState} from "react";
-import {Dropdown, Form, Spinner} from "react-bootstrap";
+import {Dropdown, Spinner, Form} from "react-bootstrap";
 import {Text} from "@shared/ui/index.js";
 
 import styles from './styles.module.scss';
@@ -37,6 +37,9 @@ export const GeoDropDown = ({style, selectCity, setSelectCity, cities, citiesLoa
                         onChange={(e) => setValue(e.target.value)}
                         value={value}
                     />
+                    <div className={styles.searchIcon}>
+                        <img src={window.location.origin + '/Search.svg'}/>
+                    </div>
                     <ul className={`list-unstyled ${styles.CustomDropDownList}`} style={{marginTop: 9}}>
                         {children}
                     </ul>
@@ -59,7 +62,7 @@ export const GeoDropDown = ({style, selectCity, setSelectCity, cities, citiesLoa
                     {cities && !citiesLoad
                         ?
                         <>
-                            {cities[selectCity].name}
+                            {selectCity}
                         </>
                         :
                         <></>
@@ -71,10 +74,10 @@ export const GeoDropDown = ({style, selectCity, setSelectCity, cities, citiesLoa
                     ?
                     <>
                         {cities.filter((item) => !value || item.name.toLowerCase().startsWith(value.toLowerCase()))
-                            .map((item, index) => {
+                            .map((item) => {
                                 return (
-                                    <Dropdown.Item key={index} eventKey={index}
-                                                   active={Number(index) === Number(selectCity)}>{String(item.name)}</Dropdown.Item>
+                                    <Dropdown.Item key={item.name} eventKey={item.name}
+                                                   active={item.name === selectCity}>{String(item.name)}</Dropdown.Item>
                                 )
                             })}
                     </>

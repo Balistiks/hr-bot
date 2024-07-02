@@ -2,14 +2,26 @@ import {CustomButton, Text} from "@shared/ui/index.js";
 
 import styles from './styles.module.scss';
 import {VacancyExternal} from "@widgets/vacancy-external/index.js";
-import {useNavigate} from "react-router-dom";
+import {useApi} from "@shared/lib/index.js";
+import {useEffect} from "react";
+
+const tgId = 11; // TODO: Поменять на ID с библиотеки телеграмма
 
 const IndexExternalPage = () => {
-    const navigate = useNavigate();
+    const {data: student, fetchData: fetchStudent} = useApi();
 
-    const onNavigateToCourse = () => {
-        navigate('/external/course');
-    }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                await fetchStudent(`students/byTgId?tgId=${tgId}`, 'GET')
+            }
+            catch (error) {
+                console.error(error)
+            }
+        };
+        fetchData();
+    }, []);
+
 
     return (
         <main>
@@ -23,9 +35,11 @@ const IndexExternalPage = () => {
                         <Text typeText={'regular'} sizeText={'17'} color={'black'} style={{maxWidth: 271}}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit
                         </Text>
-                        <CustomButton typeButton={'white-icon'} style={{marginTop: 9}} onClick={onNavigateToCourse}>
-                            Пройти пробный урок <img src={window.location.origin + '/Next.svg'} style={{marginLeft: 12}}/>
-                        </CustomButton>
+                        {student && !student.paid && student.question &&
+                            <CustomButton typeButton={'white-icon-rounded'} style={{marginTop: 9}}>
+                                оплатить обучение <img src={window.location.origin + '/Next.svg'} style={{marginLeft: 12}}/>
+                            </CustomButton>
+                        }
                     </div>
                 </div>
             </section>
