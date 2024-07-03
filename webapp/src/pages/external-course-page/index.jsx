@@ -19,8 +19,10 @@ const ExternalCoursePage = () => {
     const {data: position, loading: positionLoad, fetchData: fetchPosition} = useApi();
     const {data: answers, fetchData: fetchAnswers} = useApi();
     const {data: student, fetchData: fetchStudent} = useApi();
+    const {data: employee, fetchData: fetchEmployee} = useApi();
     const {fetchData: fetchAnswer} = useApi();
     const {fetchData: updateStudent} = useApi();
+    const {fetchData: updateEmployee} = useApi();
 
     const [showSuccess, setShowSuccess] = useState(false);
     const [showEnd, setShowEnd] = useState(false);
@@ -30,37 +32,59 @@ const ExternalCoursePage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (position && student) {
-                    if (student.question) {
-                        const index = position.questions.findIndex(task =>
-                            task.id === student.question.id &&
-                            task.number === student.question.number &&
-                            task.name === student.question.name &&
-                            task.text === student.question.text
-                        );
-                        setCurrentQuestion(student.paid ? index : 0);
-                    } else {
-                        setCurrentQuestion(0)
+                if (position) {
+                    if (student) {
+                        if (student.question) {
+                            const index = position.questions.findIndex(task =>
+                                task.id === student.question.id &&
+                                task.number === student.question.number &&
+                                task.name === student.question.name &&
+                                task.text === student.question.text
+                            );
+                            setCurrentQuestion(student.paid ? index : 0);
+                            return;
+                        }
+                    } else if (employee) {
+                        if (employee.question) {
+                            const index = position.questions.findIndex(task =>
+                                task.id === employee.question.id &&
+                                task.number === employee.question.number &&
+                                task.name === employee.question.name &&
+                                task.text === employee.question.text
+                            );
+                            setCurrentQuestion(index);
+                            return;
+                        }
                     }
+                    setCurrentQuestion(0)
                 } else {
                     await fetchPosition(`positions/${id}`, 'GET')
                     await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
                     await fetchStudent(`students/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+                    await fetchEmployee(`employees/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
                 }
             } catch (error) {
                 console.error(error)
             }
         };
         fetchData();
-    }, [student, position]);
+    }, [student, employee, position]);
 
     const submitAnswer = async (event) => {
         const formData = new FormData();
-
-        const request = {
-            text: event.target[0].value,
-            question: position.questions[currentQuestion].id,
-            student: student.id
+        let request;
+        if (student) {
+            request = {
+                text: event.target[0].value,
+                question: position.questions[currentQuestion].id,
+                student: student.id
+            }
+        } else if (employee) {
+            request = {
+                text: event.target[0].value,
+                question: position.questions[currentQuestion].id,
+                employee: employee.id
+            }
         }
 
         for (let key in request) {
@@ -73,19 +97,37 @@ const ExternalCoursePage = () => {
         await fetchPosition(`positions/${id}`, 'GET')
         await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
 
-        setCurrentQuestion(student.paid ? currentQuestion + 1 > currentQuestion.length - 1 ? currentQuestion.length - 1 : currentQuestion + 1 : 0);
+        if (student) {
+            setCurrentQuestion(student.paid ? currentQuestion + 1 > currentQuestion.length - 1 ? currentQuestion.length - 1 : currentQuestion + 1 : 0);
+        } else if (employee) {
+            setCurrentQuestion(currentQuestion + 1 > currentQuestion.length - 1 ? currentQuestion.length - 1 : currentQuestion + 1);
+        }
 
-        await updateStudent('students', 'PATCH', {
-            id: Number(student.id),
-            question: Number(position.questions[currentQuestion + 1].id),
-            position: Number(id)
-        })
+        if (student) {
+            await updateStudent('students', 'PATCH', {
+                id: Number(student.id),
+                question: Number(position.questions[currentQuestion + 1].id),
+                position: Number(id)
+            })
+        } else if (employee) {
+            await updateEmployee('employees', 'PATCH', {
+                id: Number(employee.id),
+                question: Number(position.questions[currentQuestion + 1].id),
+                position: Number(id)
+            })
+        }
+
         setShowSuccess(true);
         setFile(undefined);
     }
 
     const onSubmit = async (event) => {
         event.preventDefault();
+        if (employee) {
+            await submitAnswer(event);
+            return;
+        }
+
         if (currentQuestion !== 0 && !student.paid) {
             setShowEnd(true);
         } else {
@@ -95,8 +137,10 @@ const ExternalCoursePage = () => {
 
     const onCloseSuccess = () => {
         setShowSuccess(false)
-        if (!student.paid) {
-            setShowEnd(true);
+        if (student) {
+            if (!student.paid) {
+                setShowEnd(true);
+            }
         }
     }
 
@@ -149,7 +193,21 @@ const ExternalCoursePage = () => {
     }
 
     const FormSubmit = () => {
-        if (position && !positionLoad && student) {
+        if (position && !positionLoad ) {
+            if (currentQuestion === position.questions.length - 1) {
+                return;
+            }
+
+            if (employee) {
+                return (
+                    <SectionForm/>
+                )
+            }
+
+            if (!student) {
+                return;
+            }
+
             if (student.paid) {
                 return (
                     <SectionForm/>

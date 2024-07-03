@@ -10,11 +10,13 @@ const IndexExternalPage = () => {
     const tg = window.Telegram.WebApp;
 
     const {data: student, fetchData: fetchStudent} = useApi();
+    const {data: employee, fetchData: fetchEmployee} = useApi();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 await fetchStudent(`students/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+                await fetchEmployee(`employees/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
             }
             catch (error) {
                 console.error(error)
@@ -36,7 +38,7 @@ const IndexExternalPage = () => {
                         <Text typeText={'regular'} sizeText={'17'} color={'black'} style={{maxWidth: 271}}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit
                         </Text>
-                        {student && !student.paid && student.question &&
+                        {student && !student.paid && student.question && !employee &&
                             <CustomButton typeButton={'white-icon-rounded'} style={{marginTop: 9}}>
                                 оплатить обучение <img src={window.location.origin + '/Next.svg'} style={{marginLeft: 12}}/>
                             </CustomButton>

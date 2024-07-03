@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Employee } from './entities/employee.entity';
 import { FindOneOptions, Repository } from 'typeorm';
-import { CreateEmployeeDto } from './dto/create-employee.dto';
+import { CreateEmployessDto } from './dto/create-employess.dto';
+import { UpdateEmployessDto } from './dto/update-employess.dto';
 
 @Injectable()
 export class EmployeesService {
@@ -10,10 +11,6 @@ export class EmployeesService {
     @InjectRepository(Employee)
     private employeeRepository: Repository<Employee>,
   ) {}
-
-  async save(employee: CreateEmployeeDto): Promise<Employee> {
-    return await this.employeeRepository.save(employee);
-  }
 
   async getWithMinimalUsers(): Promise<Employee> {
     const employees = await this.employeeRepository.find({
@@ -32,5 +29,11 @@ export class EmployeesService {
 
   async find(options: FindOneOptions<Employee>): Promise<Employee> {
     return await this.employeeRepository.findOne(options);
+  }
+
+  async save(
+    employee: CreateEmployessDto | UpdateEmployessDto,
+  ): Promise<Employee> {
+    return await this.employeeRepository.save(employee);
   }
 }
