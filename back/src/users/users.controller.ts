@@ -4,12 +4,17 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { EmployeesService } from '../employees/employees.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { SetDateDto } from './dto/set-date.dto';
+import { HttpService } from '@nestjs/axios';
+import { AxiosResponse } from 'axios';
+import { Observable } from 'rxjs';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly employeesService: EmployeesService,
+    private readonly httpService: HttpService,
   ) {}
 
   @Get('byTgId')
@@ -39,6 +44,21 @@ export class UsersController {
   async save(@Body() user: CreateUserDto): Promise<User> {
     user.employee = await this.employeesService.getWithMinimalUsers();
     return await this.usersService.save(user);
+  }
+
+  @Post('date')
+  async setDate(
+    @Body() data: SetDateDto,
+  ): Promise<Observable<AxiosResponse<any>>> {
+    const user = await this.usersService.findOne({
+      where: {
+        id: data.userId,
+      },
+    });
+    return this.httpService.post('http://localhost:8080/users/date', {
+      user: user,
+      date: data.date,
+    });
   }
 
   @Patch()
