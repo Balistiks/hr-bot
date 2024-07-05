@@ -94,6 +94,11 @@ const VacancyPage = () => {
         fetchData();
     }, []);
 
+    const sumbitDate = async (date) => {
+        setShowCalendarModal(false);
+        console.log(date);
+    }
+
     return (
         <main>
             <section className={'text-center'} style={{paddingTop: 30}}>
@@ -122,7 +127,7 @@ const VacancyPage = () => {
             />
             <SuccessModal show={showSuccessModal} handleClose={() => setShowSuccessModal(false)}/>
             <EndCourseModal show={showNextTest} handleClose={() => startTest()}/>
-            <CalendarModal show={showCalendarModal} handleClose={() => setShowCalendarModal(false)}/>
+            <CalendarModal show={showCalendarModal} handleClose={() => setShowCalendarModal(false)} submitDate={sumbitDate}/>
         </main>
     )
 }

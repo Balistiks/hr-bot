@@ -50,7 +50,8 @@
   border-radius: 5px;
   font-weight: 300;
   font-size: 15px;
-  background-color: $secondary-custom;
+  background-color: #FFFFFF;
+  border: 0.5px solid $secondary-custom;
   color: $secondary-dark-custom;
 
   &Selected {
@@ -59,5 +60,12 @@
     color: $primary-custom;
     border: 1px solid $primary-custom;
     box-shadow: 0 0 0 0.05rem #DD777E;
+  }
+
+  &Disabled {
+    @extend .time;
+    background-color: $secondary-custom;
+    color: $secondary-dark-custom;
+    border: none;
   }
 }
