@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.filters import Filter
 
-from training_bot.services import employees_service
+from bot.services import employees_service
 
 
 class IsEmployeeFilter(Filter):
