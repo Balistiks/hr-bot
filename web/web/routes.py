@@ -1,9 +1,7 @@
-from aiogram import Bot, types
-from aiogram.types import BufferedInputFile
+from aiogram import Bot
 from aiohttp import web
 
 from web.misc.configuration import conf
-from web.services import cars_service
 
 routes = web.RouteTableDef()
 
