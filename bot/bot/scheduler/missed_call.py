@@ -1,6 +1,4 @@
-import json
-
-from aiogram import Bot
+from aiogram import Bot, types
 
 from datetime import datetime, timedelta
 
@@ -41,10 +39,12 @@ def scheduler_missed_call(tgid: int, apscheduler: AsyncIOScheduler):
 
 
 async def send_missed_call(bot: Bot, tgid: int):
-    await bot.send_message(
-        tgid,
-        'Привет, ты не ответил нашему HR,' 
-        'свяжись с ним "ссылка на телеграм HR"'
+    photo_path = 'files/photos/not_answer.png'
+    caption = ''
+    await bot.send_photo(
+        chat_id=tgid,
+        photo=photo_path,
+        caption=caption
     )
 
 
