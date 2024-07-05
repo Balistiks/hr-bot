@@ -18,6 +18,21 @@ services:
       - "443:443"
     env_file:
       - .env
+  training-bot:
+    build:
+      context: training_bot
+      dockerfile: ../buildfiles/training_bot.dockerfile
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./training_bot/training_bot:/app/training_bot
+    depends_on:
+      - redis
+    networks:
+      bot:
+        aliases:
+          - bot
   bot:
     build:
       context: bot
