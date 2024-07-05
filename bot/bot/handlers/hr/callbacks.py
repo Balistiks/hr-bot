@@ -28,8 +28,10 @@ async def start_hr(callback: types.CallbackQuery, state: FSMContext):
     users = (await employees_service.get_by_tg_id(callback.from_user.id))['users']
 
     await callback.message.delete()
-    await callback.message.answer(text='text',
-                                  reply_markup=await keyboards.hr.get_applicant_keyboard(users, 1))
+    await callback.message.answer_photo(
+        photo=types.FSInputFile('files/main.png'),
+        reply_markup=await keyboards.hr.get_applicant_keyboard(users, 1)
+    )
 
 
 @callbacks_router.callback_query(ApplicantState.page, F.data == 'prev_page')
@@ -47,8 +49,7 @@ async def get_applicant_slider(callback: types.CallbackQuery, state: FSMContext)
         if user['status'] != 'выходит на работу':
             users_for_keyboard.append(user)
 
-    await callback.message.edit_text(
-        text='text',
+    await callback.message.edit_reply_markup(
         reply_markup=await keyboards.hr.get_applicant_keyboard(users_for_keyboard, page)
     )
 
