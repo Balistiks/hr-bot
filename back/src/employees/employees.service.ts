@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Employee } from './entities/employee.entity';
 import { FindOneOptions, Repository } from 'typeorm';
-import { CreateEmployessDto } from './dto/create-employess.dto';
 import { UpdateEmployessDto } from './dto/update-employess.dto';
+import { CreateEmployeeDto } from './dto/create-employee.dto';
 
 @Injectable()
 export class EmployeesService {
@@ -35,7 +35,7 @@ export class EmployeesService {
   }
 
   async save(
-    employee: CreateEmployessDto | UpdateEmployessDto,
+    employee: CreateEmployeeDto | UpdateEmployessDto,
   ): Promise<Employee> {
     return await this.employeeRepository.save(employee);
   }

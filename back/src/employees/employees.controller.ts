@@ -9,7 +9,9 @@ export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
 
   @Post()
-  async create(@Body() employee: CreateEmployeeDto): Promise<Employee> {
+  async create(
+    @Body() employee: CreateEmployeeDto | UpdateEmployessDto,
+  ): Promise<Employee> {
     return await this.employeesService.save(employee);
   }
 
