@@ -14,6 +14,7 @@ async function bootstrap() {
   );
   app.setGlobalPrefix('/api');
   app.useGlobalGuards(new AuthGuard());
+  app.enableCors();
 
   const config = new DocumentBuilder().setTitle('HR-bot').build();
   const document = SwaggerModule.createDocument(app, config);

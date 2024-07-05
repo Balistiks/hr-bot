@@ -1,0 +1,68 @@
+@import "@shared/styles/theme/colors.scss";
+
+.questionBlock {
+  margin-top: 18px;
+  width: 326px;
+  max-width: 326px;
+  border-left: 3px solid $primary-custom;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.formBlock {
+  width: 326px;
+  max-width: 326px;
+  margin: 16px auto 0;
+  padding-top: 0;
+  padding-bottom: 95px;
+}
+
+.timelineBlock {
+  margin-top: 18px;
+  padding: 0;
+  width: 328px;
+  max-width: 328px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.questionSection {
+  margin-top: 22px;
+  padding: 0;
+}
+
+.CustomTextArea {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.CustomTextArea:focus {
+  border-color: $primary-custom;
+  box-shadow: 0 0 0 0.25rem rgba(213, 16, 28, 0.25);
+}
+
+.UploadFileButton {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 269px;
+  max-width: 269px;
+
+  padding: 4px 61px 3px 62px;
+  margin-top: 18px;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 10px;
+  border: none;
+
+  background: $secondary-custom;
+  color: $secondary-dark-custom;
+
+  font-size: 16px;
+
+  filter: drop-shadow(0px 4px 4px rgba(0.3633333742618561,0.3633333742618561,0.3633333742618561,0.05000000074505806));
+
+  cursor: pointer;
+}

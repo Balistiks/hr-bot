@@ -1,0 +1,30 @@
+@use 'index' as *;
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+// Set custom styles
+:root {
+  scroll-behavior: smooth;
+  --bs-body-font-family: 'Calibri', sans-serif;
+  --header-height: 72px;
+  --footer-height: 50px;
+}
+
+// Sections
+section {
+  overflow: visible;
+}
+
+header {
+  height: var(--header-height);
+  background: lightcyan;
+}
+
+main {
+  margin-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+footer {
+  height: var(--footer-height);
+  background: PapayaWhip;
+}

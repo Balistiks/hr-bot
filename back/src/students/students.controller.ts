@@ -8,17 +8,18 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 export class StudentsController {
   constructor(private readonly studentsService: StudentsService) {}
 
-  @Get(':id')
-  async getById(@Param('id') id: number): Promise<Student> {
-    return await this.studentsService.findOneByOptions({
-      where: { id },
-    });
-  }
-
   @Get('byTgId')
   async getByTgId(@Query('tgId') tgId: number): Promise<Student> {
     return await this.studentsService.findOneByOptions({
       where: { tgId },
+      relations: ['position', 'question'],
+    });
+  }
+
+  @Get(':id')
+  async getById(@Param('id') id: number): Promise<Student> {
+    return await this.studentsService.findOneByOptions({
+      where: { id },
     });
   }
 

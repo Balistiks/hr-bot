@@ -1,0 +1,71 @@
+@import "@shared/styles/theme/colors.scss";
+
+.CustomModal {
+  [class$="modal-content"] {
+    border-radius: 10px !important;
+    border: none !important;
+    -webkit-box-shadow: 0px -6px 0px 0px rgb(213, 16, 28);
+    -moz-box-shadow: 0px -6px 0px 0px rgb(213, 16, 28);
+    box-shadow: 0px -6px 0px 0px rgb(213, 16, 28);
+  }
+}
+
+.CustomModalHeader {
+  border-bottom: transparent !important;
+  padding: 10px 19px 0;
+
+  [class$="btn-close"] {
+    padding: 0 !important;
+    width: 27px !important;
+    height: 27px !important;
+    margin-top: -2px !important;
+    border-radius: 50%;
+    background: #ECECEC url("../../../../public/Close.svg") center/ auto no-repeat;
+  }
+
+  [class$="btn-close"]:focus {
+    box-shadow: 0 0 0 0.25rem rgba(213, 16, 28, 0.25) !important;
+  }
+}
+
+.CustomModalBody {
+  padding: 0 15px 22px;
+}
+
+.blockTime {
+  display: grid;
+  grid-template-columns: 84px 84px 84px 84px;
+  grid-row-gap: 1rem;
+  margin-top: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.time {
+  width: 60px;
+  height: 27px;
+  text-align: center;
+  line-height: normal;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: 300;
+  font-size: 15px;
+  background-color: #FFFFFF;
+  border: 0.5px solid $secondary-custom;
+  color: $secondary-dark-custom;
+
+  &Selected {
+    @extend .time;
+    background-color: transparent;
+    color: $primary-custom;
+    border: 1px solid $primary-custom;
+    box-shadow: 0 0 0 0.05rem #DD777E;
+  }
+
+  &Disabled {
+    @extend .time;
+    background-color: $secondary-custom;
+    color: $secondary-dark-custom;
+    border: none;
+  }
+}

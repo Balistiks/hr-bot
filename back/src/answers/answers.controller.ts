@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AnswersService } from './answers.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { Answer } from './entitites/answer.entity';
@@ -10,7 +18,10 @@ import { File } from '../files/entities/file.entity';
 
 @Controller('answers')
 export class AnswersController {
-  constructor(private readonly answersService: AnswersService, private readonly filesService: FilesService) {}
+  constructor(
+    private readonly answersService: AnswersService,
+    private readonly filesService: FilesService,
+  ) {}
 
   @Post()
   @UseInterceptors(
@@ -47,10 +58,21 @@ export class AnswersController {
   }
 
   @Get('byTgId')
-  async findByTgId(@Query('tgId') tgId: number): Promise<Answer> {
-    return await this.answersService.find({
-      where: {
-        user: { tgId },
+  async findByTgId(@Query('tgId') tgId: number): Promise<Answer[]> {
+    return await this.answersService.findMany({
+      where: [
+        { user: { tgId } },
+        { student: { tgId } },
+        { employee: { tgId } },
+      ],
+      select: {
+        question: {
+          id: true,
+          number: true,
+        },
+      },
+      relations: {
+        question: true,
       },
     });
   }

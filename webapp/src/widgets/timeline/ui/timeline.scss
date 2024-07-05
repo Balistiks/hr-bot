@@ -1,0 +1,30 @@
+@import "@shared/styles/theme/colors.scss";
+
+.timeline {
+  position: relative;
+  list-style: none;
+  max-width: 300px;
+  padding-left: 72px;
+}
+
+.timeline .timeline-item {
+  position: relative;
+  max-width: 200px;
+  margin-bottom: 34px;
+}
+
+.timeline .timeline-item:after {
+  position: absolute;
+  display: block;
+  top: 0;
+}
+
+.timeline .timeline-item:after {
+  background-color: $primary-custom;
+  left: -85px;
+  border-radius: 50%;
+  border-color: $primary-custom;
+  height: 24px;
+  width: 24px;
+  content: "";
+}

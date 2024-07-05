@@ -1,0 +1,31 @@
+.heroSection {
+  height: 342px;
+  max-height: 342px;
+  max-width: 100%;
+  padding-top: 53px;
+  //background: #FFFFFF url('../../../public/RedLines.svg') no-repeat;
+  background-color: #FFFFFF;
+  background-position-x: center;
+  filter: drop-shadow(11px 6px 12px rgba(0.658823549747467,0.658823549747467,0.658823549747467,0.09000000357627869));
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.heroBlock {
+  max-width: 360px;
+  height: 287px;
+  max-height: 287px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heroText {
+  margin-left: 34px;
+  max-width: 147px;
+}
+
+.heroImg {
+  left: 110px;
+  top: -29px;
+  z-index: -2;
+}

@@ -1,6 +1,33 @@
 version: '3.7'
 
 services:
+  nginx:
+    image: nginx:alpine
+    restart: always
+    volumes:
+      - './conf/nginx:/etc/nginx'
+    networks:
+      bot:
+        aliases:
+          - nginx
+    ports:
+      - '80:80'
+      - "443:443"
+  training-bot:
+    build:
+      context: training_bot
+      dockerfile: ../buildfiles/training_bot.dockerfile
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./training_bot/training_bot:/app/training_bot
+    depends_on:
+      - redis
+    networks:
+      bot:
+        aliases:
+          - bot
   bot:
     build:
       context: bot
@@ -28,6 +55,24 @@ services:
       bot:
         aliases:
           - redis
+  webapp:
+    build:
+      context: ./webapp
+      dockerfile: ../buildfiles/webapp.dockerfile
+    restart: always
+    networks:
+      bot:
+        aliases:
+          - webapp
+    env_file:
+      - .env
+    ports:
+      - '8080:8080'
+    volumes:
+      - './webapp/src:/app/src'
+    depends_on:
+      - back
+      - nginx
   back:
     build:
       context: back
