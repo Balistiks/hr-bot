@@ -15,6 +15,9 @@ export class EmployeesService {
   async getWithMinimalUsers(): Promise<Employee> {
     const employees = await this.employeeRepository.find({
       relations: ['users'],
+      where: {
+        hr: true,
+      },
     });
     let minimalUsers = employees[0].users.length;
     let employeeWithMinimalUsers = employees[0];
