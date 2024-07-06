@@ -22,13 +22,13 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
 
     user = await users_service.get_by_tg_id(int(tgid))
     if user['status'] != 'обучается':
-        await callback.message.edit_text(
-            text='Поставить статус',
+        await callback.message.edit_caption(
+            caption='Поставить статус',
             reply_markup=await keyboards.hr.stages.get_status_keyboard(user['status'])
         )
     else:
-        await callback.message.edit_text(
-            text=f'Результаты этапа\n{user['name']}\nЭтап - {user['status']}',
+        await callback.message.edit_caption(
+            caption=f'Результаты этапа\n{user['name']}\nЭтап - {user['status']}',
             reply_markup=keyboards.hr.stages.STAGE_APPLICANT_KEYBOARD
         )
 
@@ -56,8 +56,8 @@ async def get_status(callback: types.CallbackQuery, state: FSMContext, apschedul
             'tgId': callback.from_user.id
         })
         
-    await callback.message.edit_text(
-        text='Статус изменен',
+    await callback.message.edit_caption(
+        caption='Статус изменен',
         reply_markup=keyboards.hr.BACK_LIST_KEYBOARD
     )
 
@@ -65,4 +65,4 @@ async def get_status(callback: types.CallbackQuery, state: FSMContext, apschedul
 @callbacks_router.callback_query(F.data == 'comment')
 async def set_comment(callback: types.CallbackQuery, state: FSMContext):
     await state.set_state(StageCommentState.comment)
-    await callback.message.edit_text(text='Оставьте комментарий')
+    await callback.message.edit_caption(caption='Оставьте комментарий')
