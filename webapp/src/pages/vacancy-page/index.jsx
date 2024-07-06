@@ -45,7 +45,7 @@ const VacancyPage = () => {
         formData.append('file', file);
         await fetchAnswer('answers', 'POST', formData, true);
         await fetchCourse(`courses/${id}`, 'GET')
-        await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+        await fetchAnswers(`answers/byTgId?tgId=732710875`, 'GET')
 
         const nextTest = selectQuestion === (course.questions.length - 2)
         const endCourse = selectQuestion === (course.questions.length - 1)
@@ -87,8 +87,8 @@ const VacancyPage = () => {
         const fetchData = async () => {
             try {
                 await fetchCourse(`courses/${id}`, 'GET')
-                await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
-                await fetchUser(`users/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+                await fetchAnswers(`answers/byTgId?tgId=732710875`, 'GET')
+                await fetchUser(`users/byTgId?tgId=732710875`, 'GET')
             } catch (error) {
                 console.error(error)
             }
@@ -117,7 +117,7 @@ const VacancyPage = () => {
             </section>
             <section className={'d-flex justify-content-center'} style={{paddingTop: 22}}>
                 <Timeline questions={course ? course.questions : undefined}
-                          answers={answers ? answers : undefined}
+                          answers={answers ? answers.sort((a, b) => a.question.number > b.question.number ? 1 : -1) : undefined}
                           showQuestionModal={OnSelectQuestion}
                           showProccesModal={() => setShowSuccessModal(true)}
                 />
