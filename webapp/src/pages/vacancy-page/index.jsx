@@ -45,7 +45,7 @@ const VacancyPage = () => {
         formData.append('file', file);
         await fetchAnswer('answers', 'POST', formData, true);
         await fetchCourse(`courses/${id}`, 'GET')
-        await fetchAnswers(`answers/byTgId?tgId=${tgId}`, 'GET')
+        await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
 
         const nextTest = selectQuestion === (course.questions.length - 2)
         const endCourse = selectQuestion === (course.questions.length - 1)
