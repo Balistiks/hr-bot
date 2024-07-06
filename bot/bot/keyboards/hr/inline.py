@@ -27,7 +27,7 @@ async def get_applicant_keyboard(applicants: list, current_page: int):
     for i in range(start_index, end_index):
         tg_id = applicants[i]['tgId']
         markup.inline_keyboard.append([
-            InlineKeyboardButton(text=applicants[i]['name'], callback_data=f'tgid_{tg_id}')
+            InlineKeyboardButton(text=f'{applicants[i]['name']} - {applicants[i]['phoneNumber']}', callback_data=f'tgid_{tg_id}')
         ])
 
     prev_callback_data = 'prev_page' if current_page > 1 else '#'
