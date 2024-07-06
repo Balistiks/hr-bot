@@ -19,6 +19,7 @@ const VacancyPage = () => {
     const {fetchData: fetchAnswer} = useApi();
     const {data: user, fetchData: fetchUser} = useApi()
     const {fetchData: updateUser} = useApi();
+    const {fetchData: setDate} = useApi();
 
     // States
     const [showQuestionModal, setShowQuestionModal] = useState(false);
@@ -98,6 +99,10 @@ const VacancyPage = () => {
     const sumbitDate = async (date) => {
         setShowCalendarModal(false);
         console.log(date);
+        await setDate('users/date', 'POST', {
+            userId: user.id,
+            date: date,
+        })
     }
 
     return (
