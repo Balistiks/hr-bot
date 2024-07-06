@@ -21,6 +21,6 @@ async def start_hr(message: types.Message, state: FSMContext):
     users = (await employees_service.get_by_tg_id(message.from_user.id))['users']
 
     await message.answer_photo(
-        photo=types.FSInputFile('files/main.png'),
+        photo=types.FSInputFile('files/photos/main.png'),
         reply_markup=await keyboards.hr.get_applicant_keyboard(users, 1)
     )
