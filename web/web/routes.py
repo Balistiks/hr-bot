@@ -16,9 +16,9 @@ async def send_status(request):
         if token == conf.bot.secret_token:
             data = await request.json()
             await bot.send_message(
-                data['employeeTgId'],
-                f'Соискатель {data["name"]}:\n'
-                f'Телефон: {data["phoneNumber"]}\n'
+                data['user']['employee']['tgId'],
+                f'Соискатель {data['user']["name"]}:\n'
+                f'Телефон: {data['user']["phoneNumber"]}\n'
                 f'\nВыбрал дату созвона: {data["date"]}'
             )
             return web.Response()

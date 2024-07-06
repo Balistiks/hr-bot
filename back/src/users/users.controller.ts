@@ -8,6 +8,8 @@ import { SetDateDto } from './dto/set-date.dto';
 import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
+import * as process from 'process';
+
 
 @Controller('users')
 export class UsersController {
@@ -54,11 +56,22 @@ export class UsersController {
       where: {
         id: data.userId,
       },
+      relations: {
+        employee: true,
+      },
     });
-    return this.httpService.post('http://localhost:8080/users/date', {
-      user: user,
-      date: data.date,
-    });
+    return this.httpService.post(
+      'http://web:8080/users/date',
+      {
+        user: user,
+        date: data.date,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.SECRET_TOKEN}`,
+        },
+      },
+    );
   }
 
   @Patch()

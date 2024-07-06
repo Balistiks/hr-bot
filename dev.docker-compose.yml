@@ -110,6 +110,21 @@ services:
       bot:
         aliases:
           - db
+  web:
+    build:
+      context: web
+      dockerfile: ../buildfiles/web.dockerfile
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./web/web:/app/web
+    networks:
+      bot:
+        aliases:
+          - web
 
 networks:
   bot:
