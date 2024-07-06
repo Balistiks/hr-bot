@@ -51,7 +51,7 @@ const VacancyPage = () => {
         const endCourse = selectQuestion === (course.questions.length - 1)
 
         await updateUser('users', 'PATCH', {
-            id: userId,
+            id: user.id,
             question: course.questions[selectQuestion].id,
             status: endCourse ? 'окончил курс' : 'обучается',
             course: id
