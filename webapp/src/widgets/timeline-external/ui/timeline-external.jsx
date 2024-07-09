@@ -7,7 +7,7 @@ import {TimelineItem} from "../../../entites/timeline-item/ui/timeline-item.jsx"
 export const TimelineExternal = ({currentIndex = 0, questions, answers}) => {
     const getStatus = (item, index) => {
         const found = answers.find(function (element) {
-            return element.question.number === item.number;
+            return element.question.id === item.id;
         });
 
         let lastAnsweredQuestion = null;
@@ -32,29 +32,29 @@ export const TimelineExternal = ({currentIndex = 0, questions, answers}) => {
         }
 
         if (nextQuestion) {
-            if (item.number === nextQuestion.number) {
+            if (item.id === nextQuestion.id) {
                 return 'current'
             }
         }
 
-        if (questions[0].number === item.number && !nextQuestion) {
+        if (questions[0].id === item.id && !nextQuestion) {
             return 'current'
         }
 
         return undefined;
     }
 
-    const getProgress = () => {
-        // const currentIndex = questions.indexOf(current);
-        const totalQuestions = questions.length;
-
-        if (currentIndex !== -1) {
-            const progress = Math.round((currentIndex + 1) / totalQuestions * 100);
-            return progress;
-        } else {
-            console.log("Вопрос не найден в массиве.");
-        }
-    }
+    // const getProgress = () => {
+    //     // const currentIndex = questions.indexOf(current);
+    //     const totalQuestions = questions.length;
+    //
+    //     if (currentIndex !== -1) {
+    //         const progress = Math.round((currentIndex + 1) / totalQuestions * 100);
+    //         return progress;
+    //     } else {
+    //         console.log("Вопрос не найден в массиве.");
+    //     }
+    // }
 
     return (
         <Row>
@@ -72,9 +72,9 @@ export const TimelineExternal = ({currentIndex = 0, questions, answers}) => {
                     }
                 </div>
             </Col>
-            <Col xs={12}>
-                <ProgressBar now={getProgress()} className={styles.CustomProgress}/>
-            </Col>
+            {/*<Col xs={12}>*/}
+            {/*    <ProgressBar now={getProgress()} className={styles.CustomProgress}/>*/}
+            {/*</Col>*/}
         </Row>
     )
 }

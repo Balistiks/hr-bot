@@ -1,7 +1,7 @@
 import {CustomButton, Text} from "@shared/ui/index.js";
 
 import styles from './styles.module.scss';
-import {Form} from "react-bootstrap";
+import {Col, Form, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {TimelineExternal} from "@widgets/timeline-external/index.js";
 import {SuccessExternalModal} from "../../entites/success-external-modal/index.js";
@@ -27,6 +27,8 @@ const ExternalCoursePage = () => {
     const [showEnd, setShowEnd] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [file, setFile] = useState();
+    const [showNext, setShowNext] = useState(false);
+    const [showBack, setShowBack] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,23 +37,19 @@ const ExternalCoursePage = () => {
                     if (student) {
                         if (student.question) {
                             const index = position.questions.findIndex(task =>
-                                task.id === student.question.id &&
-                                task.number === student.question.number &&
-                                task.name === student.question.name &&
-                                task.text === student.question.text
+                                task.id === student.question.id
                             );
                             setCurrentQuestion(student.paid ? index : 0);
+                            setShowBack(index !== 0 && index !== - 1)
                             return;
                         }
                     } else if (employee) {
                         if (employee.question) {
                             const index = position.questions.findIndex(task =>
-                                task.id === employee.question.id &&
-                                task.number === employee.question.number &&
-                                task.name === employee.question.name &&
-                                task.text === employee.question.text
+                                task.id === employee.question.id
                             );
-                            setCurrentQuestion(index);
+                            setCurrentQuestion(index === -1 ? 0 : index);
+                            setShowBack(index !== 0 && index !== - 1)
                             return;
                         }
                     }
@@ -105,17 +103,19 @@ const ExternalCoursePage = () => {
         if (student) {
             await updateStudent('students', 'PATCH', {
                 id: Number(student.id),
-                question: Number(position.questions[currentQuestion + 1].id),
+                question: Number(currentQuestion + 1 <= position.questions.length - 1 ? position.questions[currentQuestion + 1].id : position.questions[position.questions.length - 1].id),
                 position: Number(id)
             })
         } else if (employee) {
             await updateEmployee('employees', 'PATCH', {
                 id: Number(employee.id),
-                question: Number(position.questions[currentQuestion + 1].id),
+                question: Number(currentQuestion + 1 <= position.questions.length - 1 ? position.questions[currentQuestion + 1].id : position.questions[position.questions.length - 1].id),
                 position: Number(id)
             })
         }
 
+        await fetchStudent(`students/byTgId?tgId=${tgId}`, 'GET')
+        await fetchEmployee(`employees/byTgId?tgId=${tgId}`, 'GET')
         setShowSuccess(true);
         setFile(undefined);
     }
@@ -194,10 +194,32 @@ const ExternalCoursePage = () => {
     const FormSubmit = () => {
         if (position && !positionLoad ) {
             if (currentQuestion === position.questions.length - 1) {
-                return;
+                let lastAnsweredQuestion = null;
+                answers.forEach(answer => {
+                    const correspondingQuestion = position.questions.find(question => question.id === answer.question.id);
+                    if (correspondingQuestion) {
+                        lastAnsweredQuestion = correspondingQuestion;
+                    }
+                });
+
+                if (lastAnsweredQuestion.id === position.questions[position.questions.length - 1].id) {
+                    return;
+                }
             }
 
             if (employee) {
+                let max_index = position.questions.findIndex(task =>
+                    task.id === employee.question.id
+                );
+
+                if (max_index === -1) {
+                    max_index = 0;
+                }
+
+                if (max_index !== currentQuestion) {
+                    return;
+                }
+
                 return (
                     <SectionForm/>
                 )
@@ -208,17 +230,27 @@ const ExternalCoursePage = () => {
             }
 
             if (student.paid) {
+                let max_index = position.questions.findIndex(task =>
+                    task.id === student.question.id
+                );
+
+                if (max_index === -1) {
+                    max_index = 0;
+                }
+
+                if (max_index !== currentQuestion) {
+                    return;
+                }
+
                 return (
                     <SectionForm/>
                 )
             }
+
             if (position && !positionLoad && student) {
                 if (student.question) {
                     const index = position.questions.findIndex(task =>
-                        task.id === student.question.id &&
-                        task.number === student.question.number &&
-                        task.name === student.question.name &&
-                        task.text === student.question.text
+                        task.id === student.question.id
                     );
                     if (index !== 1)
                     {
@@ -233,6 +265,34 @@ const ExternalCoursePage = () => {
                 }
             }
         }
+    }
+
+    const backAnswer = () => {
+        const index = currentQuestion - 1 >= 0 ? currentQuestion - 1 : 0;
+        setShowNext(true);
+        setShowBack(index !== 0);
+        setCurrentQuestion(index);
+    }
+
+    const nextAnswer = () => {
+        let max_index = 0;
+        if (student) {
+            if (student.question) {
+                max_index = position.questions.findIndex(task =>
+                    task.id === student.question.id
+                );
+            }
+        } else if (employee) {
+            if (employee.question) {
+                max_index = position.questions.findIndex(task =>
+                    task.id === employee.question.id
+                );
+            }
+        }
+        const index = currentQuestion + 1 <= max_index ? currentQuestion + 1 : max_index;
+        setShowNext(currentQuestion + 1 < max_index);
+        setShowBack(index > 0);
+        setCurrentQuestion(index);
     }
 
     return (
@@ -252,9 +312,25 @@ const ExternalCoursePage = () => {
                 }
             </section>
             <section className={styles.questionSection}>
-                <Text typeText={'light'} sizeText={'24'} color={'dark'} style={{textAlign: 'center'}}>
-                    {position && !positionLoad && position.questions[currentQuestion] && position.questions[currentQuestion].name}
-                </Text>
+                <Row className={'m-auto'} style={{maxWidth: 360}}>
+                    <Col xs={3} className={'d-flex justify-content-end align-items-center'}>
+                        {showBack &&
+                            <img src={window.location.origin + '/Back.svg'} style={{cursor: 'pointer'}}
+                                 onClick={backAnswer}/>
+                        }
+                    </Col>
+                    <Col xs={6}>
+                        <Text typeText={'light'} sizeText={'24'} color={'dark'} style={{textAlign: 'center'}}>
+                            {position && !positionLoad && position.questions[currentQuestion] && position.questions[currentQuestion].name}
+                        </Text>
+                    </Col>
+                    <Col xs={3} className={'d-flex justify-content-start align-items-center'}>
+                        {showNext &&
+                            <img src={window.location.origin + '/Next_Black.svg'} style={{cursor: 'pointer'}}
+                                 onClick={nextAnswer}/>
+                        }
+                    </Col>
+                </Row>
                 <div className={styles.questionBlock}>
                     <Text typeText={'regular'} sizeText={'16'} color={'gray'} style={{paddingLeft: 25}}>
                         {position && !positionLoad && position.questions[currentQuestion] && position.questions[currentQuestion].text}

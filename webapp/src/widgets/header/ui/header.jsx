@@ -22,28 +22,17 @@ export const Header = () => {
             <div className={`${styles.containerHeader}`}>
                 <Row>
                     <Col xs={3} className={'d-flex align-items-center'}>
-                        <img src={window.location.origin + '/Back.svg'}/>
                     </Col>
                     <Col xs={6} className={'d-flex align-items-center justify-content-center'}>
                         <img src={window.location.origin + '/Logo.svg'}/>
                     </Col>
                     <Col xs={3} className={'d-flex align-items-center justify-content-end'}>
-                        {showHome
-                            ?
+                        {showHome &&
                             <div className={'d-flex'}>
                                 <Link to={external ? '/external' : '/'}>
                                     <img src={window.location.origin + '/House.svg'}/>
                                 </Link>
-                                {!external &&
-                                    <img src={window.location.origin + '/User.svg'} style={{marginLeft: 19}}/>
-                                }
                             </div>
-                            :
-                            <>
-                                {!external &&
-                                    <img src={window.location.origin + '/User.svg'}/>
-                                }
-                            </>
                         }
                     </Col>
                 </Row>

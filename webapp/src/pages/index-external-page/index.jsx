@@ -45,7 +45,7 @@ const IndexExternalPage = () => {
                     </div>
                 </div>
             </section>
-            <section className={'d-flex flex-column justify-content-center text-center'} style={{paddingTop: 30}}>
+            <section className={'d-flex flex-column justify-content-center text-center'} style={{marginTop: 30}}>
                 <Text typeText={'bold'} sizeText={'24'} color={'black'}>
                     АКТУАЛЬНЫЕ ВАКАНСИИ
                 </Text>

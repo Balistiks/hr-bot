@@ -3,16 +3,17 @@ import {Timeline} from "@widgets/timeline/index.js";
 import {QuestionModal} from "@features/question-modal/index.js";
 import {useEffect, useState} from "react";
 import {SuccessModal} from "../../entites/success-modal/index.js";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useApi} from "@shared/lib/index.js";
 import {EndCourseModal} from "../../entites/end-course-modal/index.js";
 import {CalendarModal} from "@features/calendar-modal/index.js";
 
-const userId = 2; // TODO: Поменять на ID из вашего того самого
+const userId = 1; // TODO: Поменять на ID из вашего того самого
 const tgId = 1; // TODO: Поменять на ID с библиотеки телеграмма
 
 const VacancyPage = () => {
     const {id} = useParams();
+    const navigator = useNavigate();
 
     // API
     const {data: course, loading: courseLoad, fetchData: fetchCourse} = useApi();
@@ -96,7 +97,13 @@ const VacancyPage = () => {
 
     const sumbitDate = async (date) => {
         setShowCalendarModal(false);
-        console.log(date);
+        await updateUser('users', 'PATCH', {
+            id: userId,
+            question: course.questions[selectQuestion].id,
+            status: 'обучается',
+            course: null
+        })
+        navigator('/');
     }
 
     return (
