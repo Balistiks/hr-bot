@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import {Col, Form, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {TimelineExternal} from "@widgets/timeline-external/index.js";
-import {SuccessExternalModal} from "../../entites/success-external-modal/index.js";
+// import {SuccessExternalModal} from "../../entites/success-external-modal/index.js";
 import {EndCourseExternalModal} from "../../entites/end-course-external-modal/index.js";
 import {useNavigate, useParams} from "react-router-dom";
 import {useApi} from "@shared/lib/index.js";
@@ -23,7 +23,7 @@ const ExternalCoursePage = () => {
     const {fetchData: updateStudent} = useApi();
     const {fetchData: updateEmployee} = useApi();
 
-    const [showSuccess, setShowSuccess] = useState(false);
+    // const [showSuccess, setShowSuccess] = useState(false);
     const [showEnd, setShowEnd] = useState(false);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [file, setFile] = useState();
@@ -40,7 +40,9 @@ const ExternalCoursePage = () => {
                                 task.id === student.question.id
                             );
                             setCurrentQuestion(student.paid ? index : 0);
-                            setShowBack(index !== 0 && index !== - 1)
+                            if (student.paid) {
+                                setShowBack(index !== 0 && index !== - 1)
+                            }
                             return;
                         }
                     } else if (employee) {
@@ -116,7 +118,13 @@ const ExternalCoursePage = () => {
 
         await fetchStudent(`students/byTgId?tgId=${tgId}`, 'GET')
         await fetchEmployee(`employees/byTgId?tgId=${tgId}`, 'GET')
-        setShowSuccess(true);
+
+        if (student) {
+            if (!student.paid) {
+                setShowEnd(true);
+            }
+        }
+        // setShowSuccess(true);
         setFile(undefined);
     }
 
@@ -134,14 +142,14 @@ const ExternalCoursePage = () => {
         }
     }
 
-    const onCloseSuccess = () => {
-        setShowSuccess(false)
-        if (student) {
-            if (!student.paid) {
-                setShowEnd(true);
-            }
-        }
-    }
+    // const onCloseSuccess = () => {
+    //     setShowSuccess(false)
+    //     if (student) {
+    //         if (!student.paid) {
+    //             setShowEnd(true);
+    //         }
+    //     }
+    // }
 
     const onCloseEnd = () => {
         setShowEnd(false);
@@ -338,7 +346,7 @@ const ExternalCoursePage = () => {
                 </div>
             </section>
             <FormSubmit/>
-            <SuccessExternalModal show={showSuccess} handleClose={() => onCloseSuccess()}/>
+            {/*<SuccessExternalModal show={showSuccess} handleClose={() => onCloseSuccess()}/>*/}
             <EndCourseExternalModal show={showEnd} handleClose={() => onCloseEnd()}/>
         </main>
     )

@@ -2,7 +2,7 @@ import {Text} from "@shared/ui/index.js";
 import {Timeline} from "@widgets/timeline/index.js";
 import {QuestionModal} from "@features/question-modal/index.js";
 import {useEffect, useState} from "react";
-import {SuccessModal} from "../../entites/success-modal/index.js";
+// import {SuccessModal} from "../../entites/success-modal/index.js";
 import {useNavigate, useParams} from "react-router-dom";
 import {useApi} from "@shared/lib/index.js";
 import {EndCourseModal} from "../../entites/end-course-modal/index.js";
@@ -23,7 +23,7 @@ const VacancyPage = () => {
 
     // States
     const [showQuestionModal, setShowQuestionModal] = useState(false);
-    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    // const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [showCalendarModal, setShowCalendarModal] = useState(false);
     const [showNextTest, setNextTest] = useState(false);
     const [selectQuestion, setSelectQuestion] = useState(0);
@@ -63,7 +63,7 @@ const VacancyPage = () => {
         }
 
         if (!endCourse) {
-            setShowSuccessModal(true)
+            // setShowSuccessModal(true)
         }
 
         if (endCourse) {
@@ -120,7 +120,7 @@ const VacancyPage = () => {
                 <Timeline questions={course ? course.questions : undefined}
                           answers={answers ? answers : undefined}
                           showQuestionModal={OnSelectQuestion}
-                          showProccesModal={() => setShowSuccessModal(true)}
+                          showProccesModal={() => console.log('1')}
                 />
             </section>
             <QuestionModal show={showQuestionModal}
@@ -132,7 +132,7 @@ const VacancyPage = () => {
                            file={file}
                            setFile={setFile}
             />
-            <SuccessModal show={showSuccessModal} handleClose={() => setShowSuccessModal(false)}/>
+            {/*<SuccessModal show={showSuccessModal} handleClose={() => setShowSuccessModal(false)}/>*/}
             <EndCourseModal show={showNextTest} handleClose={() => startTest()}/>
             <CalendarModal show={showCalendarModal} handleClose={() => setShowCalendarModal(false)} submitDate={sumbitDate}/>
         </main>
