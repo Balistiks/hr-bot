@@ -28,7 +28,7 @@ const IndexExternalPage = () => {
 
     return (
         <main>
-            <section className={styles.heroSection} style={{ marginBottom: 30 }}>
+            <section className={styles.heroSection} style={{ marginBottom: 50 }}>
                 <img src={window.location.origin + '/BackgroundExternalHero.svg'} className={'position-absolute top-0 start-0'}/>
                 <img src={window.location.origin + '/ManHero.png'} className={`position-absolute ${styles.heroMan}`}/>
                 <div className={`${styles.heroCard}`}>
@@ -39,11 +39,9 @@ const IndexExternalPage = () => {
                         <Text typeText={'regular'} sizeText={'17'} color={'black'} style={{maxWidth: 271}}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit
                         </Text>
-                        {student && !student.paid && student.question && !employee &&
-                            <CustomButton typeButton={'white-icon-rounded'} style={{marginTop: 9}}>
-                                оплатить обучение <img src={window.location.origin + '/Next.svg'} style={{marginLeft: 12}}/>
-                            </CustomButton>
-                        }
+                        <CustomButton typeButton={'white-icon-rounded'} style={{marginTop: 9}}>
+                            оплатить обучение <img src={window.location.origin + '/Next.svg'} style={{marginLeft: 12}}/>
+                        </CustomButton>
                     </div>
                 </div>
             </section>
