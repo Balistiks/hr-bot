@@ -30,6 +30,9 @@ const VacancyPage = () => {
     const [selectQuestion, setSelectQuestion] = useState(0);
     const [file, setFile] = useState();
 
+    const navigate = useNavigate();
+
+
     const submitAnswer = async (event) => {
         const formData = new FormData();
 
@@ -69,6 +72,7 @@ const VacancyPage = () => {
 
         if (endCourse) {
             setShowCalendarModal(true);
+            navigate('/')
         }
     }
 

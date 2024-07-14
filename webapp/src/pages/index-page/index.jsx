@@ -13,7 +13,7 @@ const IndexPage = () => {
     const navigate = useNavigate();
     const [showCalendarModal, setShowCalendarModal] = useState(false);
     const {data: user, loading: userLoad, fetchData: fetchUser} = useApi();
-    const {data: date, fetchData: setDate} = useApi();
+    const {fetchData: setDate} = useApi();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,7 +24,7 @@ const IndexPage = () => {
             }
         };
         fetchData();
-    }, [date]);
+    }, []);
 
     if (user) {
         if (user.course) {
@@ -38,6 +38,7 @@ const IndexPage = () => {
             userId: user.id,
             date: date,
         })
+        window.location.reload();
     }
 
     return (
