@@ -55,7 +55,7 @@ const VacancyPage = () => {
             id: user.id,
             question: course.questions[selectQuestion].id,
             status: endCourse ? 'окончил курс' : 'обучается',
-            course: id ? !endCourse : null
+            course: !endCourse ? id : null
         })
 
         if (nextTest) {
