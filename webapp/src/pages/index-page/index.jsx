@@ -13,8 +13,7 @@ const IndexPage = () => {
     const navigate = useNavigate();
     const [showCalendarModal, setShowCalendarModal] = useState(false);
     const {data: user, loading: userLoad, fetchData: fetchUser} = useApi();
-    const [enabledVacancy, setEnabledVacancy] = useState(true); // true - показывать вакансии
-    const {fetchData: setDate} = useApi();
+    const {data: date, fetchData: setDate} = useApi();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,7 +24,7 @@ const IndexPage = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [date]);
 
     if (user) {
         if (user.course) {
@@ -75,7 +74,7 @@ const IndexPage = () => {
                             </Text>
                             :
                             <>
-                                {!(user && user.selectedDate) ?
+                                {(user && !user.selectedDate) ?
                                     <Text typeText={'regular'} sizeText={'15'} color={'gray'} style={{marginTop: 9}}>
                                         Выберите время для онлайн собеседования с HR
                                     </Text>
