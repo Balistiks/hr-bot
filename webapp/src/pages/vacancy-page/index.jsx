@@ -2,17 +2,18 @@ import {Text} from "@shared/ui/index.js";
 import {Timeline} from "@widgets/timeline/index.js";
 import {QuestionModal} from "@features/question-modal/index.js";
 import {useEffect, useState} from "react";
-import {SuccessModal} from "../../entites/success-modal/index.js";
-import {useParams} from "react-router-dom";
+// import {SuccessModal} from "../../entites/success-modal/index.js";
+import {useNavigate, useParams} from "react-router-dom";
 import {useApi} from "@shared/lib/index.js";
 import {EndCourseModal} from "../../entites/end-course-modal/index.js";
 import {CalendarModal} from "@features/calendar-modal/index.js";
 
-const userId = 2; // TODO: Поменять на ID из вашего того самого
+const userId = 1; // TODO: Поменять на ID из вашего того самого
 const tgId = 1; // TODO: Поменять на ID с библиотеки телеграмма
 
 const VacancyPage = () => {
     const {id} = useParams();
+    const navigator = useNavigate();
 
     // API
     const {data: course, loading: courseLoad, fetchData: fetchCourse} = useApi();
@@ -22,7 +23,7 @@ const VacancyPage = () => {
 
     // States
     const [showQuestionModal, setShowQuestionModal] = useState(false);
-    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    // const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [showCalendarModal, setShowCalendarModal] = useState(false);
     const [showNextTest, setNextTest] = useState(false);
     const [selectQuestion, setSelectQuestion] = useState(0);
@@ -62,7 +63,7 @@ const VacancyPage = () => {
         }
 
         if (!endCourse) {
-            setShowSuccessModal(true)
+            // setShowSuccessModal(true)
         }
 
         if (endCourse) {
@@ -96,7 +97,13 @@ const VacancyPage = () => {
 
     const sumbitDate = async (date) => {
         setShowCalendarModal(false);
-        console.log(date);
+        await updateUser('users', 'PATCH', {
+            id: userId,
+            question: course.questions[selectQuestion].id,
+            status: 'обучается',
+            course: null
+        })
+        navigator('/');
     }
 
     return (
@@ -113,7 +120,7 @@ const VacancyPage = () => {
                 <Timeline questions={course ? course.questions : undefined}
                           answers={answers ? answers : undefined}
                           showQuestionModal={OnSelectQuestion}
-                          showProccesModal={() => setShowSuccessModal(true)}
+                          showProccesModal={() => console.log('1')}
                 />
             </section>
             <QuestionModal show={showQuestionModal}
@@ -125,7 +132,7 @@ const VacancyPage = () => {
                            file={file}
                            setFile={setFile}
             />
-            <SuccessModal show={showSuccessModal} handleClose={() => setShowSuccessModal(false)}/>
+            {/*<SuccessModal show={showSuccessModal} handleClose={() => setShowSuccessModal(false)}/>*/}
             <EndCourseModal show={showNextTest} handleClose={() => startTest()}/>
             <CalendarModal show={showCalendarModal} handleClose={() => setShowCalendarModal(false)} submitDate={sumbitDate}/>
         </main>

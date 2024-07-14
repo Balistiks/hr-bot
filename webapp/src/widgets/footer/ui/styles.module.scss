@@ -1,15 +1,18 @@
 @import "@shared/styles/theme/colors.scss";
 
 .blockFooter {
-  background-color: $primary-custom;
+  background-color: #FFFFFF;
 }
 
 .containerFooter {
   display: flex;
+  border-top: 1px solid $primary-custom;
+  color: $dark-custom;
   justify-content: space-between;
-  max-width: 360px;
-  padding: 17px 16px;
-  font-size: 10px;
+  max-width: 328px;
+  padding: 9px 0 15px 0;
+  margin: 0 16px;
+  font-size: 13px;
 }
 
 .iconFooterLeft {
