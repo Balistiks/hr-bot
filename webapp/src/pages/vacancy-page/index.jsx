@@ -55,7 +55,7 @@ const VacancyPage = () => {
             id: user.id,
             question: course.questions[selectQuestion].id,
             status: endCourse ? 'окончил курс' : 'обучается',
-            course: id
+            course: id ? !endCourse : null
         })
 
         if (nextTest) {
@@ -106,7 +106,6 @@ const VacancyPage = () => {
         await updateUser('users', 'PATCH', {
             id: user.id,
             question: course.questions[selectQuestion].id,
-            course: null
         })
         navigator('/');
     }
