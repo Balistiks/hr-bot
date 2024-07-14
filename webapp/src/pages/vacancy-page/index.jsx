@@ -106,7 +106,6 @@ const VacancyPage = () => {
         await updateUser('users', 'PATCH', {
             id: user.id,
             question: course.questions[selectQuestion].id,
-            status: 'обучается',
             course: null
         })
         navigator('/');

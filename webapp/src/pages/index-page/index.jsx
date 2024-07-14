@@ -13,13 +13,16 @@ const IndexPage = () => {
     const navigate = useNavigate();
     const [showCalendarModal, setShowCalendarModal] = useState(false);
     const {data: user, loading: userLoad, fetchData: fetchUser} = useApi();
-    const [enabledVacancy, setEnabledVacancy] = useState(false); // true - показывать вакансии
-    const [date, setDate] = useState(false); // true - показывать информацию, что дата собеса выбрана
+    const [enabledVacancy, setEnabledVacancy] = useState(true); // true - показывать вакансии
+    const {fetchData: setDate} = useApi();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 await fetchUser(`users/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+                if (user && user.status === 'окончил курс') {
+                    setEnabledVacancy(false);
+                }
             } catch (error) {
                 console.error(error)
             }
@@ -35,8 +38,10 @@ const IndexPage = () => {
 
     const sumbitDate = async (date) => {
         setShowCalendarModal(false);
-        console.log(date);
-        setDate(true);
+        await setDate('users/date', 'POST', {
+            userId: user.id,
+            date: date,
+        })
     }
 
     return (
@@ -73,7 +78,7 @@ const IndexPage = () => {
                             </Text>
                             :
                             <>
-                                {!date ?
+                                {!(user && user.selectedDate) ?
                                     <Text typeText={'regular'} sizeText={'15'} color={'gray'} style={{marginTop: 9}}>
                                         Выберите время для онлайн собеседования с HR
                                     </Text>
@@ -88,7 +93,7 @@ const IndexPage = () => {
                             <Vacancy/>
                             :
                             <>
-                                {date
+                                {(user && user.selectedDate)
                                     ?
                                     <div className={styles.infoBlockDate}>
                                         <Text typeText={'regular'} sizeText={'16'} color={'gray'}>
