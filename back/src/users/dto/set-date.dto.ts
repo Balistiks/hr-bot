@@ -6,6 +6,6 @@ export class SetDateDto {
   userId: number;
 
   @IsNotEmpty()
-  @IsString()
-  date: string;
+  @IsDate()
+  date: Date;
 }

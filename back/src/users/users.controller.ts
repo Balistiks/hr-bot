@@ -60,11 +60,15 @@ export class UsersController {
         employee: true,
       },
     });
+    const date = data.date;
+    user.selectedDate = date;
+    await this.usersService.save(user);
+    const dateString = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
     return this.httpService.post(
       'http://web:8080/users/date',
       {
         user: user,
-        date: data.date,
+        date: dateString,
       },
       {
         headers: {

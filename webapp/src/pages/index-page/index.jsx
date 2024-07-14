@@ -19,7 +19,7 @@ const IndexPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await fetchUser(`users/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+                await fetchUser(`users/byTgId?tgId=732710875`, 'GET')
             } catch (error) {
                 console.error(error)
             }
@@ -30,8 +30,6 @@ const IndexPage = () => {
     if (user) {
         if (user.course) {
             navigate(`vacancy/${user.course.id}`)
-        } else if (user.status === 'окончил курс') {
-            setEnabledVacancy(false);
         }
     }
 
@@ -68,9 +66,9 @@ const IndexPage = () => {
                     </section>
                     <section className={'text-center'} style={{paddingTop: 30}}>
                         <Text typeText={'bold'} sizeText={'24'}>
-                            {enabledVacancy ? 'ВАКАНСИИ' : 'СОБЕСЕДОВАНИЕ'}
+                            {user && user.status !== 'окончил курс' ? 'ВАКАНСИИ' : 'СОБЕСЕДОВАНИЕ'}
                         </Text>
-                        {enabledVacancy
+                        {user && user.status !== 'окончил курс'
                             ?
                             <Text typeText={'regular'} sizeText={'16'} color={'gray'}>
                                 Акутальные вакансии в салонах ЦирюльникЪ
@@ -87,7 +85,7 @@ const IndexPage = () => {
                                 }
                             </>
                         }
-                        {enabledVacancy
+                        {user && user.status !== 'окончил курс'
                             ?
                             <Vacancy/>
                             :
