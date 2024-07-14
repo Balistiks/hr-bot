@@ -1,3 +1,5 @@
+@import "@shared/styles/theme/colors.scss";
+
 .heroSection {
   height: 342px;
   max-height: 342px;
@@ -9,6 +11,7 @@
   filter: drop-shadow(11px 6px 12px rgba(0.658823549747467,0.658823549747467,0.658823549747467,0.09000000357627869));
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+  overflow-x: clip;
 }
 
 .heroBlock {
@@ -25,7 +28,25 @@
 }
 
 .heroImg {
-  left: 110px;
-  top: -29px;
+  left: 80px;
+  top: -59px;
   z-index: -2;
+  width: 332px;
+  height: 348px;
+  object-fit: cover;
+}
+
+.infoBlockDate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 328px;
+  height: 92px;
+  border: 1px solid $secondary-custom;
+  border-radius: 8px;
+  margin-top: 12px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(110, 110, 110, 0.10);
 }

@@ -23,6 +23,7 @@ export class CoursesController {
   async find(@Query('request') request?: string): Promise<Course[]> {
     return await this.coursesService.find({
       where: request ? JSON.parse(request) : null,
+      relations: ['questions'],
     });
   }
 }

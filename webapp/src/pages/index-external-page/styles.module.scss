@@ -7,6 +7,15 @@
   margin-right: auto;
   margin-left: auto;
   margin-top: -72px;
+  overflow-x: clip;
+}
+
+.heroMan {
+  top: 48px;
+  left: -30px;
+  width: 426px;
+  height: 538px;
+  object-fit: cover;
 }
 
 .heroCard {

@@ -5,7 +5,7 @@ import './timeline.scss';
 export const Timeline = ({showQuestionModal, showProccesModal, questions, answers}) => {
     const getStatus = (item, index) => {
         const found = answers.find(function (element) {
-            return element.question.number === item.number;
+            return element.question.id === item.id;
         });
 
         let lastAnsweredQuestion = null;
