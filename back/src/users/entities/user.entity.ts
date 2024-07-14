@@ -43,6 +43,9 @@ export class User {
   })
   status: string;
 
+  @Column('timestamptz', { nullable: false })
+  selectedDate: Date;
+
   @ManyToOne(() => Question, (question) => question.users)
   question: Question;
 

@@ -1,6 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
 import {
+  IsDate,
   IsEmpty,
   IsNotEmpty,
   IsNumber,
@@ -25,6 +26,10 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 
   @IsOptional()
   course: Course;
+
+  @IsOptional()
+  @IsDate()
+  selectedDate: Date;
 
   @IsEmpty()
   answers: Answer[];
