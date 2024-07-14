@@ -20,9 +20,6 @@ const IndexPage = () => {
         const fetchData = async () => {
             try {
                 await fetchUser(`users/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
-                if (user && user.status === 'окончил курс') {
-                    setEnabledVacancy(false);
-                }
             } catch (error) {
                 console.error(error)
             }
@@ -33,6 +30,8 @@ const IndexPage = () => {
     if (user) {
         if (user.course) {
             navigate(`vacancy/${user.course.id}`)
+        } else if (user.status === 'окончил курс') {
+            setEnabledVacancy(false);
         }
     }
 
