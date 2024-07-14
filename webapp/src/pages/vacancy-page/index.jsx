@@ -46,7 +46,7 @@ const VacancyPage = () => {
         formData.append('file', file);
         await fetchAnswer('answers', 'POST', formData, true);
         await fetchCourse(`courses/${id}`, 'GET')
-        await fetchAnswers(`answers/byTgId?tgId=732710875`, 'GET')
+        await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
 
         const nextTest = selectQuestion === (course.questions.length - 2)
         const endCourse = selectQuestion === (course.questions.length - 1)
@@ -88,8 +88,8 @@ const VacancyPage = () => {
         const fetchData = async () => {
             try {
                 await fetchCourse(`courses/${id}`, 'GET')
-                await fetchAnswers(`answers/byTgId?tgId=732710875`, 'GET')
-                await fetchUser(`users/byTgId?tgId=732710875`, 'GET')
+                await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+                await fetchUser(`users/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
             } catch (error) {
                 console.error(error)
             }
@@ -102,10 +102,6 @@ const VacancyPage = () => {
         await setDate('users/date', 'POST', {
             userId: user.id,
             date: date,
-        })
-        await updateUser('users', 'PATCH', {
-            id: user.id,
-            question: course.questions[selectQuestion].id,
         })
         navigator('/');
     }
