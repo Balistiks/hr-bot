@@ -28,7 +28,7 @@ const IndexExternalPage = () => {
 
     return (
         <main>
-            <section className={styles.heroSection}>
+            <section className={styles.heroSection} style={{ marginBottom: 30 }}>
                 <img src={window.location.origin + '/BackgroundExternalHero.svg'} className={'position-absolute top-0 start-0'}/>
                 <img src={window.location.origin + '/ManHero.png'} className={`position-absolute ${styles.heroMan}`}/>
                 <div className={`${styles.heroCard}`}>
@@ -47,7 +47,7 @@ const IndexExternalPage = () => {
                     </div>
                 </div>
             </section>
-            <section className={'d-flex flex-column justify-content-center text-center'} style={{marginTop: 30}}>
+            <section className={'d-flex flex-column justify-content-center text-center'}>
                 <Text typeText={'bold'} sizeText={'24'} color={'black'}>
                     АКТУАЛЬНЫЕ ВАКАНСИИ
                 </Text>
