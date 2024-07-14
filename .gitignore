@@ -14,5 +14,3 @@ data/
 !.vscode/extensions.json
 
 docker-compose.yml
-
-db/migrations/
