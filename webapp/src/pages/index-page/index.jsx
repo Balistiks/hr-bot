@@ -59,8 +59,6 @@ const IndexPage = () => {
                             </div>
                             <img src={'./ManHero.png'}
                                  className={`position-absolute ${styles.heroImg}`}/> {/* width={302} height={318} */}
-                            <CustomButton typeButton={'outline'} className={'position-absolute'}
-                                          style={{left: 33, bottom: 10}}>Приступить к обучению</CustomButton>
                         </div>
                     </section>
                     <section className={'text-center'} style={{paddingTop: 30}}>
