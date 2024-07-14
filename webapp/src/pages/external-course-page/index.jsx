@@ -117,8 +117,8 @@ const ExternalCoursePage = () => {
             })
         }
 
-        await fetchStudent(`students/byTgId?tgId=${tgId}`, 'GET')
-        await fetchEmployee(`employees/byTgId?tgId=${tgId}`, 'GET')
+        await fetchStudent(`students/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+        await fetchEmployee(`employees/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
 
         if (student) {
             if (!student.paid) {

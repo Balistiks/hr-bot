@@ -16,7 +16,7 @@ export const Vacancy = () => {
         setSelectCity(name);
         const request = `courses?request={"city":{"name":"${name}"}}`;
         await fetchCourses(request, 'GET')
-        await fetchAnswers(`answers/byTgId?tgId=${tgId}`, 'GET')
+        await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
     }
 
     useEffect(() => {
