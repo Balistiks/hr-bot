@@ -59,9 +59,9 @@ const ExternalCoursePage = () => {
                     setCurrentQuestion(0)
                 } else {
                     await fetchPosition(`positions/${id}`, 'GET')
-                    await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
-                    await fetchStudent(`students/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
-                    await fetchEmployee(`employees/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+                    await fetchAnswers(`answers/byTgId?tgId=732710875`, 'GET')
+                    await fetchStudent(`students/byTgId?tgId=732710875`, 'GET')
+                    await fetchEmployee(`employees/byTgId?tgId=732710875`, 'GET')
                 }
             } catch (error) {
                 console.error(error)
@@ -95,7 +95,7 @@ const ExternalCoursePage = () => {
 
         await fetchAnswer('answers', 'POST', formData, true);
         await fetchPosition(`positions/${id}`, 'GET')
-        await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+        await fetchAnswers(`answers/byTgId?tgId=732710875`, 'GET')
 
         if (student) {
             setCurrentQuestion(student.paid ? currentQuestion + 1 > currentQuestion.length - 1 ? currentQuestion.length - 1 : currentQuestion + 1 : 0);
@@ -117,8 +117,8 @@ const ExternalCoursePage = () => {
             })
         }
 
-        await fetchStudent(`students/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
-        await fetchEmployee(`employees/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+        await fetchStudent(`students/byTgId?tgId=732710875`, 'GET')
+        await fetchEmployee(`employees/byTgId?tgId=732710875`, 'GET')
 
         if (student) {
             if (!student.paid) {
@@ -217,9 +217,12 @@ const ExternalCoursePage = () => {
             }
 
             if (employee) {
-                let max_index = position.questions.findIndex(task =>
-                    task.id === employee.question.id
-                );
+                let max_index = 0
+                if (employee.question) {
+                    max_index = position.questions.findIndex(task =>
+                      task.id === employee.question.id
+                    );
+                }
 
                 if (max_index === -1) {
                     max_index = 0;
