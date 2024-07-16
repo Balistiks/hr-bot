@@ -35,14 +35,28 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
 
 @callbacks_router.callback_query(F.data.startswith('question_'))
 async def get_data_state(callback: types.CallbackQuery, state: FSMContext):
-    question_id = callback.data.split('_')[1]
-    await state.update_data(question_id=question_id)
+    data = callback.data.split('_')
+    question_id = int(data[1])
 
-    await callback.message.edit_caption(
-        caption='Оставьте комментарий',
-        reply_markup=keyboards.hr.stages.STAGE_APPLICANT_KEYBOARD
-    )
+    tg_id = callback.from_user.id
+    user_data = await users_service.get_by_tg_id(tg_id)
 
+    if user_data and 'answers' in user_data:
+        question_text = None
+        answer_text = None
+
+        for answer in user_data['answers']:
+            if 'question' in answer and answer['question']['id'] == question_id:
+                question_text = answer['question']['text']
+                answer_text = answer['text']
+
+        if question_text and answer_text:
+            await state.update_data(question_id=question_id)
+
+            await callback.message.edit_caption(
+                caption=f'Вопрос: {question_text}\nОтвет: {answer_text}',
+                reply_markup=await keyboards.hr.stages.create_stage_applicant_keyboard(tg_id)
+            )
 
 @callbacks_router.callback_query(F.data.startswith('status-'))
 async def get_status(callback: types.CallbackQuery, state: FSMContext, apscheduler: AsyncIOScheduler):

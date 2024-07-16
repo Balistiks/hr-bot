@@ -5,16 +5,16 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from bot.services import users_service
 
-STAGE_APPLICANT_KEYBOARD = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [
-            InlineKeyboardButton(text='Оставить комментарий', callback_data='comment')
-        ],
-        [
-            InlineKeyboardButton(text='Назад', callback_data='hr')
+
+async def create_stage_applicant_keyboard(tg_id: int) -> InlineKeyboardMarkup:
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Назад', callback_data=f'tgid_{tg_id}')
+            ]
         ]
-    ]
-)
+    )
+    return keyboard
 
 
 async def get_data_user(tg_id: int):
@@ -22,14 +22,17 @@ async def get_data_user(tg_id: int):
     user_data = await users_service.get_by_tg_id(tg_id)
 
     if user_data and 'answers' in user_data:
-        questions = []
+        questions_and_answers = []
         for answer in user_data['answers']:
             if 'question' in answer:
                 question = answer['question']
-                questions.append(question)
+                questions_and_answers.append((question, answer['id']))
 
-        for question in questions:
-            builder.add(InlineKeyboardButton(text=question['name'], callback_data=f'question_{question["id"]}'))
+        for question, answer_id in questions_and_answers:
+            builder.add(InlineKeyboardButton(
+                text=question['name'],
+                callback_data=f'question_{question["id"]}_answer_{answer_id}'
+            ))
 
     builder.add(InlineKeyboardButton(text='Назад', callback_data='hr'))
     builder.adjust(1)
