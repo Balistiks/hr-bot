@@ -28,7 +28,7 @@ const IndexExternalPage = () => {
 
     return (
         <main>
-            <section className={styles.heroSection} style={{ marginBottom: 50 }}>
+            <section className={styles.heroSection}>
                 <img src={window.location.origin + '/BackgroundExternalHero.svg'} className={'position-absolute top-0 start-0'}/>
                 <img src={window.location.origin + '/ManHero.png'} className={`position-absolute ${styles.heroMan}`}/>
                 <div className={`${styles.heroCard}`}>
