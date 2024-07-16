@@ -17,6 +17,27 @@ STAGE_APPLICANT_KEYBOARD = InlineKeyboardMarkup(
 )
 
 
+async def get_data_user(tg_id: int):
+    builder = InlineKeyboardBuilder()
+    user_data = await users_service.get_by_tg_id(tg_id)
+
+    if user_data and 'answers' in user_data:
+        questions = []
+        for answer in user_data['answers']:
+            if 'question' in answer:
+                question = answer['question']
+                questions.append(question)
+
+        for question in questions:
+            builder.add(InlineKeyboardButton(text=question['name'], callback_data=f'question_{question["id"]}'))
+
+    builder.add(InlineKeyboardButton(text='Назад', callback_data='hr'))
+    builder.adjust(1)
+    markup = builder.as_markup()
+
+    return markup
+
+
 async def get_status_keyboard(status: str):
     builder = InlineKeyboardBuilder()
     builder.adjust(2)

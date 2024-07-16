@@ -29,8 +29,19 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
     else:
         await callback.message.edit_caption(
             caption=f'Результаты этапа\n{user['name']}\nЭтап - {user['status']}',
-            reply_markup=keyboards.hr.stages.STAGE_APPLICANT_KEYBOARD
+            reply_markup=await keyboards.hr.stages.get_data_user(tgid)
         )
+
+
+@callbacks_router.callback_query(F.data.startswith('question_'))
+async def get_data_state(callback: types.CallbackQuery, state: FSMContext):
+    question_id = callback.data.split('_')[1]
+    await state.update_data(question_id=question_id)
+
+    await callback.message.edit_caption(
+        caption='Оставьте комментарий',
+        reply_markup=keyboards.hr.stages.STAGE_APPLICANT_KEYBOARD
+    )
 
 
 @callbacks_router.callback_query(F.data.startswith('status-'))

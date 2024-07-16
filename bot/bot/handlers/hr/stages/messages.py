@@ -19,7 +19,7 @@ async def get_comment(message: types.Message, state: FSMContext):
         'text': message.text,
         'employee': employee['id'],
         'user': user['id'],
-        'question': user['question']['id']
+        'question': data['question_id']
     })
     await message.answer(text='Комментарий отправлен',
                          reply_markup=keyboards.hr.BACK_LIST_KEYBOARD)
