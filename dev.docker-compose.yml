@@ -67,7 +67,7 @@ services:
     env_file:
       - .env
     ports:
-      - '8081:8080'
+      - '8080:8080'
     volumes:
       - './webapp/src:/app/src'
     depends_on:
@@ -98,7 +98,7 @@ services:
     image: postgres:alpine
     restart: always
     ports:
-      - '5433:5432'
+      - '5432:5432'
     volumes:
       - './data/db:/var/lib/pgdata/data'
     environment:
@@ -118,7 +118,7 @@ services:
     env_file:
       - .env
     ports:
-      - "8081:8080"
+      - "8080:8080"
     volumes:
       - ./web/web:/app/web
     networks:

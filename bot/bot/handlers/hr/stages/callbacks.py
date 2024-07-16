@@ -10,7 +10,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from bot import keyboards
 from bot.scheduler import scheduler_missed_call
 from bot.states import StageCommentState
-from bot.services import users_service, employees_service
+from bot.services import users_service, employees_service, headers
 
 callbacks_router = Router()
         
@@ -22,19 +22,26 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
 
     user = await users_service.get_by_tg_id(int(tgid))
     if user['status'] != 'обучается':
-        await callback.message.edit_caption(
-            caption='Поставить статус',
+        await callback.message.edit_media(
+            media=types.InputMediaPhoto(
+                media=types.FSInputFile('files/photos/main.png'),
+                caption='Поставить статус',
+            ),
             reply_markup=await keyboards.hr.stages.get_status_keyboard(user['status'])
         )
     else:
-        await callback.message.edit_caption(
-            caption=f'Результаты этапа\n{user['name']}\nЭтап - {user['status']}',
+        await callback.message.edit_media(
+            media=types.InputMediaPhoto(
+                media=types.FSInputFile('files/photos/main.png'),
+                caption=f'Результаты этапа\n{user['name']}\nЭтап - {user['status']}',
+
+            ),
             reply_markup=await keyboards.hr.stages.get_data_user(tgid)
         )
 
 
 @callbacks_router.callback_query(F.data.startswith('question_'))
-async def get_data_state(callback: types.CallbackQuery, state: FSMContext):
+async def get_data_state(callback: types.CallbackQuery):
     data = callback.data.split('_')
     question_id = int(data[1])
 
@@ -44,19 +51,35 @@ async def get_data_state(callback: types.CallbackQuery, state: FSMContext):
     if user_data and 'answers' in user_data:
         question_text = None
         answer_text = None
+        file_path = None
 
         for answer in user_data['answers']:
             if 'question' in answer and answer['question']['id'] == question_id:
                 question_text = answer['question']['text']
                 answer_text = answer['text']
+                if 'file' in answer and answer['file'] and 'path' in answer['file']:
+                    file_path = types.URLInputFile(
+                        headers=headers,
+                        url=f"http://back:3000/api/files/{answer['file']['path']}",
+                        filename=answer['file']['path']
+                    )
+                else:
+                    file_path = None
 
-        if question_text and answer_text:
-            await state.update_data(question_id=question_id)
+            if file_path:
+                await callback.message.edit_media(
+                    media=types.InputMediaDocument(
+                        media=file_path,
+                        caption=f'Вопрос: {question_text}\nОтвет: {answer_text}'
+                    ),
+                    reply_markup=await keyboards.hr.stages.create_stage_applicant_keyboard(tg_id)
+                )
+            else:
+                await callback.message.edit_caption(
+                    caption=f'Вопрос: {question_text}\nОтвет: {answer_text}',
+                    reply_markup=await keyboards.hr.stages.create_stage_applicant_keyboard(tg_id)
+                )
 
-            await callback.message.edit_caption(
-                caption=f'Вопрос: {question_text}\nОтвет: {answer_text}',
-                reply_markup=await keyboards.hr.stages.create_stage_applicant_keyboard(tg_id)
-            )
 
 @callbacks_router.callback_query(F.data.startswith('status-'))
 async def get_status(callback: types.CallbackQuery, state: FSMContext, apscheduler: AsyncIOScheduler):

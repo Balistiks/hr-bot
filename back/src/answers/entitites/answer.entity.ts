@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
 import { Question } from '../../questions/entities/question.entity';
 import { User } from '../../users/entities/user.entity';
 import { File } from '../../files/entities/file.entity';
@@ -26,5 +26,6 @@ export class Answer {
   employee: Employee;
 
   @OneToOne(() => File, (file) => file.answer)
+  @JoinColumn()
   file: File;
 }

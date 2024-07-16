@@ -10,11 +10,12 @@ import {
 import { AnswersService } from './answers.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { Answer } from './entitites/answer.entity';
-import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import {AnyFilesInterceptor, FileInterceptor} from '@nestjs/platform-express';
 import * as multer from 'multer';
 import e from 'express';
 import { FilesService } from '../files/files.service';
 import { File } from '../files/entities/file.entity';
+import {diskStorage} from "multer";
 
 @Controller('answers')
 export class AnswersController {
@@ -25,22 +26,18 @@ export class AnswersController {
 
   @Post()
   @UseInterceptors(
-    AnyFilesInterceptor({
-      limits: {
-        fileSize: 53248,
-      },
-      storage: multer.diskStorage({
-        destination: 'upload/',
-        filename(req: e.Request, file: Express.Multer.File, callback) {
-          callback(
-            null,
-            `${file.fieldname}-${Date.now()}.${file.originalname
-              .split('.')
-              .pop()}`,
-          );
+      FileInterceptor('file', {
+        limits: {
+          fileSize: 50000000,
         },
+        storage: diskStorage({
+          destination: './files',
+          filename(req, file, callback) {
+            const filename = `${file.fieldname}-${Date.now()}.${file.originalname.split('.').pop()}`;
+            callback(null, filename);
+          },
+        }),
       }),
-    }),
   )
   async save(
     @Body() answer: CreateAnswerDto,
