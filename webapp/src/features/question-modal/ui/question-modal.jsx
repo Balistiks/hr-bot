@@ -42,6 +42,7 @@ export const QuestionModal = ({show, handleClose, submitAnswer, name, number, te
                 {/*    labore et dolore magna aliqua?*/}
                 {/*</Text>*/}
                 <Form style={{marginTop: 13}} onSubmit={onSubmit}>
+                    <CustomButton typeButton={'solid'} style={{marginTop: 19}} type={'submit'}>Отправить</CustomButton>
                     <Form.Group className="mb-3">
                         <Form.Label>
                             <Text typeText={'regular'} sizeText={'17'} color={'gray'} style={{marginTop: 13}}>
@@ -60,7 +61,6 @@ export const QuestionModal = ({show, handleClose, submitAnswer, name, number, te
                             Прикреплен файл: {file.name}
                         </Text>
                     }
-                    <CustomButton typeButton={'solid'} style={{marginTop: 19}} type={'submit'}>Отправить</CustomButton>
                 </Form>
             </Modal.Body>
         </Modal>
