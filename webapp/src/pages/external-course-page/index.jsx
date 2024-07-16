@@ -165,6 +165,18 @@ const ExternalCoursePage = () => {
         return (
             <section className={styles.formBlock}>
                 <Form onSubmit={onSubmit}>
+                    <CustomButton typeButton={'solid'}
+                                  style={{
+                                      marginTop: 19,
+                                      width: '100%',
+                                      marginRight: 'auto',
+                                      marginLeft: 'auto',
+                                      marginBottom: 10
+                                  }}
+                                  type={'submit'}
+                    >
+                        Отправить
+                    </CustomButton>
                     <Form.Group className="mb-3">
                         <Form.Label>
                             <Text typeText={'regular'} sizeText={'15'} color={'gray'}>
@@ -183,18 +195,6 @@ const ExternalCoursePage = () => {
                             Прикреплен файл: {file.name}
                         </Text>
                     }
-                    <CustomButton typeButton={'solid'}
-                                  style={{
-                                      marginTop: 19,
-                                      width: 269,
-                                      maxWidth: 269,
-                                      marginRight: 'auto',
-                                      marginLeft: 'auto'
-                                  }}
-                                  type={'submit'}
-                    >
-                        Отправить
-                    </CustomButton>
                 </Form>
             </section>
         )

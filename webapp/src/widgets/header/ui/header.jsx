@@ -18,25 +18,14 @@ export const Header = () => {
     }, [pathname]);
 
     return (
-        <header className={`fixed-top bg-white`}>
-            <div className={`${styles.containerHeader}`}>
-                <Row>
-                    <Col xs={3} className={'d-flex align-items-center'}>
-                    </Col>
-                    <Col xs={6} className={'d-flex align-items-center justify-content-center'}>
-                        <img src={window.location.origin + '/Logo.svg'}/>
-                    </Col>
-                    <Col xs={3} className={'d-flex align-items-center justify-content-end'}>
-                        {showHome &&
-                            <div className={'d-flex'}>
-                                <Link to={external ? '/external' : '/'}>
-                                    <img src={window.location.origin + '/House.svg'}/>
-                                </Link>
-                            </div>
-                        }
-                    </Col>
-                </Row>
-            </div>
+        <header style={{ position: 'absolute', width: '100%' }}>
+            {showHome &&
+                <div style={{ position: "absolute", top: 26, right: 16}}>
+                    <Link to={external ? '/external' : '/'}>
+                        <img src={window.location.origin + '/House.svg'}/>
+                    </Link>
+                </div>
+            }
         </header>
     )
 }
