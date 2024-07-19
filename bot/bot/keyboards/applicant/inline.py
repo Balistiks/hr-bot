@@ -10,3 +10,11 @@ TRAINING_KEYBOARD = InlineKeyboardMarkup(
         ]
     ]
 )
+
+CONTINUE_TO_WEB_APP = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text='Продолжить', callback_data='continue_to_web_app')
+        ]
+    ]
+)

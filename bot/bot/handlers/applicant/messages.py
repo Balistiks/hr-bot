@@ -1,6 +1,6 @@
 import re
 
-from aiogram import Router, types
+from aiogram import Router, types, F
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 
@@ -57,4 +57,8 @@ async def get_registration_phone(message: types.Message, state: FSMContext):
                 'phoneNumber': message.contact.phone_number
             })
 
-            await menu(message, state)
+            await message.answer_video(
+                video=types.FSInputFile('files/chatademia.png'),
+                caption='Текст',
+                reply_markup=keyboards.applicant.CONTINUE_TO_WEB_APP
+            )
