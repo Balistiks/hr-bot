@@ -33,8 +33,10 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
         await callback.message.edit_media(
             media=types.InputMediaPhoto(
                 media=types.FSInputFile('files/photos/main.png'),
-                caption=f'Результаты этапа\n{user['name']}\nЭтап - {user['status']}',
-
+                caption=f'{user['name']}\n'
+                        f'\nРезультаты этапа:\n'
+                        f'Этап - {user['status']}\n'
+                        + (f'Вакансия - {user['course']['name']}' if user['course'] is not None else ''),
             ),
             reply_markup=await keyboards.hr.stages.get_data_user(tgid)
         )
