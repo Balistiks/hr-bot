@@ -56,7 +56,7 @@ const IndexPage = () => {
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit
                                 </Text>
                             </div>
-                            <img src={'./ManHero.png'}
+                            <img src={'./ManHero1.png'}
                                  className={`position-absolute ${styles.heroImg}`}/> {/* width={302} height={318} */}
                             <CustomButton typeButton={'outline'} className={'position-absolute'}
                                           style={{left: 33, bottom: 10}}>Приступить к обучению</CustomButton>
