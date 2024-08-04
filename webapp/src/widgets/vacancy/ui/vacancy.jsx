@@ -4,9 +4,9 @@ import {VacancyCard} from "../../../entites/vacancy-card/index.js";
 import {useEffect, useState} from "react";
 import {useApi} from "@shared/lib/index.js";
 
-const tgId = 1; // TODO: Поменять на ID из вашего того самого
-
 export const Vacancy = () => {
+    const tg = window.Telegram.WebApp;
+
     const {data: cities, loading: citiesLoad, fetchData: fetchCity} = useApi();
     const {data: courses, loading: coursesLoad, fetchData: fetchCourses} = useApi();
     const {data: answers, fetchData: fetchAnswers} = useApi();
