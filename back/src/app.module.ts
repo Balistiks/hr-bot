@@ -12,6 +12,9 @@ import { CommentsModule } from './comments/comments.module';
 import { FilesModule } from './files/files.module';
 import { PositionsModule } from './positions/positions.module';
 import { StudentsModule } from './students/students.module';
+import { StagesModule } from './stages/stages.module';
+import { QuestionsAnswersModule } from './questions-answers/questions-answers.module';
+import { InformationModule } from './information/information.module';
 
 @Module({
   imports: [
@@ -31,6 +34,9 @@ import { StudentsModule } from './students/students.module';
     FilesModule,
     PositionsModule,
     StudentsModule,
+    StagesModule,
+    QuestionsAnswersModule,
+    InformationModule,
   ],
   controllers: [],
   providers: [],

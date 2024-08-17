@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'ty
 import { City } from '../../cities/entities/city.entity';
 import { User } from '../../users/entities/user.entity';
 import { Question } from '../../questions/entities/question.entity';
+import { Stage } from '../../stages/entities/stage.entity';
 
 @Entity()
 export class Course {
@@ -25,4 +26,7 @@ export class Course {
 
   @OneToMany(() => Question, (question) => question.course)
   questions: Question[];
+
+  @OneToMany(() => Stage, (stage) => stage.course)
+  stages: Stage[];
 }

@@ -12,6 +12,7 @@ import { Comment } from '../../comments/entitites/comment.entity';
 import { Position } from '../../positions/entities/position.entity';
 import { Student } from '../../students/entities/student.entity';
 import { Employee } from '../../employees/entities/employee.entity';
+import { QuestionAnswer } from '../../questions-answers/entities/questionAnswer.entity';
 
 @Entity()
 export class Question {

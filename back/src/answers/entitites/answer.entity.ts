@@ -1,9 +1,10 @@
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, JoinColumn, OneToMany } from 'typeorm';
 import { Question } from '../../questions/entities/question.entity';
 import { User } from '../../users/entities/user.entity';
 import { File } from '../../files/entities/file.entity';
 import { Student } from '../../students/entities/student.entity';
 import { Employee } from '../../employees/entities/employee.entity';
+import { Stage } from '../../stages/entities/stage.entity';
 
 @Entity()
 export class Answer {
@@ -12,6 +13,9 @@ export class Answer {
 
   @Column({ nullable: false })
   text: string;
+
+  @ManyToOne(() => Stage, (stage) => stage.answers)
+  stage: Stage;
 
   @ManyToOne(() => Question, (question) => question.answers)
   question: Question;

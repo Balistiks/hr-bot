@@ -10,6 +10,7 @@ import { Question } from '../../questions/entities/question.entity';
 import { Answer } from '../../answers/entitites/answer.entity';
 import { Employee } from '../../employees/entities/employee.entity';
 import { Comment } from '../../comments/entitites/comment.entity';
+import { Stage } from '../../stages/entities/stage.entity';
 
 @Entity()
 export class User {
@@ -51,6 +52,9 @@ export class User {
 
   @ManyToOne(() => Course, (course) => course.users)
   course: Course;
+
+  @ManyToOne(() => Stage, (stage) => stage.users)
+  stage: Stage;
 
   @OneToMany(() => Answer, (answer) => answer.user)
   answers: Answer[];
