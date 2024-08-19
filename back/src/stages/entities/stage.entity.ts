@@ -22,6 +22,9 @@ export class Stage {
   @Column({ nullable: false })
   text: string;
 
+  @Column({ nullable: false })
+  number: number;
+
   @Column({ nullable: false, enum: ['choice', 'multipleChoice', 'info'] })
   type: string;
 
