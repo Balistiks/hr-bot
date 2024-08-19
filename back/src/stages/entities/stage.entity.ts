@@ -1,6 +1,6 @@
 import {
   Column,
-  Entity,
+  Entity, ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -31,8 +31,8 @@ export class Stage {
   @Column({ nullable: true })
   dependence: string;
 
-  @ManyToOne(() => Course, (course) => course.stages)
-  course: Course;
+  @ManyToMany(() => Course, (course) => course.stages)
+  course: Course[];
 
   @OneToMany(() => User, (user) => user.stage)
   users: User[];
@@ -43,7 +43,7 @@ export class Stage {
   @Column({ nullable: true })
   nameDependencyParameter: string;
 
-  @OneToMany(() => QuestionAnswer, (questionAnswer) => questionAnswer.stage)
+  @ManyToMany(() => QuestionAnswer, (questionAnswer) => questionAnswer.stage)
   questionAnswers: QuestionAnswer[];
 
   @OneToMany(() => Information, (information) => information.stage)

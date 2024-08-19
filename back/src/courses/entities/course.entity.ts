@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { City } from '../../cities/entities/city.entity';
 import { User } from '../../users/entities/user.entity';
 import { Question } from '../../questions/entities/question.entity';
@@ -27,6 +27,7 @@ export class Course {
   @OneToMany(() => Question, (question) => question.course)
   questions: Question[];
 
-  @OneToMany(() => Stage, (stage) => stage.course)
+  @ManyToMany(() => Stage, (stage) => stage.course)
+  @JoinTable()
   stages: Stage[];
 }
