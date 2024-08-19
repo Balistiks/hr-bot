@@ -10,7 +10,12 @@ export class CoursesController {
   async findOneById(@Param('id') id: number): Promise<Course> {
     return await this.coursesService.findOne({
       where: { id },
-      relations: ['questions'],
+      relations: [
+        'questions',
+        'stages',
+        'stages.questionAnswers',
+        'stages.information',
+      ],
       order: {
         questions: {
           number: 'ASC',
@@ -23,7 +28,12 @@ export class CoursesController {
   async find(@Query('request') request?: string): Promise<Course[]> {
     return await this.coursesService.find({
       where: request ? JSON.parse(request) : null,
-      relations: ['questions'],
+      relations: [
+        'questions',
+        'stages',
+        'stages.questionAnswers',
+        'stages.information',
+      ],
     });
   }
 }
