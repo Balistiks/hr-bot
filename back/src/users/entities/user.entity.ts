@@ -29,6 +29,9 @@ export class User {
   @Column({ nullable: false })
   phoneNumber: string;
 
+  @Column({ nullable: false })
+  city: string;
+
   @Column({
     nullable: false,
     default: 'обучается',
