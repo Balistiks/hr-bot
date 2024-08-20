@@ -33,7 +33,7 @@ async def send_status(request):
 
             for answer in user['answers']:
                 if len(answer['text']) != 0:
-                    data_formatted[0][answer['stage']['name']] = answer['text']
+                    data_formatted[answer['stage']['name']] = answer['text']
                     columns.append(answer['stage']['name'])
 
             df = pd.DataFrame(data_formatted, columns=columns, index=[0])
