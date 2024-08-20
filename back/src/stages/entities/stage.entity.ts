@@ -43,7 +43,7 @@ export class Stage {
   @Column({ nullable: true })
   nameDependencyParameter: string;
 
-  @ManyToMany(() => QuestionAnswer, (questionAnswer) => questionAnswer.stage)
+  @OneToMany(() => QuestionAnswer, (questionAnswer) => questionAnswer.stage)
   questionAnswers: QuestionAnswer[];
 
   @OneToMany(() => Information, (information) => information.stage)

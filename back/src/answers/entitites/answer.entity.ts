@@ -11,7 +11,7 @@ export class Answer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   text: string;
 
   @ManyToOne(() => Stage, (stage) => stage.answers)

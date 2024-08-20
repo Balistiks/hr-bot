@@ -1,10 +1,30 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { Course } from './entities/course.entity';
+import { QuestionAnswer } from '../questions-answers/entities/questionAnswer.entity';
+import { QuestionsAnswersService } from '../questions-answers/questions-answers.service';
 
 @Controller('courses')
 export class CoursesController {
-  constructor(private readonly coursesService: CoursesService) {}
+  constructor(
+    private readonly coursesService: CoursesService,
+    private readonly questionsAnswersService: QuestionsAnswersService,
+  ) {}
+
+  @Get(':id/:stageId/questionsAnswers')
+  async getQuestionsAnswersByIdStageId(
+    @Param('id') id: number,
+    @Param('stageId') stageId: number,
+  ): Promise<QuestionAnswer[]> {
+    return await this.questionsAnswersService.findByOptions({
+      where: {
+        courses: { id },
+        stage: {
+          id: stageId,
+        },
+      },
+    });
+  }
 
   @Get(':id')
   async findOneById(@Param('id') id: number): Promise<Course> {

@@ -1,21 +1,8 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Query,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, Query } from '@nestjs/common';
 import { AnswersService } from './answers.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { Answer } from './entitites/answer.entity';
-import {AnyFilesInterceptor, FileInterceptor} from '@nestjs/platform-express';
-import * as multer from 'multer';
-import e from 'express';
 import { FilesService } from '../files/files.service';
-import { File } from '../files/entities/file.entity';
-import {diskStorage} from "multer";
 
 @Controller('answers')
 export class AnswersController {
@@ -25,33 +12,8 @@ export class AnswersController {
   ) {}
 
   @Post()
-  @UseInterceptors(
-      FileInterceptor('file', {
-        limits: {
-          fileSize: 50000000,
-        },
-        storage: diskStorage({
-          destination: './files',
-          filename(req, file, callback) {
-            const filename = `${file.fieldname}-${Date.now()}.${file.originalname.split('.').pop()}`;
-            callback(null, filename);
-          },
-        }),
-      }),
-  )
-  async save(
-    @Body() answer: CreateAnswerDto,
-    @UploadedFile()
-    file: any,
-  ): Promise<Answer> {
-    const newAnswer = await this.answersService.save(answer);
-    if (file) {
-      const newFile = new File();
-      newFile.path = file.filename;
-      newFile.answer = newAnswer;
-      await this.filesService.save(newFile);
-    }
-    return newAnswer;
+  async save(@Body() answer: CreateAnswerDto): Promise<Answer> {
+    return await this.answersService.save(answer);
   }
 
   @Get('byTgId')
@@ -63,13 +25,13 @@ export class AnswersController {
         { employee: { tgId } },
       ],
       select: {
-        question: {
+        stage: {
           id: true,
           number: true,
         },
       },
       relations: {
-        question: true,
+        stage: true,
       },
     });
   }

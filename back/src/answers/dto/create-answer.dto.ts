@@ -3,14 +3,15 @@ import { Question } from '../../questions/entities/question.entity';
 import { User } from '../../users/entities/user.entity';
 import { Student } from '../../students/entities/student.entity';
 import { Employee } from '../../employees/entities/employee.entity';
+import { Stage } from '../../stages/entities/stage.entity';
 
 export class CreateAnswerDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   text: string;
 
   @IsNotEmpty()
-  question: Question;
+  stage: Stage;
 
   @IsOptional()
   user: User;

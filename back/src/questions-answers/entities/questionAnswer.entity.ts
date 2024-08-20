@@ -1,5 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Stage } from '../../stages/entities/stage.entity';
+import { Course } from '../../courses/entities/course.entity';
 
 @Entity()
 export class QuestionAnswer {
@@ -15,7 +16,9 @@ export class QuestionAnswer {
   @Column({ nullable: true })
   dependencyParameter: string;
 
-  @ManyToMany(() => Stage, (stage) => stage.questionAnswers)
-  @JoinTable()
-  stage: Stage[];
+  @ManyToMany(() => Course, (course) => course.questionsAnswers)
+  courses: Course[];
+
+  @ManyToOne(() => Stage, (stage) => stage.questionAnswers)
+  stage: Stage;
 }
