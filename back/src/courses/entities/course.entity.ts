@@ -4,6 +4,7 @@ import { User } from '../../users/entities/user.entity';
 import { Question } from '../../questions/entities/question.entity';
 import { Stage } from '../../stages/entities/stage.entity';
 import { QuestionAnswer } from '../../questions-answers/entities/questionAnswer.entity';
+import { Information } from '../../information/entities/information.entity';
 
 @Entity()
 export class Course {
@@ -31,6 +32,9 @@ export class Course {
 
   @OneToMany(() => Question, (question) => question.course)
   questions: Question[];
+
+  @OneToMany(() => Information, (information) => information.course)
+  information: Information[];
 
   @ManyToMany(() => Stage, (stage) => stage.course)
   @JoinTable()
