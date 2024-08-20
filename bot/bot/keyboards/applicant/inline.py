@@ -3,6 +3,14 @@ from aiogram.types.web_app_info import WebAppInfo
 
 from bot.misc.configuration import conf
 
+cities = [
+    'Селятино',
+    'Долгопрудный',
+    'Звенигород',
+    'Видное',
+    'Калининград'
+]
+
 TRAINING_KEYBOARD = InlineKeyboardMarkup(
     inline_keyboard=[
         [
@@ -10,3 +18,20 @@ TRAINING_KEYBOARD = InlineKeyboardMarkup(
         ]
     ]
 )
+
+
+CITIES_KEYBOARD = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text=city, callback_data=city)] for city in cities
+    ]
+)
+
+
+def get_continue_keyboard(callback_data: str):
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Продолжить', callback_data=callback_data)
+            ]
+        ]
+    )

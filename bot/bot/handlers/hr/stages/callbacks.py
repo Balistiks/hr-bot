@@ -56,31 +56,14 @@ async def get_data_state(callback: types.CallbackQuery):
         file_path = None
 
         for answer in user_data['answers']:
-            if 'question' in answer and answer['question']['id'] == question_id:
-                question_text = answer['question']['text']
+            if 'stage' in answer and answer['stage']['id'] == question_id:
+                question_text = answer['stage']['text']
                 answer_text = answer['text']
-                if 'file' in answer and answer['file'] and 'path' in answer['file']:
-                    file_path = types.URLInputFile(
-                        headers=headers,
-                        url=f"http://back:3000/api/files/{answer['file']['path']}",
-                        filename=answer['file']['path']
-                    )
-                else:
-                    file_path = None
 
-            if file_path:
-                await callback.message.edit_media(
-                    media=types.InputMediaDocument(
-                        media=file_path,
-                        caption=f'Вопрос: {question_text}\nОтвет: {answer_text}'
-                    ),
-                    reply_markup=await keyboards.hr.stages.create_stage_applicant_keyboard(tg_id)
-                )
-            else:
-                await callback.message.edit_caption(
-                    caption=f'Вопрос: {question_text}\nОтвет: {answer_text}',
-                    reply_markup=await keyboards.hr.stages.create_stage_applicant_keyboard(tg_id)
-                )
+            await callback.message.edit_caption(
+                caption=f'Вопрос: {question_text}\nОтвет: {answer_text}',
+                reply_markup=await keyboards.hr.stages.create_stage_applicant_keyboard(tg_id)
+            )
 
 
 @callbacks_router.callback_query(F.data.startswith('status-'))

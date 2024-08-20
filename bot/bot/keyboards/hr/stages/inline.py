@@ -24,9 +24,8 @@ async def get_data_user(tg_id: int):
     if user_data and 'answers' in user_data:
         questions_and_answers = []
         for answer in user_data['answers']:
-            if 'question' in answer:
-                question = answer['question']
-                questions_and_answers.append((question, answer['id']))
+            question = answer['stage']
+            questions_and_answers.append((question, answer['id']))
 
         for question, answer_id in questions_and_answers:
             builder.add(InlineKeyboardButton(

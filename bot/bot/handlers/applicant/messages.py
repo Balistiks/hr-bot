@@ -1,6 +1,6 @@
 import re
 
-from aiogram import Router, types
+from aiogram import Router, types, F
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 
@@ -48,13 +48,11 @@ async def get_registration_name(message: types.Message, state: FSMContext):
 async def get_registration_phone(message: types.Message, state: FSMContext):
     if message.contact:
         if message.contact.user_id == message.from_user.id:
-            data = await state.get_data()
             await state.update_data(phone_number=message.contact.phone_number)
-            await users_service.create({
-                'userName': message.from_user.username,
-                'tgId': message.from_user.id,
-                'name': data['name'],
-                'phoneNumber': message.contact.phone_number
-            })
+            await state.set_state(RegisterState.city)
+            await message.answer(
+                'Выберите интересующий вас город',
+                reply_markup=keyboards.applicant.CITIES_KEYBOARD
+            )
 
-            await menu(message, state)
+            # await menu(message, state)
