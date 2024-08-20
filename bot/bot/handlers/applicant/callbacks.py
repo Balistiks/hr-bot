@@ -24,6 +24,7 @@ cities_videos = {
 async def get_city(callback: types.CallbackQuery, state: FSMContext):
     await callback.message.delete()
     await state.set_state(None)
+    await state.update_data(city=callback.data)
 
     await callback.message.answer(
         'Привет, меня зовут Тимур! \n'
@@ -65,14 +66,14 @@ async def send_tg_channel(callback: types.CallbackQuery):
 
 
 @callbacks_router.callback_query(F.data == 'city')
-async def send_city(callback: types.CallbackQuery):
+async def send_city(callback: types.CallbackQuery, state: FSMContext):
+    data = await state.get_data()
     await callback.message.delete()
-    user = await users_service.get_by_tg_id(callback.from_user.id)
     await callback.message.answer(
         'Видео про твой город 📍',
         reply_markup=keyboards.applicant.get_continue_url_keyboard(
             'Посмотреть',
-            cities_videos[user['city']],
+            cities_videos[data['city']],
             'city',
         )
     )
@@ -87,7 +88,7 @@ async def send_menu(callback: types.CallbackQuery, state: FSMContext):
         'tgId': callback.from_user.id,
         'name': data['name'],
         'phoneNumber': data['phone_number'],
-        'city': callback.data
+        'city': data['city']
     })
     await state.clear()
     await menu(callback.message, state)
