@@ -6,6 +6,8 @@ import {useEffect, useState} from "react";
 import {useApi} from "@shared/lib/index.js";
 
 export const QuestionModal = ({show, handleClose, submitAnswer, stage, courseId}) => {
+    const tg = window.Telegram.WebApp;
+
     const {data: questionAnswers, fetchData: fetchQuestionAnswers} = useApi();
     const {data: information, fetchData: fetchInformation} = useApi();
     const {data: answers, fetchData: fetchAnswers} = useApi();
@@ -30,7 +32,7 @@ export const QuestionModal = ({show, handleClose, submitAnswer, stage, courseId}
             await fetchInformation(`courses/${courseId}/${stage.id}/information`, 'GET')
         }
         if (stage.name === 'Документы') {
-            await fetchAnswers(`answers/byTgId?tgId=${1}`, 'GET')
+            await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
         }
     }
 

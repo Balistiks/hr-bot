@@ -41,7 +41,7 @@ const VacancyPage = () => {
         });
 
         await fetchCourse(`courses/${id}`, 'GET')
-        await fetchAnswers(`answers/byTgId?tgId=${1}`, 'GET')
+        await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
 
         const nextTest = selectQuestion === (course.stages.length - 2)
         const endCourse = selectQuestion === (course.stages.length - 1)
@@ -107,8 +107,8 @@ const VacancyPage = () => {
         const fetchData = async () => {
             try {
                 await fetchCourse(`courses/${id}`, 'GET')
-                await fetchAnswers(`answers/byTgId?tgId=${1}`, 'GET')
-                await fetchUser(`users/byTgId?tgId=${1}`, 'GET')
+                await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+                await fetchUser(`users/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
             } catch (error) {
                 console.error(error)
             }

@@ -18,7 +18,7 @@ const IndexPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await fetchUser(`users/byTgId?tgId=1`, 'GET')
+                await fetchUser(`users/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
             } catch (error) {
                 console.error(error)
             }

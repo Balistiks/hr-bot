@@ -19,7 +19,7 @@ export const Vacancy = () => {
         const fetchData = async () => {
             try {
                 await fetchCourses('courses', 'GET')
-                await fetchAnswers(`answers/byTgId?tgId=1`, 'GET')
+                await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
             } catch (error) {
                 console.error(error)
             }
