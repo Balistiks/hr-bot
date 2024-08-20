@@ -48,8 +48,9 @@ async def send_tg_channel(callback: types.CallbackQuery):
 
 
 @callbacks_router.callback_query(F.data == 'salon')
-async def send_tg_channel(callback: types.CallbackQuery):
+async def send_salon(callback: types.CallbackQuery):
     user_channel_status = await callback.bot.get_chat_member(chat_id=conf.bot.channel, user_id=callback.from_user.id)
+    print(user_channel_status)
     if user_channel_status != 'left':
         await callback.message.delete()
         await callback.message.answer(
