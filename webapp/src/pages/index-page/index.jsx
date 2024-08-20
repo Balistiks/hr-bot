@@ -53,9 +53,9 @@ const IndexPage = () => {
                     <section className={styles.heroSection}>
                         <div className={`${styles.heroBlock} position-relative`}>
                             <div className={styles.heroText}>
-                                <Text typeText={'bold'} sizeText={'25'}>Lorem ipsum</Text>
+                                <Text typeText={'bold'} sizeText={'25'}>ЦирюльникЪ</Text>
                                 <Text typeText={'regular'} sizeText={'18'}>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                                    комфортная работа в федеральной сети салонов красоты 🔥
                                 </Text>
                             </div>
                             <img src={'./ManHero.png'}
