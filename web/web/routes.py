@@ -36,6 +36,9 @@ async def send_status(request):
                     data_formatted[answer['stage']['name']] = answer['text']
                     columns.append(answer['stage']['name'])
 
+            print(data_formatted)
+            print(columns)
+
             df = pd.DataFrame(data_formatted, columns=columns)
             file_name = f'files/applicant_status_{user["tgId"]}.xlsx'
             df.to_excel(file_name, index=False)
