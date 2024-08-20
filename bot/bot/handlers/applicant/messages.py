@@ -8,6 +8,7 @@ from bot import keyboards
 from bot.states import RegisterState
 from bot.services import users_service
 from bot.filter import RegisteredFilter
+from bot.misc import functions
 
 messages_router = Router()
 
@@ -31,27 +32,39 @@ async def menu(message: types.Message, state: FSMContext):
 @messages_router.message(CommandStart())
 async def start_applicant(message: types.Message, state: FSMContext):
     await state.set_state(RegisterState.name)
-    await message.answer_photo(types.FSInputFile('files/photos/name.png'),)
+    message = await message.answer_photo(
+        types.FSInputFile('files/photos/main.png'),
+        caption='Как вас зовут? 🤔'
+    )
+    await state.update_data(last_message_id=message.message_id)
 
 
 @messages_router.message(RegisterState.name)
 async def get_registration_name(message: types.Message, state: FSMContext):
-    await state.update_data(name=message.text)
+    data = await state.get_data()
+    await message.delete()
+    await functions.delete_message(message.bot, message.chat.id, data['last_message_id'])
+
     await state.set_state(RegisterState.phone_number)
-    await message.answer_photo(
-        types.FSInputFile('files/photos/phone.png'),
+    message = await message.answer_photo(
+        types.FSInputFile('files/photos/main.png'),
+        caption='Отправьте свой контакт 📲',
         reply_markup=keyboards.PHONE_KEYBOARD
     )
+    await state.update_data(name=message.text, last_message_id=message.message_id)
 
 
 @messages_router.message(RegisterState.phone_number)
 async def get_registration_phone(message: types.Message, state: FSMContext):
+    await message.delete()
     if message.contact:
         if message.contact.user_id == message.from_user.id:
+            data = await state.get_data()
+            await functions.delete_message(message.bot, message.chat.id, data['last_message_id'])
             await state.update_data(phone_number=message.contact.phone_number)
             await state.set_state(RegisterState.city)
             await message.answer(
-                'Выберите интересующий вас город',
+                'Выберите город, в котором хотите работать 📍',
                 reply_markup=keyboards.applicant.CITIES_KEYBOARD
             )
 

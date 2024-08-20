@@ -27,7 +27,33 @@ CITIES_KEYBOARD = InlineKeyboardMarkup(
 )
 
 
-def get_continue_keyboard(callback_data: str):
+def get_channel_keyboard(channel_url: str, callback_data: str):
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Наш канал', url=channel_url)
+            ],
+            [
+                InlineKeyboardButton(text='Продолжить', callback_data=callback_data)
+            ]
+        ]
+    )
+
+
+def get_continue_url_keyboard(text: str, url: str, callback_data: str):
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text=text, url=url)
+            ],
+            [
+                InlineKeyboardButton(text='Продолжить', callback_data=callback_data)
+            ]
+        ]
+    )
+
+
+def get_continue_keyboard(callback_data: str,):
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [
