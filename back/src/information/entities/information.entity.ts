@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Stage } from '../../stages/entities/stage.entity';
 import { Course } from '../../courses/entities/course.entity';
 
@@ -16,8 +16,8 @@ export class Information {
   @Column({ nullable: true })
   dependencyParameter: string;
 
-  @ManyToOne(() => Course, (course) => course.information)
-  course: Course;
+  @ManyToMany(() => Course, (course) => course.information)
+  courses: Course[];
 
   @ManyToOne(() => Stage, (stage) => stage.information)
   stage: Stage;

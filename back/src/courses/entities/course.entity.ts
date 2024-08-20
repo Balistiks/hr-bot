@@ -33,7 +33,8 @@ export class Course {
   @OneToMany(() => Question, (question) => question.course)
   questions: Question[];
 
-  @OneToMany(() => Information, (information) => information.course)
+  @ManyToMany(() => Information, (information) => information.courses)
+  @JoinTable()
   information: Information[];
 
   @ManyToMany(() => Stage, (stage) => stage.course)

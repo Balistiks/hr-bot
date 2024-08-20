@@ -24,10 +24,16 @@ export class AnswersController {
         { student: { tgId } },
         { employee: { tgId } },
       ],
+      order: {
+        stage: {
+          number: 'ASC',
+        },
+      },
       select: {
         stage: {
           id: true,
           number: true,
+          name: true
         },
       },
       relations: {
