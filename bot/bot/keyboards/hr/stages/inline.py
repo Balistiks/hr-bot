@@ -24,8 +24,7 @@ async def get_data_user(tg_id: int):
     if user_data and 'answers' in user_data:
         questions_and_answers = []
         for answer in user_data['answers']:
-            print(answer['text'])
-
+            print(len(answer['text']))
             if answer['text'] is not None or answer['text'] != '':
                 print(answer['text'])
                 question = answer['stage']
