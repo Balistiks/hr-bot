@@ -23,20 +23,20 @@ async def send_status(request):
 
             columns = ['Имя', 'Номер', 'UserName', 'tgId', 'Вакансия']
 
-            data_formatted = [{
+            data_formatted = {
                 'Имя': user['name'],
                 'Номер': user['phoneNumber'],
                 'UserName': user['userName'],
                 'tgId': user['tgId'],
                 'Вакансия': user['answers'][0]['stage']['course'][0]['name'],
-            }]
+            }
 
             for answer in user['answers']:
                 if len(answer['text']) != 0:
                     data_formatted[0][answer['stage']['name']] = answer['text']
                     columns.append(answer['stage']['name'])
 
-            df = pd.DataFrame(data_formatted, columns=columns)
+            df = pd.DataFrame(data_formatted, columns=columns, index=[0])
             file_name = f'files/applicant_status_{user["tgId"]}.xlsx'
             df.to_excel(file_name, index=False)
 
