@@ -14,7 +14,7 @@ cities = [
 TRAINING_KEYBOARD = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(text='Пройти обучение', web_app=WebAppInfo(url=conf.bot.web_app_url))
+            InlineKeyboardButton(text='Пройти собеседование', web_app=WebAppInfo(url=conf.bot.web_app_url))
         ]
     ]
 )
