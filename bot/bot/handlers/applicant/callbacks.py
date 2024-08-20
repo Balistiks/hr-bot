@@ -73,7 +73,7 @@ async def send_city(callback: types.CallbackQuery, state: FSMContext):
         reply_markup=keyboards.applicant.get_continue_url_keyboard(
             'Посмотреть',
             cities_videos[data['city']],
-            'city',
+            'menu',
         )
     )
 
