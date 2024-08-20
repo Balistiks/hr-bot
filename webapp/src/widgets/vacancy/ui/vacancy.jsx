@@ -10,29 +10,22 @@ export const Vacancy = () => {
     const {data: cities, loading: citiesLoad, fetchData: fetchCity} = useApi();
     const {data: courses, loading: coursesLoad, fetchData: fetchCourses} = useApi();
     const {data: answers, fetchData: fetchAnswers} = useApi();
-    const [selectCity, setSelectCity] = useState('');
 
     const OnSelectCity = async (name) => {
-        setSelectCity(name);
-        const request = `courses?request={"city":{"name":"${name}"}}`;
-        await fetchCourses(request, 'GET')
-        await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+
     }
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (!cities) {
-                    await fetchCity('cities', 'GET')
-                } else {
-                    await OnSelectCity(cities[0].name);
-                }
+                await fetchCourses('courses', 'GET')
+                await fetchAnswers(`answers/byTgId?tgId=1`, 'GET')
             } catch (error) {
                 console.error(error)
             }
         };
         fetchData();
-    }, [cities]);
+    }, []);
 
 
     const showVacancy = (course) => {
@@ -54,8 +47,6 @@ export const Vacancy = () => {
 
     return (
         <>
-            <GeoDropDown style={{marginTop: 6}} cities={cities} citiesLoad={citiesLoad} selectCity={selectCity}
-                         setSelectCity={OnSelectCity}/>
             <Row style={{padding: '13px 12px 22px'}} className={'mw-100 gx-2 gy-3 mx-auto'}>
                 {courses && !coursesLoad && answers
                     ?

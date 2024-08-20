@@ -33,33 +33,48 @@ const VacancyPage = () => {
     const navigate = useNavigate();
 
 
-    const submitAnswer = async (event) => {
-        const formData = new FormData();
-
-        const request = {
-            text: event.target[0].value,
-            question: course.questions[selectQuestion].id,
+    const submitAnswer = async (answer) => {
+        await fetchAnswer('answers', 'POST', {
+            text: answer,
+            stage: course.stages[selectQuestion].id,
             user: user.id
-        }
+        });
 
-        for (let key in request) {
-            formData.append(key, request[key])
-        }
-
-        formData.append('file', file);
-        await fetchAnswer('answers', 'POST', formData, true);
         await fetchCourse(`courses/${id}`, 'GET')
-        await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+        await fetchAnswers(`answers/byTgId?tgId=${1}`, 'GET')
 
-        const nextTest = selectQuestion === (course.questions.length - 2)
-        const endCourse = selectQuestion === (course.questions.length - 1)
+        const nextTest = selectQuestion === (course.stages.length - 2)
+        const endCourse = selectQuestion === (course.stages.length - 1)
 
-        await updateUser('users', 'PATCH', {
-            id: user.id,
-            question: course.questions[selectQuestion].id,
-            status: endCourse ? 'окончил курс' : 'обучается',
-            course: endCourse ? null : id
-        })
+        console.log(answer)
+        if (
+          course.stages[selectQuestion].name === 'Гражданство' &&
+          (
+            answer === 'РФ, ' ||
+            answer === 'ВНЖ РФ, ' ||
+            answer === 'РВП РФ, '
+          )
+        ) {
+            await fetchAnswer('answers', 'POST', {
+                text: '',
+                stage: course.stages[selectQuestion+1].id,
+                user: user.id
+            });
+            await updateUser('users', 'PATCH', {
+                id: user.id,
+                stage: course.stages[selectQuestion+1].id,
+                status: endCourse ? 'окончил курс' : 'обучается',
+                course: endCourse ? null : id
+            })
+            location.reload()
+        } else {
+            await updateUser('users', 'PATCH', {
+                id: user.id,
+                stage: course.stages[selectQuestion].id,
+                status: endCourse ? 'окончил курс' : 'обучается',
+                course: endCourse ? null : id
+            })
+        }
 
         if (nextTest) {
             setNextTest(true);
@@ -79,7 +94,7 @@ const VacancyPage = () => {
     const startTest = async () => {
         setNextTest(false);
         setShowQuestionModal(true)
-        setSelectQuestion(course.questions.length - 1)
+        setSelectQuestion(course.stages.length - 1)
     }
 
     const OnSelectQuestion = (id) => {
@@ -92,8 +107,8 @@ const VacancyPage = () => {
         const fetchData = async () => {
             try {
                 await fetchCourse(`courses/${id}`, 'GET')
-                await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
-                await fetchUser(`users/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
+                await fetchAnswers(`answers/byTgId?tgId=${1}`, 'GET')
+                await fetchUser(`users/byTgId?tgId=${1}`, 'GET')
             } catch (error) {
                 console.error(error)
             }
@@ -113,7 +128,7 @@ const VacancyPage = () => {
     return (
         <main>
             <section className={'text-center'} style={{paddingTop: 30}}>
-                <Text typeText={'bold'} sizeText={'22'}
+                <Text style={{width: 250, marginLeft: 'auto', marginRight: 'auto'}} typeText={'bold'} sizeText={'22'}
                       color={'black'}>{course && !courseLoad ? course.name.toUpperCase() : 'ВАКАНСИЯ'}</Text>
                 <Text typeText={'regular'} sizeText={'16'} color={'gray'}
                       style={{maxWidth: 216, marginLeft: 'auto', marginRight: 'auto'}}>
@@ -121,8 +136,8 @@ const VacancyPage = () => {
                 </Text>
             </section>
             <section className={'d-flex justify-content-center'} style={{paddingTop: 22}}>
-                <Timeline questions={course ? course.questions : undefined}
-                          answers={answers ? answers.sort((a, b) => a.question.number > b.question.number ? 1 : -1) : undefined}
+                <Timeline questions={course ? course.stages : undefined}
+                          answers={answers ? answers : undefined}
                           showQuestionModal={OnSelectQuestion}
                           showProccesModal={() => console.log('1')}
                 />
@@ -130,14 +145,14 @@ const VacancyPage = () => {
             <QuestionModal show={showQuestionModal}
                            handleClose={() => setShowQuestionModal(false)}
                            submitAnswer={submitAnswer}
-                           name={course ? course.questions[selectQuestion].name : ''}
-                           text={course ? course.questions[selectQuestion].text : ''}
-                           number={course ? course.questions[selectQuestion].number : 1}
+                           courseId={course ? course.id : 0}
+                           stage={course ? course.stages[selectQuestion] : {}}
+                           answers={answers ? answers : undefined}
                            file={file}
                            setFile={setFile}
             />
             {/*<SuccessModal show={showSuccessModal} handleClose={() => setShowSuccessModal(false)}/>*/}
-            <EndCourseModal show={showNextTest} handleClose={() => startTest()}/>
+            {/*<EndCourseModal show={showNextTest} handleClose={() => startTest()}/>*/}
             <CalendarModal show={showCalendarModal} handleClose={() => setShowCalendarModal(false)} submitDate={sumbitDate}/>
         </main>
     )

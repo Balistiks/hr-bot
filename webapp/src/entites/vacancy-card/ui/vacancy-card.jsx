@@ -12,7 +12,7 @@ export const VacancyCard = ({id, name, address}) => {
 
     return (
         <div className={`${styles.VacancyCard} text-start`}>
-            <Text typeText={'regular'} sizeText={'16'} color={'black'} style={{whiteSpace: 'nowrap'}}>
+            <Text typeText={'regular'} sizeText={'16'} color={'black'}>
                 {name}
             </Text>
             <div className={'d-flex align-items-center'} style={{paddingLeft: 7, marginTop: 8}}>
