@@ -24,7 +24,7 @@ async def get_data_user(tg_id: int):
     if user_data and 'answers' in user_data:
         questions_and_answers = []
         for answer in user_data['answers']:
-            if answer['text'] is not None:
+            if answer['text'] is not None or answer['text'] != '':
                 question = answer['stage']
                 questions_and_answers.append((question, answer['id']))
 
