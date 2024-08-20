@@ -33,7 +33,8 @@ async def menu(message: types.Message, state: FSMContext):
 async def start_applicant(message: types.Message, state: FSMContext):
     await state.set_state(RegisterState.name)
     message = await message.answer(
-        'Как вас зовут? 🤔'
+        'Как вас зовут? 🤔\n'
+        '\nИспользуйте формат "Иванов Иван Иванович"'
     )
     await state.update_data(last_message_id=message.message_id)
 
