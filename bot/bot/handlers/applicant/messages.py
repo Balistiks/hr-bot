@@ -45,11 +45,12 @@ async def get_registration_name(message: types.Message, state: FSMContext):
     await functions.delete_message(message.bot, message.chat.id, data['last_message_id'])
 
     await state.set_state(RegisterState.phone_number)
+    await state.update_data(name=message.text)
     message = await message.answer(
         'Отправьте свой контакт 📲',
         reply_markup=keyboards.PHONE_KEYBOARD
     )
-    await state.update_data(name=message.text, last_message_id=message.message_id)
+    await state.update_data(last_message_id=message.message_id)
 
 
 @messages_router.message(RegisterState.phone_number)
