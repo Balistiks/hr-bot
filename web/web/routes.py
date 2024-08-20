@@ -37,7 +37,7 @@ async def send_status(request):
                     columns.append(answer['stage']['name'])
 
             df = pd.DataFrame(data_formatted, columns=columns, index=[0])
-            file_name = f'applicant_status_{user["tgId"]}.xlsx'
+            file_name = f'Кандидат_{user["tgId"]}.xlsx'
             df.to_excel(file_name, index=False)
 
             await bot.send_document(
