@@ -20,4 +20,8 @@ export class CreateUserDto {
 
   @IsEmpty()
   employee: Employee;
+
+  @IsNotEmpty()
+  @IsString()
+  city: string;
 }
