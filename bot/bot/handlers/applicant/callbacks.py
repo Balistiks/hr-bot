@@ -23,15 +23,7 @@ cities_videos = {
 @callbacks_router.callback_query(RegisterState.city)
 async def get_city(callback: types.CallbackQuery, state: FSMContext):
     await callback.message.delete()
-    data = await state.get_data()
-    await users_service.create({
-        'userName': callback.from_user.username,
-        'tgId': callback.from_user.id,
-        'name': data['name'],
-        'phoneNumber': data['phone_number'],
-        'city': callback.data
-    })
-    await state.clear()
+    await state.set_state(None)
 
     await callback.message.answer(
         'Привет, меня зовут Тимур! \n'
@@ -89,4 +81,13 @@ async def send_city(callback: types.CallbackQuery):
 @callbacks_router.callback_query(F.data == 'menu')
 async def send_menu(callback: types.CallbackQuery, state: FSMContext):
     await callback.message.delete()
+    data = await state.get_data()
+    await users_service.create({
+        'userName': callback.from_user.username,
+        'tgId': callback.from_user.id,
+        'name': data['name'],
+        'phoneNumber': data['phone_number'],
+        'city': callback.data
+    })
+    await state.clear()
     await menu(callback.message, state)
