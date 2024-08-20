@@ -56,9 +56,20 @@ export class UsersController {
       where: {
         id: data.userId,
       },
-      relations: {
-        employee: true,
+      order: {
+        answers: {
+          id: 'ASC',
+          stage: {
+            number: 'ASC',
+          },
+        },
       },
+      relations: [
+        'employee',
+        'answers',
+        'answers.stage',
+        'answers.stage.course',
+      ],
     });
     const date = data.date;
     user.selectedDate = date;
