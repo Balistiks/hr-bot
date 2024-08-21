@@ -60,9 +60,14 @@ const VacancyPage = () => {
                 stage: course.stages[selectQuestion+1].id,
                 user: user.id
             });
+            await fetchAnswer('answers', 'POST', {
+                text: '',
+                stage: course.stages[selectQuestion+2].id,
+                user: user.id
+            });
             await updateUser('users', 'PATCH', {
                 id: user.id,
-                stage: course.stages[selectQuestion+1].id,
+                stage: course.stages[selectQuestion+2].id,
                 status: endCourse ? 'окончил курс' : 'обучается',
                 course: endCourse ? null : id
             })
