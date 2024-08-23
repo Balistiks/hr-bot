@@ -56,6 +56,11 @@ export const QuestionModal = ({show, handleClose, submitAnswer, stage, courseId}
                 </div>
             </Modal.Header>
             <Modal.Body className={styles.CustomModalBody}>
+                {stage.text && (
+                  <Text typeText={'regular'} sizeText={'16'} color={'gray'}>
+                      {stage.text}
+                  </Text>
+                )}
                 {stage.type === 'info' && (!stage.dependence && (
                   <Text dangerouslySetInnerHTML={{ __html: information && information[0].text }} typeText={'regular'} sizeText={'16'} color={'gray'}>
                   </Text>
