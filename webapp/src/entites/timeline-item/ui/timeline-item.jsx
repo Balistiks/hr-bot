@@ -12,9 +12,9 @@ export const TimelineItem = ({type, border = true, onClick, name}) => {
                     <Text typeText={'regular'} sizeText={'19'} color={'gray'} style={{paddingTop: 12}}>
                         {name.toUpperCase()}
                     </Text>
-                    <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>
-                      Посмотреть задание
-                    </CustomButton>
+                    <Text typeText={'regular'} sizeText={'13'} color={'gray'} style={{marginTop: 9}}>
+                      ЗАДАНИЕ ВЫПОЛНЕНО
+                    </Text>
                     {/*<CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>*/}
                     {/*    Посмотреть задание*/}
                     {/*</CustomButton>*/}
