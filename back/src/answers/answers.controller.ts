@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Post, Query } from '@nestjs/common';
 import { AnswersService } from './answers.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { Answer } from './entitites/answer.entity';
@@ -39,6 +39,16 @@ export class AnswersController {
       relations: {
         stage: true,
       },
+    });
+  }
+
+  @Get(':id')
+  async getById(@Param('id') id: number): Promise<Answer> {
+    return await this.answersService.find({
+      where: {
+        id,
+      },
+      relations: ['stage'],
     });
   }
 }
