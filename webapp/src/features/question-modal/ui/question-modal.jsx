@@ -51,7 +51,6 @@ export const QuestionModal = ({show, handleClose, submitAnswer, stage, courseId}
                         <img src={window.location.origin + '/Pencil.svg'}/>
                     </div>
                     <div className={styles.TaskInfoBlockText}>
-                        <Text typeText={'regular'} sizeText={'17'} color={'gray'}>Задание {stage.number}</Text>
                         <Text typeText={'regular'} sizeText={'22'} color={'black'}>{stage.name && stage.name.toUpperCase()}</Text>
                     </div>
                 </div>

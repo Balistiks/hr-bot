@@ -22,7 +22,7 @@ export const VacancyCard = ({id, name, address}) => {
                 </Text>
             </div>
             <CustomButton typeButton={'solid'} style={{marginTop: 16}} onClick={onNavigateCourses}>
-                <Text typeText={'bold'} sizeText={'13'}>Пройти обучение</Text>
+                <Text typeText={'bold'} sizeText={'13'}>СОБЕСЕДОВАНИЕ</Text>
             </CustomButton>
         </div>
     )

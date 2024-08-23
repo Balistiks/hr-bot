@@ -133,11 +133,13 @@ const VacancyPage = () => {
     return (
         <main>
             <section className={'text-center'} style={{paddingTop: 30}}>
-                <Text style={{width: 250, marginLeft: 'auto', marginRight: 'auto'}} typeText={'bold'} sizeText={'22'}
-                      color={'black'}>{course && !courseLoad ? course.name.toUpperCase() : 'ВАКАНСИЯ'}</Text>
-                <Text typeText={'regular'} sizeText={'16'} color={'gray'}
-                      style={{maxWidth: 216, marginLeft: 'auto', marginRight: 'auto'}}>
-                    {course && !courseLoad ? course.description : 'Описание'}
+                <Text
+                  style={{width: 250, marginLeft: 'auto', marginRight: 'auto'}}
+                  typeText={'bold'}
+                  sizeText={'22'}
+                  color={'black'}
+                >
+                    {course && !courseLoad ? course.name.toUpperCase() : 'ВАКАНСИЯ'}
                 </Text>
             </section>
             <section className={'d-flex justify-content-center'} style={{paddingTop: 22}}>
