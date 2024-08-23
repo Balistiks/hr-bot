@@ -10,7 +10,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from bot import keyboards
 from bot.scheduler import scheduler_missed_call
 from bot.states import StageCommentState
-from bot.services import users_service, employees_service, headers
+from bot.services import users_service, employees_service, answers_service
 
 callbacks_router = Router()
         
@@ -42,28 +42,20 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
         )
 
 
-@callbacks_router.callback_query(F.data.startswith('question_'))
+@callbacks_router.callback_query(F.data.startswith('question_answer_'))
 async def get_data_state(callback: types.CallbackQuery):
     data = callback.data.split('_')
-    question_id = int(data[1])
+    answer_id = int(data[2])
 
-    tg_id = callback.from_user.id
-    user_data = await users_service.get_by_tg_id(tg_id)
+    answer = await answers_service.get_by_id(answer_id)
 
-    if user_data and 'answers' in user_data:
-        question_text = None
-        answer_text = None
-        file_path = None
+    question_text = answer['stage']['text']
+    answer_text = answer['text']
 
-        for answer in user_data['answers']:
-            if 'stage' in answer and answer['stage']['id'] == question_id:
-                question_text = answer['stage']['text']
-                answer_text = answer['text']
-
-            await callback.message.edit_caption(
-                caption=f'Вопрос: {question_text}\nОтвет: {answer_text}',
-                reply_markup=await keyboards.hr.stages.create_stage_applicant_keyboard(tg_id)
-            )
+    await callback.message.edit_caption(
+        caption=f'Вопрос: {question_text}\nОтвет: {answer_text}',
+        reply_markup=await keyboards.hr.stages.create_stage_applicant_keyboard(int(data[3]))
+    )
 
 
 @callbacks_router.callback_query(F.data.startswith('status-'))

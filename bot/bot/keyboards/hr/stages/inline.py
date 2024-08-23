@@ -32,7 +32,7 @@ async def get_data_user(tg_id: int):
         for question, answer_id in questions_and_answers:
             builder.add(InlineKeyboardButton(
                 text=question['name'],
-                callback_data=f'question_{question["id"]}_answer_{answer_id}'
+                callback_data=f'question_answer_{answer_id}_{tg_id}'
             ))
 
     builder.add(InlineKeyboardButton(text='Назад', callback_data='hr'))
