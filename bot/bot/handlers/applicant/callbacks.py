@@ -28,7 +28,7 @@ async def get_city(callback: types.CallbackQuery, state: FSMContext):
 
     await callback.message.answer_photo(
         photo=types.FSInputFile(
-            '/files/photos/timur.jpg',
+            'files/photos/timur.jpg',
         ),
         caption='Привет, меня зовут Тимур! \n'
         '\nЯ генеральный директор федеральной сети салонов красоты "ЦирюльникЪ" 💅🏽\n'
