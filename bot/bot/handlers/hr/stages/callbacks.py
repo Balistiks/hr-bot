@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 
 from aiogram import Router, types, F, Bot
 from aiogram.fsm.context import FSMContext
+from aiogram.exceptions import TelegramBadRequest
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -11,6 +12,7 @@ from bot import keyboards
 from bot.scheduler import scheduler_missed_call
 from bot.states import StageCommentState
 from bot.services import users_service, employees_service, answers_service
+from bot.misc import functions
 
 callbacks_router = Router()
         
@@ -22,11 +24,16 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
 
     user = await users_service.get_by_tg_id(int(tgid))
     if user['status'] != 'обучается':
-        await callback.message.edit_media(
-            media=types.InputMediaPhoto(
-                media=types.FSInputFile('files/photos/main.png'),
-                caption='Поставить статус',
+        try:
+            await callback.message.delete()
+        except TelegramBadRequest:
+            await callback.message.edit_reply_markup(None)
+        excel_file_name = await functions.get_excel(user)
+        await callback.message.answer_document(
+            document=types.FSInputFile(
+                excel_file_name
             ),
+            caption='Поставить статус',
             reply_markup=await keyboards.hr.stages.get_status_keyboard(user['status'])
         )
     else:
