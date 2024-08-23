@@ -23,7 +23,14 @@ export class UsersController {
   async findByTgId(@Query('tgId') tgId: number): Promise<User> {
     return await this.usersService.findOne({
       where: { tgId },
-      relations: ['course', 'question', 'answers', 'answers.stage', 'stage'],
+      relations: [
+        'course',
+        'question',
+        'answers',
+        'answers.stage',
+        'stage',
+        'answers.stage.course',
+      ],
     });
   }
 
