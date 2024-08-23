@@ -47,7 +47,7 @@ async def get_status_keyboard(status: str):
     builder.adjust(2)
     markup = builder.as_markup()
 
-    markup.inline_keyboard.append([InlineKeyboardButton(text=status, callback_data='#')])
+    markup.inline_keyboard.append([InlineKeyboardButton(text=f'Статус: {status}', callback_data='#')])
     markup.inline_keyboard.append([
         InlineKeyboardButton(text='Дозвон' if status == 'недозвон' else 'Недозвон',
                              callback_data='status-окончил курс' if status == 'недозвон' else 'status-недозвон'),
