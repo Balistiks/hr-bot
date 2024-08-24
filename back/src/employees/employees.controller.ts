@@ -25,8 +25,7 @@ export class EmployeesController {
         'users.answers',
         'users.answers.stage',
         'users.answers.stage.course',
-        'question',
-        'position',
+        'stage',
       ],
     });
   }
