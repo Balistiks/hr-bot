@@ -22,7 +22,9 @@ export class EmployeesController {
       relations: [
         'users',
         'users.course',
-        'users.question',
+        'users.answers',
+        'users.answers.stage',
+        'users.answers.course',
         'question',
         'position',
       ],
