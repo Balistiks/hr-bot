@@ -24,7 +24,7 @@ export class EmployeesController {
         'users.course',
         'users.answers',
         'users.answers.stage',
-        'users.answers.course',
+        'users.answers.stage.course',
         'question',
         'position',
       ],
