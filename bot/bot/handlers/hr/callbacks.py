@@ -69,8 +69,8 @@ async def create_excel_applicant(tgid):
             'статус': applicant['status']
         })
 
-    df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'курс', 'этап', 'статус'])
-    file_name = f'files/applicant_status_{tgid}.xlsx'
+    df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'Вакансия', 'этап', 'статус'])
+    file_name = f'files/соискатели_{tgid}.xlsx'
     df.to_excel(file_name, index=False)
 
     return file_name
