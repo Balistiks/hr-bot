@@ -20,12 +20,11 @@ export class EmployeesController {
     return await this.employeesService.find({
       where: { tgId },
       relations: [
-        'users',
+        'users.stage',
         'users.course',
         'users.answers',
         'users.answers.stage',
         'users.answers.stage.course',
-        'stage',
       ],
     });
   }
