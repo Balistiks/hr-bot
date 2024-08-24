@@ -64,7 +64,7 @@ async def create_excel_applicant(tgid):
             'Номер': applicant['phoneNumber'],
             'UserName': applicant['userName'],
             'tgid': applicant['tgId'],
-            'курс': applicant['course']['name'],
+            'Вакансия': applicant['answers'][0]['stage']['course'][0]['name'],
             'этап': applicant['stage']['number'],
             'статус': applicant['status']
         })
