@@ -46,7 +46,11 @@ export const Timeline = ({showQuestionModal, showProccesModal, questions, answer
 
     const getCitizenship = () => {
         const citizenshipAnswer = answers.find((answer) => answer.stage.name === 'Гражданство');
-        return citizenshipAnswer ? citizenshipAnswer.text : ''
+        if (citizenshipAnswer) {
+            citizenshipAnswer.text.replace(',', '')
+            citizenshipAnswer.text.replace(' ', '')
+            return citizenshipAnswer.text
+        }
     }
 
     return (
