@@ -13,20 +13,12 @@ export const TimelineItem = ({type, border = true, onClick, name, questionType, 
                         {name.toUpperCase()}
                     </Text>
                     {
-                      ((questionType !== 'info' && name !== 'Документы') || (name === 'Документы' && (citizenship !== 'РФ' || citizenship !== 'ВНЖ РФ' || citizenship !== 'РВП РФ'))) && (
+                      ((questionType !== 'info' && name !== 'Документы') || (name === 'Документы' && (citizenship !== 'РФ' && citizenship !== 'ВНЖ РФ' && citizenship !== 'РВП РФ'))) && (
                         <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={() => onClick(true)}>
                           Изменить ответ
                         </CustomButton>
                       )
                     }
-                    {(name === 'Документы' && (citizenship !== 'РФ, ' || citizenship !== 'ВНЖ РФ, ' || citizenship !== 'РВП РФ, ')) && (
-                      <>
-                        <p>Ошибка</p>
-                        <p>{citizenship}</p>
-                        <p>{name === 'Документы' && name}</p>
-                        <p>{(citizenship !== 'РФ' || citizenship !== 'ВНЖ РФ' || citizenship !== 'РВП РФ') && citizenship}</p>
-                      </>
-                    )}
                   {/*<CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>*/}
                     {/*    Посмотреть задание*/}
                     {/*</CustomButton>*/}
