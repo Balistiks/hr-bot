@@ -20,9 +20,13 @@ export const TimelineItem = ({type, border = true, onClick, name, questionType, 
                       )
                     }
                     {(name === 'Документы' && (citizenship !== 'РФ, ' || citizenship !== 'ВНЖ РФ, ' || citizenship !== 'РВП РФ, ')) && (
-                      <p>Ошибка</p>
+                      <>
+                        <p>Ошибка</p>
+                        <p>{name}</p>
+                        <p>{citizenship}</p>
+                      </>
                     )}
-                    {/*<CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>*/}
+                  {/*<CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>*/}
                     {/*    Посмотреть задание*/}
                     {/*</CustomButton>*/}
                 </li>
