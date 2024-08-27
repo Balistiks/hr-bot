@@ -56,6 +56,7 @@ export const Timeline = ({showQuestionModal, showProccesModal, questions, answer
                                           type={answers ? getStatus(item, index) : undefined}
                                           onClick={(update) => showQuestionModal(index, update)}
                                           questionType={item.type}
+                                          citizenship={answers.find((answer) => answer.stage.name === 'Гражданство').text}
                             />
                         )
                     })}
