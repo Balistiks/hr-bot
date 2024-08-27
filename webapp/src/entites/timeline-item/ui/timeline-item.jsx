@@ -2,7 +2,7 @@ import {CustomButton, Text} from "@shared/ui/index.js";
 
 import styles from './styles.module.scss'
 
-export const TimelineItem = ({type, border = true, onClick, name, questionType, citizenship}) => {
+export const TimelineItem = ({type, border = true, onClick, name, questionType, citizenshipAnswer}) => {
 
     switch (type) {
         case 'completed':
@@ -12,17 +12,15 @@ export const TimelineItem = ({type, border = true, onClick, name, questionType, 
                     <Text typeText={'regular'} sizeText={'19'} color={'gray'} style={{paddingTop: 12}}>
                         {name.toUpperCase()}
                     </Text>
-                    {questionType !== 'info' && (
-                      name === 'Документы' && (
-                        citizenship !== 'РФ, ' ||
-                        citizenship !== 'ВНЖ РФ, ' ||
-                        citizenship !== 'РВП РФ, '
+                    {
+                      questionType !== 'info' || (
+                      name === 'Документы' && citizenshipAnswer && (citizenshipAnswer.text !== 'РФ, ' || citizenshipAnswer.text !== 'ВНЖ РФ, ' || citizenshipAnswer.text !== 'РВП РФ, ')
+                      ) && (
+                        <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={() => onClick(true)}>
+                          Изменить ответ
+                        </CustomButton>
                       )
-                    ) && (
-                      <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={() => onClick(true)}>
-                        Изменить ответ
-                      </CustomButton>
-                    )}
+                    }
                     {/*<CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>*/}
                     {/*    Посмотреть задание*/}
                     {/*</CustomButton>*/}
