@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Post, Query } from '@nestjs/common';
 import { AnswersService } from './answers.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { Answer } from './entitites/answer.entity';
@@ -14,6 +14,13 @@ export class AnswersController {
   @Post()
   async save(@Body() answer: CreateAnswerDto): Promise<Answer> {
     return await this.answersService.save(answer);
+  }
+
+  @Delete()
+  async deleteMany(@Body() answers: Answer[]) {
+    for (const answer of answers) {
+      await this.answersService.delete(answer);
+    }
   }
 
   @Get('byTgId')

@@ -22,4 +22,8 @@ export class AnswersService {
   async findMany(options: FindManyOptions<Answer>): Promise<Answer[]> {
     return await this.answerRepository.find(options);
   }
+
+  async delete(answer: Answer) {
+    return await this.answerRepository.delete(answer);
+  }
 }
