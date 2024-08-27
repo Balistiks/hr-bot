@@ -64,8 +64,16 @@ const VacancyPage = () => {
                             user: user.id
                         });
                     }
+                    await updateUser('users', 'PATCH', {
+                        id: user.id,
+                        stage: course.stages[selectQuestion+2].id,
+                    })
                 } else {
                     await deleteAnswers('answers', 'DELETE', createdAnswers)
+                    await updateUser('users', 'PATCH', {
+                        id: user.id,
+                        stage: course.stages[selectQuestion].id,
+                    })
                 }
                 location.reload()
             }
