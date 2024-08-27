@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Answer } from './entitites/answer.entity';
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { CreateAnswerDto } from './dto/create-answer.dto';
+import { UpdateAnswerDto } from './dto/update-answer.dto';
 
 @Injectable()
 export class AnswersService {
@@ -11,7 +12,7 @@ export class AnswersService {
     private answerRepository: Repository<Answer>,
   ) {}
 
-  async save(answer: CreateAnswerDto): Promise<Answer> {
+  async save(answer: CreateAnswerDto | UpdateAnswerDto): Promise<Answer> {
     return await this.answerRepository.save(answer);
   }
 

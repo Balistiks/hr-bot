@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Logger, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Patch, Post, Query } from '@nestjs/common';
 import { AnswersService } from './answers.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { Answer } from './entitites/answer.entity';
 import { FilesService } from '../files/files.service';
+import { UpdateAnswerDto } from './dto/update-answer.dto';
 
 @Controller('answers')
 export class AnswersController {
@@ -21,6 +22,11 @@ export class AnswersController {
     for (const answer of answers) {
       await this.answersService.delete(answer);
     }
+  }
+
+  @Patch()
+  async update(@Body() answer: UpdateAnswerDto): Promise<Answer> {
+    return await this.answersService.save(answer);
   }
 
   @Get('byTgId')
