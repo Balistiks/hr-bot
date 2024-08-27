@@ -44,6 +44,11 @@ export const Timeline = ({showQuestionModal, showProccesModal, questions, answer
         return undefined;
     }
 
+    const getCitizenship = () => {
+        const citizenshipAnswer = answers.find((answer) => answer.stage.name === 'Гражданство');
+        return citizenshipAnswer ? citizenshipAnswer.text : ''
+    }
+
     return (
         <ul className={"timeline"}>
             {questions &&
@@ -56,7 +61,7 @@ export const Timeline = ({showQuestionModal, showProccesModal, questions, answer
                                           type={answers ? getStatus(item, index) : undefined}
                                           onClick={(update) => showQuestionModal(index, update)}
                                           questionType={item.type}
-                                          citizenshipAnswer={answers.find((answer) => answer.stage.name === 'Гражданство')}
+                                          citizenship={answers ? getCitizenship() : ''}
                             />
                         )
                     })}

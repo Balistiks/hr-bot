@@ -2,7 +2,7 @@ import {CustomButton, Text} from "@shared/ui/index.js";
 
 import styles from './styles.module.scss'
 
-export const TimelineItem = ({type, border = true, onClick, name, questionType, citizenshipAnswer}) => {
+export const TimelineItem = ({type, border = true, onClick, name, questionType, citizenship}) => {
 
     switch (type) {
         case 'completed':
@@ -14,7 +14,7 @@ export const TimelineItem = ({type, border = true, onClick, name, questionType, 
                     </Text>
                     {
                       questionType !== 'info' || (
-                      name === 'Документы' && citizenshipAnswer && (citizenshipAnswer.text !== 'РФ, ' || citizenshipAnswer.text !== 'ВНЖ РФ, ' || citizenshipAnswer.text !== 'РВП РФ, ')
+                      name === 'Документы' && citizenship && (citizenship !== 'РФ, ' || citizenship !== 'ВНЖ РФ, ' || citizenship !== 'РВП РФ, ')
                       ) && (
                         <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={() => onClick(true)}>
                           Изменить ответ
