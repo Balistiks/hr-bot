@@ -15,7 +15,7 @@ export const TimelineItem = ({type, border = true, onClick, name, questionType, 
                     {
                       ((questionType !== 'info' && name !== 'Документы') || (name === 'Документы' && (citizenship !== 'РФ, ' || citizenship !== 'ВНЖ РФ, ' || citizenship !== 'РВП РФ, '))) && (
                         <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={() => onClick(true)}>
-                          Изменить ответ
+                          Изменить ответ {(name === 'Документы' && (citizenship !== 'РФ, ' || citizenship !== 'ВНЖ РФ, ' || citizenship !== 'РВП РФ, '))}
                         </CustomButton>
                       )
                     }
