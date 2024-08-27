@@ -12,9 +12,9 @@ export const TimelineItem = ({type, border = true, onClick, name}) => {
                     <Text typeText={'regular'} sizeText={'19'} color={'gray'} style={{paddingTop: 12}}>
                         {name.toUpperCase()}
                     </Text>
-                    <Text typeText={'regular'} sizeText={'13'} color={'gray'} style={{marginTop: 9}}>
-                      ЗАДАНИЕ ВЫПОЛНЕНО
-                    </Text>
+                    <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={() => onClick(true)}>
+                      Изменить ответ
+                    </CustomButton>
                     {/*<CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>*/}
                     {/*    Посмотреть задание*/}
                     {/*</CustomButton>*/}
@@ -31,7 +31,7 @@ export const TimelineItem = ({type, border = true, onClick, name}) => {
                     {/*<Text typeText={'regular'} sizeText={'11'} color={'gray'} style={{marginTop: 9}}>*/}
                     {/*    Lorem ipsum dolor sit amet, consectetur adipiscing elit.*/}
                     {/*</Text>*/}
-                    <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>
+                    <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={() => onClick(false)}>
                         Посмотреть задание
                     </CustomButton>
                     {/*<CustomButton typeButton={'red-icon'} style={{marginTop: 25}} onClick={onClick}>*/}

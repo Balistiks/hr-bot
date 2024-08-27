@@ -54,7 +54,7 @@ export const Timeline = ({showQuestionModal, showProccesModal, questions, answer
                                           border={index + 1 < questions.length}
                                           name={item.name}
                                           type={answers ? getStatus(item, index) : undefined}
-                                          onClick={() => showQuestionModal(index)}
+                                          onClick={(update) => showQuestionModal(index, update)}
                             />
                         )
                     })}

@@ -21,6 +21,8 @@ const VacancyPage = () => {
     const {data: user, fetchData: fetchUser} = useApi()
     const {fetchData: updateUser} = useApi();
     const {fetchData: setDate} = useApi();
+    const {fetchData: deleteAnswers} = useApi();
+    const {fetchData: updateAnswers} = useApi()
 
     // States
     const [showQuestionModal, setShowQuestionModal] = useState(false);
@@ -29,71 +31,105 @@ const VacancyPage = () => {
     const [showNextTest, setNextTest] = useState(false);
     const [selectQuestion, setSelectQuestion] = useState(0);
     const [file, setFile] = useState();
+    const [isUpdate, setIsUpdate] = useState(false);
 
     const navigate = useNavigate();
 
 
     const submitAnswer = async (answer) => {
-        await fetchAnswer('answers', 'POST', {
-            text: answer,
-            stage: course.stages[selectQuestion].id,
-            user: user.id
-        });
+        if (isUpdate) {
+            const userAnswer = answers.find((userAnswer) =>
+              userAnswer.stage.name === course.stages[selectQuestion].name
+            )
+            await updateAnswers('answers', 'PATCH', {
+                id: userAnswer['id'],
+                text: answer,
+            })
+            if (
+              course.stages[selectQuestion].name === 'Гражданство'
+            ) {
+                const createdAnswers = answers.filter((userAnswer) =>
+                  userAnswer.stage.name === 'Документы' ||
+                  userAnswer.stage.name === 'Москва 24'
+                )
+                if (
+                  answer === 'РФ, ' ||
+                  answer === 'ВНЖ РФ, ' ||
+                  answer === 'РВП РФ, '
+                ) {
+                    for (let i = createdAnswers.length + 1; i <= 2; i++) {
+                        await fetchAnswer('answers', 'POST', {
+                            text: '',
+                            stage: course.stages[selectQuestion+i].id,
+                            user: user.id
+                        });
+                    }
+                } else {
+                    await deleteAnswers('answers', 'DELETE', createdAnswers)
+                }
+                location.reload()
+            }
+        } else {
+            await fetchAnswer('answers', 'POST', {
+                text: answer,
+                stage: course.stages[selectQuestion].id,
+                user: user.id
+            });
+
+            const nextTest = selectQuestion === (course.stages.length - 2)
+            const endCourse = selectQuestion === (course.stages.length - 1)
+
+            if (
+              course.stages[selectQuestion].name === 'Гражданство' &&
+              (
+                answer === 'РФ, ' ||
+                answer === 'ВНЖ РФ, ' ||
+                answer === 'РВП РФ, '
+              )
+            ) {
+                await fetchAnswer('answers', 'POST', {
+                    text: '',
+                    stage: course.stages[selectQuestion+1].id,
+                    user: user.id
+                });
+                await fetchAnswer('answers', 'POST', {
+                    text: '',
+                    stage: course.stages[selectQuestion+2].id,
+                    user: user.id
+                });
+                await updateUser('users', 'PATCH', {
+                    id: user.id,
+                    stage: course.stages[selectQuestion+2].id,
+                    status: endCourse ? 'окончил курс' : 'обучается',
+                    course: endCourse ? null : id
+                })
+                location.reload()
+            } else {
+                await updateUser('users', 'PATCH', {
+                    id: user.id,
+                    stage: course.stages[selectQuestion].id,
+                    status: endCourse ? 'окончил курс' : 'обучается',
+                    course: endCourse ? null : id
+                })
+            }
+
+            if (nextTest) {
+                setNextTest(true);
+                return;
+            }
+
+            if (!endCourse) {
+                // setShowSuccessModal(true)
+            }
+
+            if (endCourse) {
+                setShowCalendarModal(true);
+                navigate('/')
+            }
+        }
 
         await fetchCourse(`courses/${id}`, 'GET')
         await fetchAnswers(`answers/byTgId?tgId=${tg.initDataUnsafe.user.id}`, 'GET')
-
-        const nextTest = selectQuestion === (course.stages.length - 2)
-        const endCourse = selectQuestion === (course.stages.length - 1)
-
-        console.log(answer)
-        if (
-          course.stages[selectQuestion].name === 'Гражданство' &&
-          (
-            answer === 'РФ, ' ||
-            answer === 'ВНЖ РФ, ' ||
-            answer === 'РВП РФ, '
-          )
-        ) {
-            await fetchAnswer('answers', 'POST', {
-                text: '',
-                stage: course.stages[selectQuestion+1].id,
-                user: user.id
-            });
-            await fetchAnswer('answers', 'POST', {
-                text: '',
-                stage: course.stages[selectQuestion+2].id,
-                user: user.id
-            });
-            await updateUser('users', 'PATCH', {
-                id: user.id,
-                stage: course.stages[selectQuestion+2].id,
-                status: endCourse ? 'окончил курс' : 'обучается',
-                course: endCourse ? null : id
-            })
-            location.reload()
-        } else {
-            await updateUser('users', 'PATCH', {
-                id: user.id,
-                stage: course.stages[selectQuestion].id,
-                status: endCourse ? 'окончил курс' : 'обучается',
-                course: endCourse ? null : id
-            })
-        }
-
-        if (nextTest) {
-            setNextTest(true);
-            return;
-        }
-
-        if (!endCourse) {
-            // setShowSuccessModal(true)
-        }
-
-        if (endCourse) {
-            setShowCalendarModal(true);
-            navigate('/')
-        }
     }
 
     const startTest = async () => {
@@ -102,10 +138,11 @@ const VacancyPage = () => {
         setSelectQuestion(course.stages.length - 1)
     }
 
-    const OnSelectQuestion = (id) => {
+    const OnSelectQuestion = (id, update) => {
         setShowQuestionModal(true)
         setSelectQuestion(id)
         setFile(undefined);
+        setIsUpdate(update);
     }
 
     useEffect(() => {
