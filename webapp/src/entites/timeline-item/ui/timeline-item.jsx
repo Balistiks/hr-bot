@@ -2,7 +2,7 @@ import {CustomButton, Text} from "@shared/ui/index.js";
 
 import styles from './styles.module.scss'
 
-export const TimelineItem = ({type, border = true, onClick, name}) => {
+export const TimelineItem = ({type, border = true, onClick, name, questionType}) => {
 
     switch (type) {
         case 'completed':
@@ -12,9 +12,12 @@ export const TimelineItem = ({type, border = true, onClick, name}) => {
                     <Text typeText={'regular'} sizeText={'19'} color={'gray'} style={{paddingTop: 12}}>
                         {name.toUpperCase()}
                     </Text>
-                    <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={() => onClick(true)}>
-                      Изменить ответ
-                    </CustomButton>
+                    {questionType !== 'info' && (
+                      <CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={() => onClick(true)}>
+                        Изменить ответ
+                      </CustomButton>
+                    )}
+
                     {/*<CustomButton typeButton={'gray'} style={{marginTop: 13}} onClick={onClick}>*/}
                     {/*    Посмотреть задание*/}
                     {/*</CustomButton>*/}
