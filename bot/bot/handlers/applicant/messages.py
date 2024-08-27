@@ -48,7 +48,8 @@ async def get_registration_name(message: types.Message, state: FSMContext):
     await state.set_state(RegisterState.phone_number)
     await state.update_data(name=message.text)
     message = await message.answer(
-        'Отправьте свой контакт 📲',
+        'Напишите свой номер телефона 📲\n'
+        '\nФормат: +79080000000',
         reply_markup=keyboards.PHONE_KEYBOARD
     )
     await state.update_data(last_message_id=message.message_id)
@@ -56,16 +57,22 @@ async def get_registration_name(message: types.Message, state: FSMContext):
 
 @messages_router.message(RegisterState.phone_number)
 async def get_registration_phone(message: types.Message, state: FSMContext):
+    data = await state.get_data()
     await message.delete()
-    if message.contact:
-        if message.contact.user_id == message.from_user.id:
-            data = await state.get_data()
-            await functions.delete_message(message.bot, message.chat.id, data['last_message_id'])
-            await state.update_data(phone_number=message.contact.phone_number)
-            await state.set_state(RegisterState.city)
-            await message.answer(
-                'Выберите город, в котором хотите работать 📍',
-                reply_markup=keyboards.applicant.CITIES_KEYBOARD
-            )
+    await functions.delete_message(message.bot, message.chat.id, data['last_message_id'])
+    if re.match(r'\+79(\d{9})$', message.text):
+        await functions.delete_message(message.bot, message.chat.id, data['last_message_id'])
+        await state.update_data(phone_number=message.text)
+        await state.set_state(RegisterState.city)
+        message = await message.answer(
+            'Выберите город, в котором хотите работать 📍',
+            reply_markup=keyboards.applicant.CITIES_KEYBOARD
+        )
+    else:
+        message = await message.answer(
+            'Попробуйте ввести номер телефона еше раз\n'
+            '\nПример: +79990000000'
+        )
+    await state.update_data(last_message_id=message.message_id)
 
             # await menu(message, state)
