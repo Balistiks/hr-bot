@@ -15,7 +15,7 @@ cities_videos = {
     'Селятино': 'https://drive.google.com/file/d/1sVQve9KvFkE-eQJepyRaOByRNa8fP67f/view?usp=share_link',
     'Долгопрудный': 'https://drive.google.com/file/d/13PSrrNkrpz-SJPk7KEIix9EH-kemIIe-/view?usp=share_link',
     'Калининград': 'https://drive.google.com/file/d/1DJW_DmUH6tuGygNjLGdjJM9ZM5C78J2t/view?usp=share_link',
-    'Звенигород': 'https://drive.google.com/file/d/1BaWTt1n94nYPz1AufWc26soqXA7Y78Vh/view?usp=share_link',
+    'Звенигород': 'https://vk.com/video-109222908_456239892',
     'Видное': 'https://drive.google.com/file/d/10qgkOjlCQLNWNSK72zMo32UjtdFJhiXo/view?usp=share_link',
 }
 
