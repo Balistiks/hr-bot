@@ -64,7 +64,7 @@ async def create_excel_applicant(tgid):
             'Номер': applicant['phoneNumber'],
             'UserName': applicant['userName'],
             'tgid': applicant['tgId'],
-            'Вакансия': applicant['answers'][0]['stage']['course'][0]['name'] if applicant['applicant'] is not None else '',
+            'Вакансия': applicant['answers'][0]['stage']['course'][0]['name'] if applicant['answers'] is not None else '',
             'этап': applicant['stage']['number'] if applicant['stage'] is not None else '',
             'статус': applicant['status']
         })
