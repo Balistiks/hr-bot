@@ -12,6 +12,8 @@ export const QuestionModal = ({show, handleClose, submitAnswer, stage, courseId}
     const {data: information, fetchData: fetchInformation} = useApi();
     const {data: answers, fetchData: fetchAnswers} = useApi();
 
+    const [writeValue, setWriteValue] = useState('');
+
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -20,6 +22,8 @@ export const QuestionModal = ({show, handleClose, submitAnswer, stage, courseId}
             for (const input of event.target) {
                 answer += input.checked ? `${input.value}, ` : ''
             }
+        } else if (stage.type === 'write') {
+            answer = writeValue;
         }
         submitAnswer(answer);
         handleClose();
@@ -122,6 +126,12 @@ export const QuestionModal = ({show, handleClose, submitAnswer, stage, courseId}
                             }
                         })
                     }
+                    {stage.type === 'write' && (
+                      <Form.Control
+                        value={writeValue}
+                        onChange={(e) => setWriteValue(e.target.value)}
+                      />
+                    )}
                     <CustomButton typeButton={'solid'} style={{marginTop: 19}} type={'submit'}>Подтвердить</CustomButton>
                 </Form>
             </Modal.Body>
