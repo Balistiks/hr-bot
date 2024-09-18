@@ -38,10 +38,14 @@ async def start_bot():
     scheduler = ContextSchedulerDecorator(AsyncIOScheduler(jobstores=job_stores))
     scheduler.ctx.add_instance(bot, declared_class=Bot)
     
+    scheduler_status = AsyncIOScheduler(timezone='Asia/Vladivostok')
+    scheduler_status.add_job(check_status, trigger='cron', day='*', kwargs={'bot': bot})
+
     dp = get_dispatcher(storage=storage, scheduler=scheduler)
-    
+
     scheduler.start()
-    await check_status(bot, scheduler)
+    scheduler_status.start()
+
     await dp.start_polling(
         bot,
         allowed_updates=dp.resolve_used_update_types(),

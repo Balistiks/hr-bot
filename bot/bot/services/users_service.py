@@ -39,10 +39,10 @@ async def update(user: dict) -> dict:
         )).json()
 
 
-async def get_all() -> list:
+async def get_all_studying() -> dict:
     async with aiohttp.ClientSession(
         headers=headers
     ) as session:
         return await (await session.get(
-            f'{url}/users',
+            f'{url}/users/studying',
         )).json()

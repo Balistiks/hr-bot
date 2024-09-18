@@ -9,20 +9,40 @@ import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 import * as process from 'process';
+import {Between} from "typeorm";
 
 
 @Controller('users')
 export class UsersController {
   constructor(
-    private readonly usersService: UsersService,
-    private readonly employeesService: EmployeesService,
-    private readonly httpService: HttpService,
-  ) {}
+      private readonly usersService: UsersService,
+      private readonly employeesService: EmployeesService,
+      private readonly httpService: HttpService,
+  ) {
+  }
+
+ @Get('studying')
+  async getAll(): Promise<User[]> {
+    const now = new Date();
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setDate(now.getDate() - 3);
+
+    const sixDaysAgo = new Date();
+    sixDaysAgo.setDate(now.getDate() - 6);
+
+    return await this.usersService.find({
+      where: {
+        status: 'обучается',
+        registeredAt: Between(sixDaysAgo, threeDaysAgo),
+      },
+    });
+  }
+
 
   @Get('byTgId')
   async findByTgId(@Query('tgId') tgId: number): Promise<User> {
     return await this.usersService.findOne({
-      where: { tgId },
+      where: {tgId},
       relations: [
         'course',
         'question',
@@ -37,7 +57,7 @@ export class UsersController {
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<User> {
     return await this.usersService.findOne({
-      where: { id },
+      where: {id},
       relations: ['course', 'question'],
     });
   }
@@ -57,7 +77,7 @@ export class UsersController {
 
   @Post('date')
   async setDate(
-    @Body() data: SetDateDto,
+      @Body() data: SetDateDto,
   ): Promise<Observable<AxiosResponse<any>>> {
     const user = await this.usersService.findOne({
       where: {
@@ -83,26 +103,21 @@ export class UsersController {
     await this.usersService.save(user);
     const dateString = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
     return this.httpService.post(
-      'http://web:8080/users/date',
-      {
-        user: user,
-        date: dateString,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.SECRET_TOKEN}`,
+        'http://web:8080/users/date',
+        {
+          user: user,
+          date: dateString,
         },
-      },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.SECRET_TOKEN}`,
+          },
+        },
     );
   }
 
   @Patch()
   async update(@Body() user: UpdateUserDto): Promise<User> {
     return await this.usersService.save(user);
-  }
-
-  @Get()
-  async getAll(): Promise<User[]> {
-    return await this.usersService.find({});
   }
 }
