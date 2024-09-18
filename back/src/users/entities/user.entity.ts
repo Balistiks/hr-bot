@@ -1,5 +1,5 @@
 import {
-  Column,
+  Column, CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
@@ -67,4 +67,7 @@ export class User {
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
+
+  @CreateDateColumn()
+  registeredAt: Date;
 }

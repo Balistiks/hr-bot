@@ -11,6 +11,7 @@ from apscheduler.jobstores.redis import RedisJobStore
 from apscheduler_di import ContextSchedulerDecorator
 
 from bot.misc.configuration import conf
+from bot.scheduler import check_status
 
 from bot.dispatcher import get_redis_storage, get_dispatcher
 
@@ -40,6 +41,7 @@ async def start_bot():
     dp = get_dispatcher(storage=storage, scheduler=scheduler)
     
     scheduler.start()
+    await check_status(bot, scheduler)
     await dp.start_polling(
         bot,
         allowed_updates=dp.resolve_used_update_types(),

@@ -37,3 +37,12 @@ async def update(user: dict) -> dict:
             f'{url}/users',
             data=user
         )).json()
+
+
+async def get_all() -> list:
+    async with aiohttp.ClientSession(
+        headers=headers
+    ) as session:
+        return await (await session.get(
+            f'{url}/users',
+        )).json()

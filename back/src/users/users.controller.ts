@@ -100,4 +100,9 @@ export class UsersController {
   async update(@Body() user: UpdateUserDto): Promise<User> {
     return await this.usersService.save(user);
   }
+
+  @Get()
+  async getAll(): Promise<User[]> {
+    return await this.usersService.find({});
+  }
 }
