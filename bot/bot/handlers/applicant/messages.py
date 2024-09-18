@@ -50,7 +50,6 @@ async def get_registration_name(message: types.Message, state: FSMContext):
     message = await message.answer(
         'Напишите свой номер телефона 📲\n'
         '\nФормат: +79080000000',
-        reply_markup=keyboards.PHONE_KEYBOARD
     )
     await state.update_data(last_message_id=message.message_id)
 
