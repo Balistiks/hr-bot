@@ -12,11 +12,11 @@ callbacks_router = Router()
 
 
 cities_videos = {
-    'Селятино': 'https://drive.google.com/file/d/1sVQve9KvFkE-eQJepyRaOByRNa8fP67f/view?usp=share_link',
-    'Долгопрудный': 'https://drive.google.com/file/d/13PSrrNkrpz-SJPk7KEIix9EH-kemIIe-/view?usp=share_link',
-    'Калининград': 'https://drive.google.com/file/d/1DJW_DmUH6tuGygNjLGdjJM9ZM5C78J2t/view?usp=share_link',
+    'Селятино': 'https://vk.com/video-109222908_456239897',
+    'Долгопрудный': 'https://vk.com/clip-109222908_456239915',
+    'Калининград': 'https://vk.com/clip-118559346_456239175',
     'Звенигород': 'https://vk.com/video-109222908_456239892',
-    'Видное': 'https://drive.google.com/file/d/10qgkOjlCQLNWNSK72zMo32UjtdFJhiXo/view?usp=share_link',
+    'Видное': 'https://vk.com/clip-130473966_456239913',
 }
 
 
@@ -35,7 +35,7 @@ async def get_city(callback: types.CallbackQuery, state: FSMContext):
         '\nЗаписал для тебя видео, в котором хочу поближе познакомить тебя с компанией 🤝',
         reply_markup=keyboards.applicant.get_continue_url_keyboard(
             'Посмотреть видео',
-            'https://drive.google.com/file/d/1v_EEKgyw5nruL6MWcj7zIYTHnok6c0Cp/view?usp=share_link',
+            'https://vk.com/video-109222908_456239893',
             'tg_channel'
         )
     )
@@ -56,10 +56,10 @@ async def send_salon(callback: types.CallbackQuery):
     if user_channel_status.status != 'left':
         await callback.message.delete()
         await callback.message.answer(
-            'Давай посмотрим на наши салоны изнутри 📷',
+            'Знакомство с нашим директором по персоналу - Ольгой 👋🏻',
             reply_markup=keyboards.applicant.get_continue_url_keyboard(
                 'Посмотреть',
-                'https://drive.google.com/file/d/1sxSb2h8lptIsjVe8-psOHR1Cnks9tId5/view?usp=share_link',
+                'https://vk.com/video-109222908_456239918',
                 'city',
             )
         )
