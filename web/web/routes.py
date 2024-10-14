@@ -44,6 +44,7 @@ async def send_status(request):
                 data['user']['employee']['tgId'],
                 types.FSInputFile(file_name),
                 caption=f'Соискатель {data["user"]["name"]}:\n'
+                f'Город: {user["city"]}\n'
                 f'Телефон: {data["user"]["phoneNumber"]}\n'
                 f'TG: @{data["user"]["userName"]}\n'
                 f'\nВыбрал дату созвона: {data["date"]}'
