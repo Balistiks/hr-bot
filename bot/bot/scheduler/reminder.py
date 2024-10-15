@@ -1,6 +1,5 @@
 import datetime
 
-from dateutil import parser
 from aiogram import Bot
 
 from bot.services import users_service
@@ -13,7 +12,7 @@ async def check_status(bot: Bot):
         await check_status_daily(
             bot,
             int(user['tgId']),
-            parser.isoparse(user['registeredAt']) if isinstance(user['registeredAt'], str) else datetime.datetime.fromtimestamp(user['registeredAt'])
+            datetime.datetime.strptime(user['registeredAt'], '%Y-%m-%dT%H:%M:%S.%fZ')
         )
 
 
