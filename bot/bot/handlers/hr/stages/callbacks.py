@@ -45,7 +45,7 @@ async def set_applicant_stage(callback: types.CallbackQuery, state: FSMContext):
                         f'Этап - {user['status']}\n'
                         + (f'Вакансия - {user['course']['name']}' if user['course'] is not None else ''),
             ),
-            reply_markup=await keyboards.hr.stages.get_data_user(tgid)
+            reply_markup=await keyboards.hr.stages.get_data_user_keyboard(tgid)
         )
 
 
