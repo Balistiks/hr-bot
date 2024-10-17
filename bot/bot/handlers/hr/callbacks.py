@@ -1,4 +1,5 @@
 import json
+import datetime
 import pandas as pd
 
 from aiogram import Router, types, F
@@ -66,10 +67,11 @@ async def create_excel_applicant(tgid):
             'tgid': applicant['tgId'],
             'Вакансия': applicant['answers'][0]['stage']['course'][0]['name'] if applicant['answers'] is not None and len(applicant['answers']) > 0 else '',
             'этап': applicant['stage']['number'] if applicant['stage'] is not None else '',
-            'статус': applicant['status']
+            'статус': applicant['status'],
+            'Регистрация': datetime.datetime.strptime(applicant['registeredAt'], '%Y-%m-%dT%H:%M:%S.%fZ'),
         })
 
-    df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'Вакансия', 'этап', 'статус'])
+    df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'Вакансия', 'этап', 'статус', 'Регистрация'])
     file_name = f'files/соискатели_{tgid}.xlsx'
     df.to_excel(file_name, index=False)
 
