@@ -68,7 +68,7 @@ async def create_excel_applicant(tgid):
             'Вакансия': applicant['answers'][0]['stage']['course'][0]['name'] if applicant['answers'] is not None and len(applicant['answers']) > 0 else '',
             'этап': applicant['stage']['number'] if applicant['stage'] is not None else '',
             'статус': applicant['status'],
-            'Регистрация': datetime.datetime.strptime(applicant['registeredAt'], '%Y-%m-%dT%H:%M:%SZ'),
+            'Регистрация': datetime.datetime.strptime(applicant['registeredAt'], '%Y-%m-%dT%H:%M:%S.%fZ'),
         })
 
     df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'Вакансия', 'этап', 'статус', 'Регистрация'])
