@@ -60,7 +60,6 @@ async def create_excel_applicant(tgid):
 
     data_formatted = []
     for applicant in applicants:
-        print(applicant['selectedDate'])
         data_formatted.append({
             'Имя': applicant['name'],
             'Номер': applicant['phoneNumber'],
@@ -70,7 +69,9 @@ async def create_excel_applicant(tgid):
             'этап': applicant['stage']['number'] if applicant['stage'] is not None else '',
             'статус': applicant['status'],
             'Выбранное время': datetime.datetime.strptime(
-                applicant['selectedDate'], '%Y-%m-%dT%H:%M:%S.%fZ') if applicant['selectedDate'] is not None else ''
+                applicant['selectedDate'], '%Y-%m-%dT%H:%M:%S.%fZ').strftime(
+                '%d.%m.%Y'
+            ) if applicant['selectedDate'] is not None else ''
         })
 
     df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'Вакансия', 'этап', 'статус', 'Выбранное время'])
