@@ -1,3 +1,4 @@
+import datetime
 import json
 import pandas as pd
 
@@ -66,7 +67,9 @@ async def create_excel_applicant(tgid):
             'tgid': applicant['tgId'],
             'Вакансия': applicant['answers'][0]['stage']['course'][0]['name'] if applicant['answers'] is not None and len(applicant['answers']) > 0 else '',
             'этап': applicant['stage']['number'] if applicant['stage'] is not None else '',
-            'статус': applicant['status']
+            'статус': applicant['status'],
+            'Выбранное время': datetime.datetime.strptime(
+                applicant['selectedDate'], '%Y-%m-%dT%H:%M:%S.%fZ') if applicant['selectedDate'] is not None else ''
         })
 
     df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'Вакансия', 'этап', 'статус'])
