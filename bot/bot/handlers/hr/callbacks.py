@@ -72,7 +72,7 @@ async def create_excel_applicant(tgid):
                 applicant['selectedDate'], '%Y-%m-%dT%H:%M:%S.%fZ') if applicant['selectedDate'] is not None else ''
         })
 
-    df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'Вакансия', 'этап', 'статус'])
+    df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'Вакансия', 'этап', 'статус', 'Выбранное время'])
     file_name = f'files/соискатели_{tgid}.xlsx'
     df.to_excel(file_name, index=False)
 
