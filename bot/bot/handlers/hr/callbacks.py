@@ -59,6 +59,7 @@ async def create_excel_applicant(tgid):
     applicants = (await employees_service.get_by_tg_id(tgid))['users']
 
     data_formatted = []
+    print(applicant['selectedDate'])
     for applicant in applicants:
         data_formatted.append({
             'Имя': applicant['name'],
