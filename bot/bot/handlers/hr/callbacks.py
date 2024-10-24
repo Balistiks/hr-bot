@@ -68,9 +68,9 @@ async def create_excel_applicant(tgid):
             'Вакансия': applicant['answers'][0]['stage']['course'][0]['name'] if applicant['answers'] is not None and len(applicant['answers']) > 0 else '',
             'этап': applicant['stage']['number'] if applicant['stage'] is not None else '',
             'статус': applicant['status'],
-            'Выбранное время': datetime.datetime.strptime(
+            'Выбранная дата и время созвона': datetime.datetime.strptime(
                 applicant['selectedDate'], '%Y-%m-%dT%H:%M:%S.%fZ').strftime(
-                '%d.%m.%Y'
+                '%d.%m.%Y %H:%M'
             ) if applicant['selectedDate'] is not None else ''
         })
 
