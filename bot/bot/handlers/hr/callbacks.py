@@ -70,7 +70,7 @@ async def create_excel_applicant(tgid):
             'статус': applicant['status'],
             'Выбранная дата и время созвона': datetime.datetime.strptime(
                 applicant['selectedDate'], '%Y-%m-%dT%H:%M:%S.%fZ').strftime(
-                '%d.%m.%Y-%H:%M'
+                '%H:%M'
             ) if applicant['selectedDate'] is not None else ''
         })
 
