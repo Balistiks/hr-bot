@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 from aiogram import Router, types, F
 from aiogram.filters import CommandStart
@@ -32,6 +33,7 @@ async def menu(message: types.Message, state: FSMContext):
 @messages_router.message(CommandStart())
 async def start_applicant(message: types.Message, state: FSMContext):
     await state.set_state(RegisterState.name)
+    await state.update_data(start_date=datetime.now())
     message = await message.answer(
         'Как вас зовут? 🤔\n'
         '\nИспользуйте формат "Иванов Иван Иванович"'

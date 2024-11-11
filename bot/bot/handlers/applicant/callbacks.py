@@ -90,7 +90,8 @@ async def send_menu(callback: types.CallbackQuery, state: FSMContext):
         'tgId': callback.from_user.id,
         'name': data['name'],
         'phoneNumber': data['phone_number'],
-        'city': data['city']
+        'city': data['city'],
+        'startDate': data['start_date']
     })
     await state.clear()
     await menu(callback.message, state)
