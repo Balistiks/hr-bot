@@ -74,6 +74,7 @@ async def create_excel_applicant(tgid):
                 '%d.%m.%Y'
             ) if applicant['registeredAt'] is not None else '',
             'Вакансия': applicant['answers'][0]['stage']['course'][0]['name'] if applicant['answers'] is not None and len(applicant['answers']) > 0 else '',
+            'Город': applicant['city'],
             'этап': applicant['stage']['number'] if applicant['stage'] is not None else '',
             'статус': applicant['status'],
             'Выбранная дата и время созвона': datetime.datetime.strptime(
@@ -82,7 +83,7 @@ async def create_excel_applicant(tgid):
             ) if applicant['selectedDate'] is not None else ''
         })
 
-    df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'Дата первого сообщения пользователя', 'Дата регистрации пользователя', 'Вакансия', 'этап', 'статус', 'Выбранная дата и время созвона'])
+    df = pd.DataFrame(data_formatted, columns=['Имя', 'Номер', 'UserName', 'tgid', 'Дата первого сообщения пользователя', 'Дата регистрации пользователя', 'Вакансия', 'Город', 'этап', 'статус', 'Выбранная дата и время созвона'])
     file_name = f'files/соискатели_{tgid}.xlsx'
     df.to_excel(file_name, index=False)
 
