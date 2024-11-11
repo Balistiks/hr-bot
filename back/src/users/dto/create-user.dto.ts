@@ -1,4 +1,4 @@
-import { IsEmpty, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsDate, IsEmpty, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { Employee } from '../../employees/entities/employee.entity';
 
 export class CreateUserDto {
@@ -24,4 +24,8 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   city: string;
+
+  @IsNotEmpty()
+  @IsDate()
+  startDate: Date;
 }

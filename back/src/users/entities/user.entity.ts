@@ -50,6 +50,9 @@ export class User {
   @Column('timestamptz', { nullable: true })
   selectedDate: Date;
 
+  @Column('timestamptz')
+  startDate: Date;
+
   @ManyToOne(() => Question, (question) => question.users)
   question: Question;
 
