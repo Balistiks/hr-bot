@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from aiogram import Router, types, F
 from aiogram.fsm.context import FSMContext
 
@@ -91,7 +93,7 @@ async def send_menu(callback: types.CallbackQuery, state: FSMContext):
         'name': data['name'],
         'phoneNumber': data['phone_number'],
         'city': data['city'],
-        'startDate': data['start_date']
+        'startDate': datetime.strptime(data['start_date'], '%d.%m.%Y')
     })
     await state.clear()
     await menu(callback.message, state)
