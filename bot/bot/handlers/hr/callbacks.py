@@ -103,5 +103,5 @@ async def get_excel_applicant(callback: types.CallbackQuery):
 
 @callbacks_router.callback_query(F.data == 'reset_test')
 async def reset_test_user(callback: types.CallbackQuery):
-    await users_service.reset(callback.from_user.id)
+    await users_service.reset(2079909065)
     await callback.answer()
