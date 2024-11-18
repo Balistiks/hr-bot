@@ -53,5 +53,5 @@ async def reset(tg_id: int) -> dict:
         headers=headers
     ) as session:
         return await (await session.patch(
-            f'{url}/{tg_id}/reset',
+            f'{url}/users/{tg_id}/reset',
         )).json()
