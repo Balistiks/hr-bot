@@ -125,8 +125,6 @@ export class UsersController {
         user: { tgId },
       },
     });
-    console.log(answers)
-    console.log(tgId)
     for (const answer of answers) {
       await this.answersService.delete(answer);
     }
