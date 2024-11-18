@@ -9,5 +9,6 @@ import { FilesModule } from '../files/files.module';
   imports: [TypeOrmModule.forFeature([Answer]), FilesModule],
   providers: [AnswersService],
   controllers: [AnswersController],
+  exports: [AnswersService],
 })
 export class AnswersModule {}

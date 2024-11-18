@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
@@ -10,6 +10,7 @@ import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 import * as process from 'process';
 import {Between} from "typeorm";
+import { AnswersService } from '../answers/answers.service';
 
 
 @Controller('users')
@@ -18,6 +19,7 @@ export class UsersController {
       private readonly usersService: UsersService,
       private readonly employeesService: EmployeesService,
       private readonly httpService: HttpService,
+      private readonly answersService: AnswersService,
   ) {
   }
 
@@ -114,6 +116,26 @@ export class UsersController {
           },
         },
     );
+  }
+
+  @Patch(':tgId/reset')
+  async reset(@Param('tgId') tgId: number): Promise<User> {
+    const answers = await this.answersService.findMany({
+      where: {
+        user: { tgId },
+      },
+    });
+    for (const answer of answers) {
+      await this.answersService.delete(answer);
+    }
+    const user = await this.usersService.findOne({
+      where: { tgId },
+    });
+    user.course = null;
+    user.stage = null;
+    user.selectedDate = null;
+    user.status = 'обучается';
+    return await this.usersService.save(user);
   }
 
   @Patch()
