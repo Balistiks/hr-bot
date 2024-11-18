@@ -52,8 +52,6 @@ async def reset(tg_id: int) -> dict:
     async with aiohttp.ClientSession(
         headers=headers
     ) as session:
-        data = await (await session.patch(
+        return await (await session.patch(
             f'{url}/{tg_id}/reset',
         )).json()
-        print(data)
-        return data
