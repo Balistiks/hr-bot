@@ -41,5 +41,8 @@ async def get_applicant_keyboard(applicants: list, current_page: int):
     markup.inline_keyboard.append([
         InlineKeyboardButton(text='Excel', callback_data='excel_status')
     ])
+    markup.inline_keyboard.append([
+        InlineKeyboardButton(text='Обнулить тестового пользователя', callback_data='reset_test')
+    ])
 
     return markup

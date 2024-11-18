@@ -6,7 +6,7 @@ from aiogram import Router, types, F
 from aiogram.fsm.context import FSMContext
 
 from bot import keyboards
-from bot.services import employees_service
+from bot.services import employees_service, users_service
 from bot.states import ApplicantState
 
 callbacks_router = Router()
@@ -99,3 +99,9 @@ async def get_excel_applicant(callback: types.CallbackQuery):
     await callback.message.answer_document(
         types.FSInputFile(file_name),
         reply_markup=keyboards.hr.BACK_LIST_KEYBOARD)
+
+
+@callbacks_router.callback_query(F.data == 'reset_test')
+async def reset_test_user(callback: types.CallbackQuery):
+    await users_service.reset(callback.from_user.id)
+    await callback.answer()

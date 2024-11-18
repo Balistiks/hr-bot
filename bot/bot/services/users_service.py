@@ -46,3 +46,12 @@ async def get_all_studying() -> dict:
         return await (await session.get(
             f'{url}/users/studying',
         )).json()
+
+
+async def reset(tg_id: int) -> dict:
+    async with aiohttp.ClientSession(
+        headers=headers
+    ) as session:
+        return await (await session.patch(
+            f'{url}/{tg_id}/reset',
+        )).json()
