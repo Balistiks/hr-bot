@@ -88,9 +88,9 @@ async def send_menu(callback: types.CallbackQuery, state: FSMContext):
     await callback.message.delete()
     data = await state.get_data()
     await callback.bot.send_message(
-        732710875,
+        6812895669,
         f'Новый пользователь:\n'
-        f'Соискатель {data["name"]}:\n'
+        f'\nСоискатель {data["name"]}:\n'
         f'Телефон: {data["phone_number"]}\n'
         f'TG: @{callback.from_user.username}\n'
     )
