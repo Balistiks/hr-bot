@@ -54,7 +54,7 @@ export const Vacancy = (props) => {
                         {courses.map((item, index) => {
                             return (
                               <>
-                                  {item.city === null || item.city.name === props.city && (
+                                  {(item.city === undefined || item.city.name === props.city) && (
                                     <>
                                         {showVacancy(item) &&
                                           <Col xs={6} key={index} style={{paddingRight: 0}}>
