@@ -1,4 +1,4 @@
-import {Form, Modal} from "react-bootstrap";
+import {Col, Form, Modal, Row} from "react-bootstrap";
 import {CustomButton, Text} from "@shared/ui/index.js";
 
 import styles from './styles.module.scss';
@@ -13,12 +13,36 @@ export const QuestionModal = ({show, handleClose, submitAnswer, stage, courseId}
     const {data: answers, fetchData: fetchAnswers} = useApi();
 
     const [writeValue, setWriteValue] = useState('');
+    const [services, setServices] = useState([]);
+    const [serviceTimes, setServiceTimes] = useState({});
 
+    const onChoiceService = (event) => {
+        if (event.target.checked) {
+            setServices([...services, event.target.value])
+        } else {
+            setServices(services.filter((service) => {
+                return service !== event.target.value
+            }))
+        }
+    }
+
+    const onTimeChange = (event, item) => {
+        const newService = {};
+        newService[item] = event.target.value
+        setServiceTimes({
+            ...serviceTimes,
+            ...newService
+        });
+    }
 
     const onSubmit = (event) => {
         event.preventDefault();
         let answer = '';
-        if (stage.type === 'multipleChoice' || stage.type === 'choice') {
+        if (stage.type === 'multipleChoice' || stage.name === 'Услуги') {
+            for (const service of services) {
+                answer += `${service} ${serviceTimes[service]}, `
+            }
+        } else if (stage.type === 'multipleChoice' || stage.type === 'choice') {
             for (const input of event.target) {
                 answer += input.checked ? `${input.value}, ` : ''
             }
@@ -81,13 +105,29 @@ export const QuestionModal = ({show, handleClose, submitAnswer, stage, courseId}
                 <Form style={{marginTop: 13}} onSubmit={onSubmit}>
                     {stage.type === 'multipleChoice' && questionAnswers && stage.name !== 'Документы' && (
                       questionAnswers.map((questionAnswer) => (
-                        <Form.Check
-                          value={questionAnswer.text}
-                          key={questionAnswer.id}
-                          type='checkbox'
-                          id={questionAnswer.id}
-                          label={questionAnswer.text}
-                        />
+                        <Row className='align-items-center' style={{height: 50}} key={questionAnswer.id}>
+                            <Col>
+                                <Form.Check
+                                  value={questionAnswer.text}
+                                  key={questionAnswer.id}
+                                  type='checkbox'
+                                  id={questionAnswer.id}
+                                  label={questionAnswer.text}
+                                  onChange={(event) => onChoiceService(event)}
+                                />
+                            </Col>
+                            <Col xs={5}>
+                            {stage.name === 'Услуги' && (
+                                  <Form.Control
+                                    type={'number'}
+                                    style={{fontSize: 11}}
+                                    size="sm"
+                                    placeholder='Время выполнения'
+                                    onChange={(event) => onTimeChange(event, questionAnswer.text)}
+                                  />
+                            )}
+                            </Col>
+                        </Row>
                       ))
                     )}
                     {stage.type === 'choice' && questionAnswers && (
