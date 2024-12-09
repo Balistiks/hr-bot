@@ -4,7 +4,7 @@ import {VacancyCard} from "../../../entites/vacancy-card/index.js";
 import {useEffect, useState} from "react";
 import {useApi} from "@shared/lib/index.js";
 
-export const Vacancy = () => {
+export const Vacancy = (props) => {
     const tg = window.Telegram.WebApp;
 
     const {data: cities, loading: citiesLoad, fetchData: fetchCity} = useApi();
@@ -53,7 +53,8 @@ export const Vacancy = () => {
                     <>
                         {courses.map((item, index) => {
                             return (
-                              {item.city === null || item.city.name === props.city && (
+                              <>
+                                  {item.city === null || item.city.name === props.city && (
                                     <>
                                         {showVacancy(item) &&
                                           <Col xs={6} key={index} style={{paddingRight: 0}}>
@@ -62,6 +63,7 @@ export const Vacancy = () => {
                                         }
                                     </>
                                   )}
+                              </>
                             )
                         })}
                     </>
