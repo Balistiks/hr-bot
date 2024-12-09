@@ -53,13 +53,15 @@ export const Vacancy = () => {
                     <>
                         {courses.map((item, index) => {
                             return (
-                                <>
-                                    {showVacancy(item) &&
-                                        <Col xs={6} key={index} style={{paddingRight: 0}}>
-                                            <VacancyCard id={item.id} name={item.name} address={item.address}/>
-                                        </Col>
-                                    }
-                                </>
+                              {item.city === null || item.city.name === props.city && (
+                                    <>
+                                        {showVacancy(item) &&
+                                          <Col xs={6} key={index} style={{paddingRight: 0}}>
+                                              <VacancyCard id={item.id} name={item.name} address={item.address}/>
+                                          </Col>
+                                        }
+                                    </>
+                                  )}
                             )
                         })}
                     </>

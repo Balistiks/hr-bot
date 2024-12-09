@@ -85,7 +85,7 @@ const IndexPage = () => {
                         }
                         {user && user.status !== 'окончил курс'
                             ?
-                            <Vacancy/>
+                            <Vacancy city={user.city}/>
                             :
                             <>
                                 {(user && user.selectedDate)
