@@ -9,7 +9,7 @@ import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 import * as process from 'process';
-import {Between} from "typeorm";
+import { Between, DeleteResult } from 'typeorm';
 import { AnswersService } from '../answers/answers.service';
 
 
@@ -119,7 +119,7 @@ export class UsersController {
   }
 
   @Patch(':tgId/reset')
-  async reset(@Param('tgId') tgId: number): Promise<User> {
+  async reset(@Param('tgId') tgId: number): Promise<DeleteResult> {
     const answers = await this.answersService.findMany({
       where: {
         user: { tgId },
@@ -131,11 +131,7 @@ export class UsersController {
     const user = await this.usersService.findOne({
       where: { tgId },
     });
-    user.course = null;
-    user.stage = null;
-    user.selectedDate = null;
-    user.status = 'обучается';
-    return await this.usersService.save(user);
+    return await this.usersService.delete(user);
   }
 
   @Patch()
