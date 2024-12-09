@@ -51,6 +51,8 @@ export const QuestionModal = ({show, handleClose, submitAnswer, stage, courseId}
         }
         submitAnswer(answer);
         handleClose();
+        setServices([]);
+        setServiceTimes({});
     }
 
     const fetchData = async () => {
