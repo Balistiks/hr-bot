@@ -38,7 +38,7 @@ export const QuestionModal = ({show, handleClose, submitAnswer, stage, courseId}
     const onSubmit = (event) => {
         event.preventDefault();
         let answer = '';
-        if (stage.type === 'multipleChoice' || stage.name === 'Услуги') {
+        if (stage.type === 'multipleChoice' && stage.name === 'Услуги') {
             for (const service of services) {
                 answer += `${service} ${serviceTimes[service]}, `
             }
