@@ -119,7 +119,7 @@ export class UsersController {
   }
 
   @Patch(':tgId/reset')
-  async reset(@Param('tgId') tgId: number): Promise<DeleteResult> {
+  async reset(@Param('tgId') tgId: number) {
     const answers = await this.answersService.findMany({
       where: {
         user: { tgId },
