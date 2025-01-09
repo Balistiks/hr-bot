@@ -19,12 +19,12 @@ async def check_status(bot: Bot):
 async def check_status_daily(bot: Bot, tgid, start_time):
     days_passed = (datetime.datetime.now() - start_time).days
 
-    if days_passed == 3:
+    if days_passed == 1:
         await bot.send_message(
             chat_id=tgid,
             text='Нам не терпится пригласить вас на собеседование! Пожалуйста, завершите тестирование'
         )
-    elif days_passed == 6:
+    elif days_passed == 2:
         await bot.send_message(
             chat_id=tgid,
             text='Мы все еще ждем вашего присоединения в команду, скорее завершайте тестирование'
