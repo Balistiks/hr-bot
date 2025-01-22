@@ -9,6 +9,8 @@ async def check_status(bot: Bot):
     users = await users_service.get_all_studying()
     print(users)
     for user in users:
+        date = datetime.datetime.strptime(user['registeredAt'], '%Y-%m-%dT%H:%M:%S.%fZ')
+        date.replace(hour=0, minute=0, second=0, microsecond=0)
         await check_status_daily(
             bot,
             int(user['tgId']),
@@ -17,7 +19,9 @@ async def check_status(bot: Bot):
 
 
 async def check_status_daily(bot: Bot, tgid, start_time):
-    days_passed = (datetime.datetime.now() - start_time).days
+    days_passed = (datetime.datetime.today() - start_time).days
+
+    print(f'{tgid} {days_passed}')
 
     if days_passed == 1:
         await bot.send_message(
