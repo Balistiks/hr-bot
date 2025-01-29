@@ -26,11 +26,9 @@ export class UsersController {
  @Get('studying')
   async getAll(): Promise<User[]> {
     const now = new Date();
-    const threeDaysAgo = new Date();
-    threeDaysAgo.setDate(now.getDate() - 3);
+    const threeDaysAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, -14, 0, 0)
 
-    const sixDaysAgo = new Date();
-    sixDaysAgo.setDate(now.getDate() - 6);
+    const sixDaysAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, -14, 0, 0)
 
     return await this.usersService.find({
       where: {
