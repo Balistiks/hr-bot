@@ -39,7 +39,7 @@ async def start_bot():
     scheduler.ctx.add_instance(bot, declared_class=Bot)
     
     scheduler_status = AsyncIOScheduler(timezone='Asia/Vladivostok')
-    scheduler_status.add_job(check_status, trigger='cron', day='*', kwargs={'bot': bot})
+    scheduler_status.add_job(check_status, trigger='cron', hour=19, kwargs={'bot': bot})
 
     dp = get_dispatcher(storage=storage, scheduler=scheduler)
 
