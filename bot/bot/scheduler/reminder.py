@@ -23,13 +23,16 @@ async def check_status_daily(bot: Bot, tgid, start_time):
 
     print(f'{tgid} {days_passed}')
 
-    if days_passed == 1:
-        await bot.send_message(
-            chat_id=tgid,
-            text='Нам не терпится пригласить вас на собеседование! Пожалуйста, завершите тестирование'
-        )
-    elif days_passed == 2:
-        await bot.send_message(
-            chat_id=tgid,
-            text='Мы все еще ждем вашего присоединения в команду, скорее завершайте тестирование'
-        )
+    try:
+        if days_passed == 1:
+            await bot.send_message(
+                chat_id=tgid,
+                text='Нам не терпится пригласить вас на собеседование! Пожалуйста, завершите тестирование'
+            )
+        elif days_passed == 2:
+            await bot.send_message(
+                chat_id=tgid,
+                text='Мы все еще ждем вашего присоединения в команду, скорее завершайте тестирование'
+            )
+    except Exception as e:
+        print(e)
